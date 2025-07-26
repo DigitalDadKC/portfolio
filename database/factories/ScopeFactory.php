@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Job;
+use App\Models\Proposal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +21,7 @@ class ScopeFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'area' => $this->faker->randomNumber(5),
-            'total' => $this->faker->randomFloat(2),
-            'formatted_total' => '$' . $this->faker->randomNumber(3) . ',' . $this->faker->randomNumber(3),
-            'days' => $this->faker->randomNumber(2),
-            'job_id' => Job::query()->inRandomOrder()->first()->id
+            'proposal_id' => Proposal::query()->inRandomOrder()->first()->id
         ];
     }
 }

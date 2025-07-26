@@ -22,6 +22,9 @@ return new class extends Migration {
             $table->string('address');
             $table->string('city');
             $table->foreignId('state_id')->constrained();
+            $table->integer('zip_code');
+            $table->text('terms')->nullable()->default(NULL);
+            $table->timestamps();
         });
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
@@ -29,22 +32,25 @@ return new class extends Migration {
             $table->string('address');
             $table->string('city');
             $table->foreignId('state_id')->constrained();
-            $table->float('total');
-            $table->string('formatted_total');
-            $table->integer('days')->nullable()->default(NULL);
+            $table->integer('zip');
             $table->timestamp('start_date')->nullable()->default(NULL);
             $table->string('notes')->nullable()->default(NULL);
             $table->timestamps();
         });
-
+        Schema::create('proposals', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable()->default(NULL);
+            $table->integer('contingency')->nullable()->default(NULL);
+            $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->enum('type', ['base', 'alternate', 'change order'])->constrained();
+            $table->text('exclusions')->nullable()->default(NULL);
+            $table->timestamps();
+        });
         Schema::create('scopes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable()->default(NULL);
             $table->float('area')->nullable()->default(NULL);
-            $table->integer('days')->nullable()->default(NULL);
-            $table->float('total')->nullable()->default(NULL);
-            $table->string('formatted_total');
-            $table->foreignId('job_id')->constrained()->onDelete('cascade');
+            $table->foreignId('proposal_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -55,14 +61,12 @@ return new class extends Migration {
 
         Schema::create('lines', function (Blueprint $table) {
             $table->id();
-            $table->integer('order');
-            $table->string('description');
+            $table->string('description')->nullable()->default(NULL);
             $table->foreignId('unit_of_measurement_id')->constrained();
-            $table->integer('days')->nullable()->default(NULL);
-            $table->float('price');
-            $table->float('quantity');
-            $table->float('total');
-            $table->string('formatted_total');
+            $table->decimal('days')->nullable()->default(NULL);
+            $table->integer('price')->nullable()->default(NULL);
+            $table->integer('quantity')->nullable()->default(NULL);
+            $table->integer('order');
             $table->foreignId('scope_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -76,6 +80,7 @@ return new class extends Migration {
         Schema::dropIfExists('lines');
         Schema::dropIfExists('unit_of_measurements');
         Schema::dropIfExists('scopes');
+        Schema::dropIfExists('proposals');
         Schema::dropIfExists('jobs');
         Schema::dropIfExists('companies');
         Schema::dropIfExists('states');

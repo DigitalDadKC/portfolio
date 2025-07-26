@@ -52,12 +52,12 @@ const submit = () => {
                         </div>
                         <div>
                             <h4 class="font-body text-xl mb-1">Current Location</h4>
-                            <p class="mb-1 text-paragraph">Lee's Summit, MO, USA</p>
+                            <p class="mb-1 text-paragraph">Kansas City, MO, USA</p>
                             <p class="text-accent font-normal">Serving customers nationwide</p>
                         </div>
                     </div>
                 </div>
-                <form @submit.prevent="submit" action="" class="space-y-8 w-full max-w-md mx-auto">
+                <form @submit.prevent="submit" action="" class="space-y-4 w-full max-w-xl mx-auto">
                     <div v-if="showMessage" class="py-4 text-accent dark:text-dark-quatrenary rounded-lg">
                         Thank you for contacting me!<br>
                         We'll be in touch!
@@ -67,7 +67,7 @@ const submit = () => {
                             <input v-model="form.name" type="text" class="input" placeholder="Your Name" aria-label="Your Name">
                             <span v-if="form.errors.name" class="text-sm m-2 text-red-400">{{ form.errors.name }}</span>
                         </div>
-                        <div>
+                        <div class=" grow">
                             <input v-model="form.email" type="email" class="input" placeholder="Your Email" aria-label="Your Email">
                             <span v-if="form.errors.email" class="text-sm m-2 text-red-400">{{ form.errors.email }}</span>
                         </div>

@@ -21,21 +21,12 @@ class Job extends Model
     {
         return $this->belongsTo(User::class);
     }
-
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
     }
-    public function scopes(): HasMany
+    public function proposals(): HasMany
     {
-        return $this->hasMany(Scope::class);
+        return $this->hasMany(Proposal::class);
     }
-
-    // public function startDate(): Attribute
-    // {
-    //     return new Attribute(
-    //         get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('M d, Y'),
-    //         set: fn($value) => Carbon::parse($value)->format('Y-m-d')
-    //     );
-    // }
 }

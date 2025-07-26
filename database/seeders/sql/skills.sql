@@ -3,16 +3,15 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 INSERT INTO `skills` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
-(10, 'HTML5', 'skills/unCHEjNnWBOuGcDAa9aRaLF1nhEt9BoguA0meJt8.svg', '2023-12-28 18:26:31', '2024-06-15 01:27:08'),
-(11, 'CSS3', 'skills/1Mzgn4acs6lx5jC1s1vnJbPGapcB8GyW6ULspfAu.svg', '2023-12-28 18:34:56', '2024-06-15 01:27:41'),
-(12, 'JavaScript', 'skills/EbqM034ywPpLWp5ekZvjhTONKavK4Ka8rS2Htaqm.svg', '2023-12-28 18:38:27', '2024-06-15 01:28:01'),
-(13, 'jQuery', 'skills/9HYpKpuApxQlOax52TmvEnm9x4XujCQAHZ8pF3ed.svg', '2023-12-28 18:42:08', '2024-06-15 01:28:21'),
-(14, 'Tailwind', 'skills/FBJdYXfH8xt5Y9wd1KauTsMZFk2ySiTqEr7qP0IH.svg', '2023-12-28 18:43:34', '2024-06-15 01:29:00'),
-(15, 'AlpineJS', 'skills/Xt2UzCqjjkZVuvYVtS87SBTIRwctpW6nYQFISO3x.svg', '2023-12-28 18:45:10', '2024-06-15 01:29:14'),
-(16, 'Laravel', 'skills/VyUfy3EB5TLmUHjxlaz3f9NoCxtZXUQy4Re7c6sO.svg', '2023-12-28 18:46:08', '2024-06-15 01:29:27'),
-(17, 'Livewire', 'skills/kIDSIYWRpLd07zAV618Ws4sFpuQPVmRT0ncaI1IS.svg', '2023-12-28 18:50:38', '2024-06-15 01:29:39'),
-(18, 'Vue', 'skills/Cpgf00dKTXljhUuDkKUtDlgwdNHy4eBnz2ruIIR2.svg', '2023-12-28 18:53:55', '2024-06-15 01:33:30'),
-(37, 'Bootstrap', 'skills/AFh2mFodFUylK8bk5JWo8EzJZLPaqPEXrFSs1P8E.svg', '2024-01-03 00:51:56', '2024-06-15 01:30:24'),
-(38, 'Excel VBA', 'skills/1AmYRXtBqMeW9MgGOGmSTIzgdXEWqybqawfYW8tW.svg', '2024-01-03 01:35:56', '2024-06-15 01:33:43');
+(1, 'HTML5', 'skills/4pkrFxMcTlYMccCzmQMWZwJZcMQaiPZt8ZyNRuub.svg', '2023-12-28 18:26:31', '2025-03-18 22:11:45'),
+(2, 'CSS3', 'skills/ELnB8Q5AnobWDFmlV7cuAATYLDjgMpP80l0FDR4y.svg', '2023-12-28 18:34:56', '2025-03-18 22:10:41'),
+(3, 'JavaScript', 'skills/hz0ermckl3eXvMkxrZET3kB8wX4mK32nSx3IowNF.svg', '2023-12-28 18:38:27', '2025-03-18 22:11:01'),
+(4, 'jQuery', 'skills/zEntdEjOX1lEZXqOj23IZIhX3d15EIHFHWfHwSTT.svg', '2023-12-28 18:42:08', '2025-03-18 21:10:46'),
+(5, 'Tailwind', 'skills/WhdJiOdt5wfBY4cHtW3Ezp92o1PEonRjxeqZ99Vs.svg', '2023-12-28 18:43:34', '2025-03-18 20:58:36'),
+(6, 'Laravel', 'skills/TRpU0hwnG8e7ncFDPRsojd4HSfy20JUK5BsJcXtr.svg', '2023-12-28 18:46:08', '2025-03-18 20:58:55'),
+(7, 'Livewire', 'skills/Knqje8deG3DS8gb0qC20dSiDHEKck6i6xdql70vZ.svg', '2023-12-28 18:50:38', '2025-03-18 20:58:46'),
+(8, 'Vue', 'skills/y0fIpZ7iNqCSaYanBmkQul8RwcI9uPEW4xFPsj2h.svg', '2023-12-28 18:53:55', '2025-03-18 22:11:09'),
+(9, 'Bootstrap', 'skills/w4wdM443wxrTgtfHE2Z57K8LBlLouhVDw4DmC1W4.svg', '2024-01-03 00:51:56', '2025-03-18 22:11:23'),
+(10, 'Excel VBA', 'skills/3zCXFFXz3yrZeXuVUe3g8KuF4h3zM8Uc8DeADCsD.svg', '2024-01-03 01:35:56', '2025-03-18 22:11:31');
 
 COMMIT;

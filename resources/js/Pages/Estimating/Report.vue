@@ -1,7 +1,6 @@
 <script setup>
-import {  } from 'vue';
-import { Link, Head } from '@inertiajs/vue3';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { ref, computed } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
 import { Bar } from 'vue-chartjs';
 import { Line } from 'vue-chartjs';
@@ -13,47 +12,98 @@ const props = defineProps({
     'jobs': Object
 })
 
-const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+const years = [...new Set(props.jobs.map(job => new Date(job.created_at).getUTCFullYear()))].sort()
+const months = [
+    {id: 1, month: 'January'},
+    {id: 2, month: 'February'},
+    {id: 3, month: 'March'},
+    {id: 4, month: 'April'},
+    {id: 5, month: 'May'},
+    {id: 6, month: 'June'},
+    {id: 7, month: 'July'},
+    {id: 8, month: 'August'},
+    {id: 9, month: 'September'},
+    {id: 10, month: 'October'},
+    {id: 11, month: 'November'},
+    {id: 12, month: 'December'}
+]
+const colors = [
+    '#29435C',
+    '#925a2b',
+    '#556E53',
 ]
 
-const barMetadata = props.jobs.map(job => labels[new Date(job.created_at).getMonth()]).reduce((a, b) => { a[b] = (a[b] || 0) + 1; return a; }, {})
-const lineMetadata = []
-labels.forEach((label, index) => {
-  lineMetadata[index] = props.jobs.filter(job => new Date(job.created_at).getMonth() == index).map(job => job.scopes.map(scope => scope.lines.map(line => line.price * line.quantity)).map(total => total.reduce((a, b) => a+b, 0)).reduce((c, d) => c + d, 0)).reduce((e, f) => e+f, 0)
+let barMetadata = []
+let lineMetadata = []
+let yearlyProposalCount = []
+
+years.forEach((year, index) => {
+    let barYearlyData = []
+    let lineYearlyData = []
+    let yearlyProposalCountData = []
+    let yearly_jobs = props.jobs.filter(job => new Date(job.created_at).getUTCFullYear() == year)
+    months.forEach((month, i) => {
+        barYearlyData.push(yearly_jobs.filter(job => new Date(job.created_at).getMonth() == i).length)
+        lineYearlyData.push(yearly_jobs.filter(job => new Date(job.created_at).getMonth() == i).map(job => job.proposals.reduce((a, b) => a + b.scopes.reduce((c, d) => c + d.lines.reduce((e, f) => e + ((f.price/100) * (f.quantity/100)), 0), 0), 0)))
+        yearlyProposalCountData.push(yearly_jobs.filter(job => new Date(job.created_at).getMonth() == i).map(job => job.proposals).map(proposal => proposal.length).reduce((a, b) => a + b, 0))
+    })
+    barMetadata.push({
+        label: year,
+        backgroundColor: colors[index],
+        borderColor: colors[index],
+        data: barYearlyData
+    })
+    lineMetadata.push({
+        label: year,
+        backgroundColor: colors[index],
+        borderColor: colors[index],
+        data: lineYearlyData.map(data => data.reduce((a, b) => a + b, 0))
+    })
+    yearlyProposalCount.push(yearlyProposalCountData)
 })
 
 const barData = {
-    labels: labels,
-    datasets: [{
-      label: 'Number of jobs',
-      backgroundColor: '#B0A695',
-      borderColor: '#152A38',
-      data: barMetadata}]
+    labels: months.map(item => item.month),
+    datasets: barMetadata,
 }
 
 const lineData = {
-    labels: labels,
-    datasets: [{
-      label: 'Total Monthly Job $',
-      backgroundColor: '#EBE3D5',
-      borderColor: '#F3EEEA',
-      data: lineMetadata}]
+    labels: months.map(item => item.month),
+    datasets: lineMetadata
 }
 
-const chartOptions = {
+const year = ref(Math.max(...years))
+
+const jobCountData = computed(() => {
+    return barMetadata.find(data => data.label == year.value)
+})
+
+const proposalCountData = computed(() => {
+    return yearlyProposalCount[years.indexOf(year.value)]
+})
+
+const proposalVolumeData = computed(() => {
+    return lineMetadata.find(data => data.label == year.value).data
+})
+
+const barChartOptions = {
   responsive: true,
+  plugins: {
+    title: {
+        display: true,
+        text: 'Annual Job Count'
+    }
+  }
+}
+
+const lineChartOptions = {
+  responsive: true,
+  plugins: {
+    title: {
+        display: true,
+        text: 'Annual Proposal $'
+    }
+  }
 }
 
 </script>
@@ -62,17 +112,75 @@ const chartOptions = {
     <EstimatingLayout>
         <Head title="Reporting" />
 
-        <div class="bg-dark-primary h-screen pt-12">
-            <div class="xl:container xl:mx-auto xl:p-0 w-screen">
-                <div class="flex flex-col xl:flex-row gap-4 justify-center items-center p-2 md:px-12">
-                    <div class="relative w-11/12">
-                        <Bar id="bar-chart" :options="chartOptions" :data="barData" aria-label="Bar Chart Data" aria-describedby="bar-chart" class="bg-light-secondary rounded-md">Chart could not be loaded</Bar>
+        <v-container class="w-100 w-xl-75 bg-grey-lighten-2 rounded-lg">
+            <v-row>
+                <v-col cols="12" lg="6">
+                    <div class="d-flex justify-center">
+                        <Bar id="bar-chart" :options="barChartOptions" :data="barData" aria-label="Bar Chart Data" aria-describedby="bar-chart" class="bg-light-secondary rounded-md w-full h-full">Chart could not be loaded</Bar>
                     </div>
-                    <div class="relative w-11/12">
-                        <Line id="line-chart" :options="chartOptions" :data="lineData" aria-label="Line Chart Data" aria-describedby="line-chart" class="bg-light-tertiary">Chart could not be loaded</Line>
+                </v-col>
+                <v-col cols="12" lg="6">
+                    <div class="d-flex justify-center">
+                        <Line id="line-chart" :options="lineChartOptions" :data="lineData" aria-label="Line Chart Data" aria-describedby="line-chart" class="bg-light-tertiary w-full h-full">Chart could not be loaded</Line>
                     </div>
-                </div>
-            </div>
-        </div>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="12" lg="6">
+                    <v-card>
+                        <div class="p-4">
+                            <v-card-title class="text-center">Job Count</v-card-title>
+                            <v-select v-model="year" :items="years" hide-details class="bg-grey-lighten-2"></v-select>
+                        </div>
+                        <v-card-item v-for="(month, index) in months" :key="index">
+                            <div class="d-flex justify-space-between">
+                                <div>
+                                    {{month.month}}
+                                </div>
+                                <div>
+                                    {{jobCountData.data[index]}}
+                                </div>
+                            </div>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+                <v-col cols="12" lg="3">
+                    <v-card>
+                        <div class="p-4">
+                            <v-card-title class="text-center">Proposal Count</v-card-title>
+                            <v-select v-model="year" :items="years" hide-details class="bg-grey-lighten-2"></v-select>
+                        </div>
+                        <v-card-item v-for="(month, index) in months" :key="index">
+                            <div class="d-flex justify-space-between">
+                                <div>
+                                    {{month.month}}
+                                </div>
+                                <div>
+                                    {{proposalCountData[index] }}
+                                </div>
+                            </div>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+                <v-col cols="12" lg="3">
+                    <v-card>
+                        <div class="p-4">
+                            <v-card-title class="text-center">Proposal Volume</v-card-title>
+                            <v-select v-model="year" :items="years" hide-details class="bg-grey-lighten-2"></v-select>
+                        </div>
+                        <v-card-item v-for="(month, index) in months" :key="index">
+                            <div class="d-flex justify-space-between">
+                                <div>
+                                    {{month.month}}
+                                </div>
+                                <div>
+                                    {{$filters.formatCurrency(proposalVolumeData[index]) }}
+                                </div>
+                            </div>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
     </EstimatingLayout>
 </template>

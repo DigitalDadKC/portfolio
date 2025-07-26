@@ -12,7 +12,8 @@ import Features from '@/Components/Frontend/Features.vue';
 
 defineProps({
     skills: Object,
-    projects: Object
+    projects: Object,
+    features: Object,
 })
 </script>
 
@@ -21,11 +22,11 @@ defineProps({
     <FrontendLayout>
         <Hero />
         <Promote />
-        <About />
-        <Skills :skills="skills" />
-        <Portfolio :skills="skills" :projects="projects" />
         <Services />
-        <Features />
+        <Skills :skills="skills" />
+        <Portfolio :skills :projects />
+        <Features :features />
+        <About />
         <Contact />
     </FrontendLayout>
 </template>

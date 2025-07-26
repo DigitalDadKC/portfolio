@@ -23,12 +23,10 @@ class JobFactory extends Factory
             'address' => $this->faker->streetAddress(),
             'city' => $this->faker->city(),
             'state_id' => State::query()->inRandomOrder()->first()->id,
-            'total' => $this->faker->randomFloat(2, 500000, 10000000),
-            'formatted_total' => '$' . $this->faker->randomNumber(3) . ',' . $this->faker->randomNumber(3) . ',' . $this->faker->randomNumber(3),
-            'days' => $this->faker->randomNumber(3),
+            'zip' => $this->faker->randomNumber(5, true),
             'start_date' => $this->faker->dateTimeThisYear(),
-            'notes' => $this->faker->sentence(),
-            'created_at' => $this->faker->dateTimeThisYear()
+            'notes' => $this->faker->paragraph(2),
+            'created_at' => $this->faker->dateTimeBetween('-2 years')
         ];
     }
 }

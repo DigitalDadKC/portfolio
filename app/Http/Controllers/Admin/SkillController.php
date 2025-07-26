@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Skill;
@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\SkillResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
 
 class SkillController extends Controller
 {
@@ -17,7 +18,7 @@ class SkillController extends Controller
     public function index()
     {
         $skills = SkillResource::collection(Skill::all());
-        return Inertia::render('Skills/Index', compact('skills'));
+        return Inertia::render('Admin/Skills/Index', compact('skills'));
     }
 
     /**
@@ -25,7 +26,9 @@ class SkillController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Skills/Create');
+        return Inertia::render('Admin/Skills/Skill', [
+            'new' => true,
+        ]);
     }
 
     /**
@@ -33,9 +36,9 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
+        $image = $request->image;
         $request->validate([
-            'image' => ['required', 'image'],
-            'name' => ['required', 'min:3']
+            'name' => 'required|min:3'
         ]);
 
         if ($request->hasFile('image')) {
@@ -56,7 +59,10 @@ class SkillController extends Controller
      */
     public function edit(Skill $skill)
     {
-        return Inertia::render('Skills/Edit', compact('skill'));
+        return Inertia::render('Admin/Skills/Skill', [
+            'new' => false,
+            'skill' => $skill,
+        ]);
     }
 
     /**
@@ -66,8 +72,9 @@ class SkillController extends Controller
     {
         $image = $skill->image;
         $request->validate([
-            'name' => ['required', 'min:3'],
+            'name' => 'required|min:3'
         ]);
+
         if ($request->hasFile('image')) {
             Storage::delete($skill->image);
             $image = $request->file('image')->store('skills');

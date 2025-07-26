@@ -5,13 +5,13 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Job;
 use App\Models\Line;
-use App\Models\User;
 use App\Models\Scope;
 use App\Models\Contract;
 use App\Models\Material;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use App\Models\MaterialEffectiveDate;
+use App\Models\Proposal;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
@@ -21,9 +21,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(AdminSeeder::class);
         $this->call(SqlSeeder::class);
-        User::factory(50)->create();
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(AdminSeeder::class);
+        // User::factory(50)->create();
 
         // Initial Contract guaranteed
         MaterialEffectiveDate::factory()->create([
@@ -39,8 +41,9 @@ class DatabaseSeeder extends Seeder
         MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['Name' => 'Category #' . $sequence->index + 1])->create();
         Material::factory(50)->create();
 
-        // Job::factory(100)->create();
-        // Scope::factory(120)->create();
-        // Line::factory(500)->create();
+        Job::factory(250)->create();
+        Proposal::factory(400)->create();
+        Scope::factory(600)->create();
+        Line::factory(950)->create();
     }
 }

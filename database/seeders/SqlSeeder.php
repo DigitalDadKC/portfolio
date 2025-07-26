@@ -18,8 +18,12 @@ class SqlSeeder extends Seeder
             'MaterialUnitSize',
             'Skills',
             'Projects',
+            'Features',
             'UnitOfMeasurements',
-            'States'
+            'States',
+            'CsiDivisions',
+            'CsiSections',
+            'CsiSubsections'
         ];
         foreach ($models as $model) {
             $path = 'database/seeders/sql/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';

@@ -10,10 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::create('skills', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('image');
+            $table->timestamps();
+        });
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable()->default(NULL);
             $table->string('image');
             $table->string('project_url')->nullable();
             $table->integer('project_order');
@@ -24,6 +30,11 @@ return new class extends Migration {
             $table->foreignId('skill_id')->constrained();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
         });
+        Schema::create('features', function(Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('order');
+        });
     }
 
     /**
@@ -31,7 +42,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('features');
         Schema::dropIfExists('project_skill');
         Schema::dropIfExists('projects');
+        Schema::dropIfExists('skills');
     }
 };

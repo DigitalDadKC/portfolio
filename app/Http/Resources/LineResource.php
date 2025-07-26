@@ -24,9 +24,7 @@ class LineResource extends JsonResource
             'unit_of_measurement' => UnitOfMeasurementResource::make($this->unit_of_measurement),
             'days' => $this->days,
             'price' => $this->price,
-            'quantity' => $this->quantity,
-            'total' => $this->total,
-            'formatted_total' => $this->formatted_total,
+            'quantity' => $this->quantity
         ];
     }
 }

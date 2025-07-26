@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Skill;
@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ProjectResource;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
 
 class ProjectController extends Controller
 {
@@ -18,7 +19,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = ProjectResource::collection(Project::orderBy('project_order')->get());
-        return Inertia::render('Projects/Index', compact('projects'));
+        return Inertia::render('Admin/Projects/Index', compact('projects'));
     }
 
     /**
@@ -26,8 +27,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $skills = Skill::all();
-        return Inertia::render('Projects/Create', compact('skills'));
+        return Inertia::render('Admin/Projects/Project', [
+            'new' => true,
+            'skills' => Skill::all(),
+        ]);
     }
 
     /**
@@ -36,10 +39,9 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => ['required', 'image'],
-            'name' => ['required', 'min:3'],
-            'skills.*' => ['required'],
-            'project_url' => ['required']
+            'name' => 'required|min:3',
+            'skills.*' => 'required',
+            'project_url' => 'required'
         ]);
 
         if ($request->hasFile('image')) {
@@ -48,9 +50,10 @@ class ProjectController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'image' => $image,
-                'project_url' => $request->project_url
+                'project_url' => $request->project_url,
+                'project_order' => Project::count() + 1
             ]);
-            $project->skills()->sync($request->skills, 'id');
+            $project->skills()->sync($request->skills);
 
             return Redirect::route('projects.index')->with('message', 'Project created successfully!');
         }
@@ -63,9 +66,12 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $skills = Skill::all();
         $project->skills;
-        return Inertia::render('Projects/Edit', compact('project', 'skills'));
+        return Inertia::render('Admin/Projects/Project', [
+            'new' => false,
+            'project' => $project,
+            'skills' => Skill::all(),
+        ]);
     }
 
     /**
@@ -75,8 +81,8 @@ class ProjectController extends Controller
     {
         $image = $project->image;
         $request->validate([
-            'name' => ['required', 'min:3'],
-            'skills.*' => ['required'],
+            'name' => 'required|min:3',
+            'skills.*' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
@@ -90,7 +96,7 @@ class ProjectController extends Controller
             'project_url' => $request->project_url,
             'image' => $image
         ]);
-        $project->skills()->sync($request->skills, 'id');
+        $project->skills()->sync($request->skills);
 
         return Redirect::route('projects.index')->with('message', 'Project updated successfully!');
     }

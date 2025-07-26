@@ -13,6 +13,6 @@ class Project extends Model
     protected $guarded = [];
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->belongsToMany(Skill::class)->orderBy('id');
     }
 }

@@ -20,9 +20,6 @@ class ScopeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'area' => $this->area,
-            'days' => $this->days,
-            'total' => $this->total,
-            'formatted_total' => $this->formatted_total,
             'lines' => LineResource::collection($this->lines)
         ];
     }

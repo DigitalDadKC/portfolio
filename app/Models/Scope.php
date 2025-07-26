@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Scope extends Model
 {
     use HasFactory;
-    public function job(): BelongsTo
+    public function proposal(): BelongsTo
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(Proposal::class);
     }
     public function lines(): HasMany
     {

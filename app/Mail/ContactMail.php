@@ -28,9 +28,6 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            replyTo: [
-                new Address('raleighgroesbeck@gmail.com', 'Raleigh Groesbeck'),
-            ],
             subject: 'Mail from Portfolio site',
         );
     }

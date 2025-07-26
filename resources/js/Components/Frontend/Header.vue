@@ -11,10 +11,11 @@ const scrollBackground = ref(false)
 
 const navigations = [
   {name: "Home", href: "#home"},
-  {name: "About", href: "#about"},
-  {name: "Portfolio", href: "#portfolio"},
   {name: "Services", href: "#services"},
+  {name: "Portfolio", href: "#portfolio"},
+  {name: "About", href: "#about"},
   {name: "Contact", href: "#contact"},
+  {name: "Login", href: "dashboard"}
 ]
 const setScrollBackground = (value) => {
   scrollBackground.value = value
@@ -43,15 +44,10 @@ onMounted(() => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
         </button>
-        <div class="hidden md:block">
-          <Link :href="route('dashboard')" class="transform duration-500" :class="{'text-base': scrollBackground, 'text-lg':!scrollBackground}" aria-label="Portal">
-            Portal
-          </Link>
-        </div>
         <div class="w-full md:block md:w-auto" id="navbar-default" :class="{hidden : showMobileMenu}">
           <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:border-dark-tertiary">
             <li v-for="(navigation, index) in navigations" :key="index" class="py-2">
-              <a :href="navigation.href" class="text-accent dark:text-white hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-quatrenary" :class="{'text-base': scrollBackground, 'text-lg':!scrollBackground}" :aria-label="navigation.name" aria-current="page">{{ navigation.name }}</a>
+              <a :href="navigation.href" class="text-accent hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-tertiary" :class="{'text-base': scrollBackground, 'text-lg':!scrollBackground}" :aria-label="navigation.name" aria-current="page">{{ navigation.name }}</a>
             </li>
           </ul>
         </div>

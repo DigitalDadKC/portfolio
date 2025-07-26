@@ -17,10 +17,12 @@ class CompanyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' => $this->logo,
+            'logo' => asset( '/storage/' . $this->logo),
             'address' => $this->address,
             'city' => $this->city,
             'state' => StateResource::make($this->state),
+            'zip' => $this->zip_code,
+            'terms' => $this->terms
         ];
     }
 }

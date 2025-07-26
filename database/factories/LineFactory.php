@@ -24,10 +24,8 @@ class LineFactory extends Factory
             'description' => $this->faker->word(),
             'unit_of_measurement_id' => UnitOfMeasurement::query()->inRandomOrder()->first()->id,
             'days' => $this->faker->randomDigit(),
-            'price' => $this->faker->randomNumber(4),
-            'quantity' => $this->faker->randomFloat(1, 0, 5000),
-            'total' => $this->faker->randomFloat(2),
-            'formatted_total' => '$' . $this->faker->randomNumber(3),
+            'price' => $this->faker->randomNumber(4, false),
+            'quantity' => $this->faker->randomNumber(4, false),
             'scope_id' => Scope::query()->inRandomOrder()->first()->id
         ];
     }

@@ -13,7 +13,7 @@ defineProps({
         <div class="container mx-auto">
             <div class="flex flex-col items-center text-center">
                 <h2 class="section-title">Portfolio</h2>
-                <p class="subtitle">Browse my projects!</p>
+                <p class="subtitle ">Browse my projects!</p>
             </div>
         </div>
         <Projects :skills="skills" :projects="projects" />

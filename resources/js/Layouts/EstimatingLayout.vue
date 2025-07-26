@@ -1,65 +1,95 @@
 <script setup>
+    import NavLink from '@/Components/NavLink.vue';
+    import HomeButton from '@/Components/HomeButton.vue';
     import { Head } from '@inertiajs/vue3';
-    import InputLabel from '@/Components/InputLabel.vue';
     import { useStorage } from "@vueuse/core";
+    import GuestLayout from './GuestLayout.vue';
 
     const showSidebar = useStorage('my-flag', true)
-    const emit = defineEmits(['toggleSidebar']);
 </script>
 
 <template>
     <Head title="Estimating" />
 
-    <v-app class="d-flex min-h-screen">
-        <v-app-bar elevation="2" class="bg-grey-lighten-2">
-            <template v-slot:prepend>
-                <v-app-bar-nav-icon @click.stop="showSidebar = !showSidebar"></v-app-bar-nav-icon>
-                <Link :href="route('home')">
-                    <v-btn bg-color="red">Back to Digital Dad</v-btn>
-                </Link>
-            </template>
-        </v-app-bar>
+    <GuestLayout title="Construction Estimating Software">
+        <template v-slot:links>
+            <div v-if="$vuetify.display.mobile">
+                <v-menu>
+                    <template v-slot:activator="{props}">
+                        <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                    </template>
 
-        <v-navigation-drawer v-model="showSidebar" :location="$vuetify.display.mobile ? 'bottom' : undefined" temporary class="d-flex flex-wrap p-4 bg-grey">
-            <v-card>
-                <v-list>
-                    <v-list-subheader>NAVIGATION</v-list-subheader>
+                    <v-list>
+                        <v-list-item color="primary" rounded="shaped">
+                            <template v-slot:prepend>
+                                <v-icon>mdi-home</v-icon>
+                            </template>
+                            <v-list-item-title>
+                                <Link :href="route('estimating.index')">
+                                    Estimating
+                                </Link>
+                            </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item color="primary" rounded="shaped">
+                            <template v-slot:prepend>
+                                <v-icon>mdi-chart-line</v-icon>
+                            </template>
+                            <v-list-item-title>
+                                <Link :href="route('estimating.report')">
+                                    Reports
+                                </Link>
+                            </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item color="primary" rounded="shaped">
+                            <template v-slot:prepend>
+                                <v-icon>mdi-domain</v-icon>
+                            </template>
+                            <v-list-item-title>
+                                <Link :href="route('estimating.index')">
+                                    Company Page
+                                </Link>
+                            </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div>
+
+            <div v-else>
+                <v-list class="d-flex align-center">
                     <v-list-item color="primary" rounded="shaped">
-                        <template v-slot:prepend>
+                        <v-list-item-title>
                             <v-icon>mdi-home</v-icon>
-                        </template>
-                        <v-list-item-title>
-                            <Link :href="route('estimating.index')">
+                            <NavLink :href="route('estimating.index')" :active="route().current('estimating.index')">
                                 Estimating
-                            </Link>
+                            </NavLink>
                         </v-list-item-title>
                     </v-list-item>
-                    <v-list-item color="primary" rounded="shaped">
-                        <template v-slot:prepend>
+                    <v-list-item>
+                        <v-list-item-title>
                             <v-icon>mdi-chart-line</v-icon>
-                        </template>
-                        <v-list-item-title>
-                            <Link :href="route('estimating.report')">
+                            <NavLink :href="route('estimating.report')" :active="route().current('estimating.report')">
                                 Reports
-                            </Link>
+                            </NavLink>
                         </v-list-item-title>
                     </v-list-item>
                     <v-list-item color="primary" rounded="shaped">
-                        <template v-slot:prepend>
-                            <v-icon>mdi-domain</v-icon>
-                        </template>
                         <v-list-item-title>
-                            <Link :href="route('company.index')">
+                            <v-icon>mdi-domain</v-icon>
+                            <NavLink :href="route('company.index')" :active="route().current('company.index')">
                                 Company Page
-                            </Link>
+                            </NavLink>
                         </v-list-item-title>
                     </v-list-item>
                 </v-list>
+            </div>
+        </template>
+
+        <v-navigation-drawer v-model="showSidebar" temporary class="d-flex flex-wrap p-4 bg-grey" elevation="2" width="400">
+            <v-card>
+                <slot name="sidebar" />
             </v-card>
         </v-navigation-drawer>
 
-        <v-main class="bg-grey-lighten-1">
-            <slot />
-        </v-main>
-    </v-app>
+        <slot />
+    </GuestLayout>
 </template>
