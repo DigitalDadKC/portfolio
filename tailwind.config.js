@@ -1,3 +1,4 @@
+import 'vuetify/styles';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 const colors = require("tailwindcss/colors")

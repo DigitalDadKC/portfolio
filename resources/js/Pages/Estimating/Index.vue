@@ -3,19 +3,27 @@ import { ref, computed } from 'vue';
 import { Link, Head, router } from '@inertiajs/vue3';
 import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
 import Paginator from '@/Components/Paginator.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { useDateFormat } from '@vueuse/core';
 
 const props = defineProps({
     jobs: Object,
     states: Object,
+    customers: Object,
     filters: Object
 })
 
 const search = ref(props.filters.search)
 const pages = ref(props.filters?.pages ?? 25)
 const state_id = ref(props.filters.state)
+const customer_id = ref(props.filters.customer)
+
 const states = computed(() => {
     return [{'id': null, 'state': 'SELECT'}, ...props.states]
+})
+const customers = computed(() => {
+    return [{'id': null, 'name': 'SELECT'}, ...props.customers]
 })
 
 const getJobs = () => {
@@ -24,6 +32,7 @@ const getJobs = () => {
             search: search.value,
             pages: pages.value,
             state: state_id.value,
+            customer: customer_id.value
         },
         only: ['jobs', 'filters'],
         replace: true,
@@ -44,14 +53,14 @@ const getProposal = (job, proposal) => {
     <Head title="Estimating" />
 
     <EstimatingLayout>
-        <div class="d-flex justify-center">
-            <v-table density="compact" height="1100px" fixed-header>
+        <div class="flex justify-center">
+            <table class="table table-auto bg-light-primary dark:bg-dark-primary rounded-lg">
                 <thead>
                     <tr class="uppercase">
                         <th colspan="10">
-                            <div class="d-flex flex-column flex-md-row justify-space-between ga-4 px-2 py-4">
-                                <Link :href="route('estimating.create')">
-                                    <v-btn color="orange-accent-1" size="large">Add Job</v-btn>
+                            <div class="flex flex-col md:flex-row justify-between px-2 py-4">
+                                <Link :href="route('estimating.create')" as="button" class="" prefetch>
+                                    <PrimaryButton>Add Job</PrimaryButton>
                                 </Link>
                                 <div class="d-flex align-center ga-2">
                                     <Paginator :links="props.jobs.meta.links" />
@@ -61,54 +70,59 @@ const getProposal = (job, proposal) => {
                         </th>
                     </tr>
                     <tr class="uppercase font-weight-bold">
-                        <th class="font-weight-bold w-96">
+                        <th class="w-96 p-1">
                             Job #
                             <div class="flex">
-                                <v-text-field density="compact" v-model="search" class="bg-grey-lighten-2 w-full rounded-lg" hide-details label="Search job #, address, or city..." prepend-inner-icon="mdi-magnify" @input="getJobs()"></v-text-field>
+                                <v-text-field density="compact" v-model="search" class="w-full rounded-lg bg-light-secondary" hide-details label="Search job #, address, or city..." prepend-inner-icon="mdi-magnify" @input="getJobs()"></v-text-field>
                             </div>
                         </th>
-                        <th class="font-weight-bold">
+                        <th class="p-1">
                             <div>Address</div>
-                            <v-select density="compact" v-model="state_id" class="bg-grey-lighten-2 min-w-40 rounded-lg" :items="states" label="State" hide-details item-title="state" item-value="id" @update:model-value="getJobs()"></v-select>
+                            <v-select density="compact" v-model="state_id" class="min-w-40 bg-light-secondary" :items="states" item-title="state" item-value="id" label="State" hide-details @update:model-value="getJobs()"></v-select>
                         </th>
-                        <th class="text-center font-weight-bold hidden xl:table-cell">Job Notes</th>
-                        <th class="bg-grey-lighten-1 font-weight-bold border">
+                        <th class="text-center hidden xl:table-cell">
+                            Customer
+                            <v-select density="compact" v-model="customer_id" class="min-w-40 bg-light-secondary" :items="customers" item-title="name" item-value="id" label="Customer" hide-details @update:model-value="getJobs()"></v-select>
+                        </th>
+                        <th class="bg-light-secondary">
                             <div class="text-center text-lg">
                                 Proposals
                             </div>
-                            <v-table density="compact" class="bg-grey-lighten-1">
-                                <tr>
-                                    <th class="w-52 text-start">Name</th>
-                                    <th class="w-24 text-start">Type</th>
-                                    <th class="w-24 text-start">Created</th>
-                                    <th class="w-24 text-start">Total</th>
-                                    <th class="w-20 text-start">Edit</th>
-                                    <th class="text-start">Export</th>
-                                </tr>
-                            </v-table>
+                            <table class="table table-auto">
+                                <tbody>
+                                    <tr>
+                                        <th class="pl-2 w-52 text-start">Name</th>
+                                        <th class="w-24 text-start">Type</th>
+                                        <th class="w-24 text-start">Created</th>
+                                        <th class="w-28 text-start">Estimator</th>
+                                        <th class="w-24 text-start">Total</th>
+                                        <th class="w-20 text-start">Edit</th>
+                                        <th class="text-start">Export</th>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(job, index) in props.jobs.data" :key="index">
-                        <td class="py-3">
-                            <div class="d-flex align-center justify-between">
+                        <td class="p-2">
+                            <div class="flex items-center justify-between">
                                 {{`D${new Date(job.created_at).getFullYear()} - ` + job.number }}
-                                <Link :href="route('estimating.edit', job.id)">
-                                    <v-btn color="orange-accent-1">Edit</v-btn>
+                                <Link :href="route('estimating.edit', job.id)" prefetch>
+                                    <SecondaryButton>Edit</SecondaryButton>
                                 </Link>
                             </div>
                         </td>
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
-                        <td class="hidden xl:table-cell max-w-96">{{ job.notes }}</td>
-                        <td class="bg-grey-lighten-2 w-1/2">
-                            <v-btn size="small" color="orange-accent-2" @click="getProposal(job.id, null)">New Proposal</v-btn>
-                            <!-- <Link :href="route('proposals.create', {job: job.id})">
-                                <v-btn size="small" color="orange-accent-2">New Proposal</v-btn>
-                            </Link> -->
+                        <td class="hidden xl:table-cell max-w-96">{{ job.customer.name }}</td>
+                        <td class="bg-light-secondary w-1/2 px-2 py-1">
+                            <Link method="post" as="button" :href="route('proposals', {job: job.id})">
+                                <PrimaryButton class="h-6">New Proposal</PrimaryButton>
+                            </Link>
                             <tr v-for="(proposal, i) in job.proposals" :key="i">
                                 <td class="min-w-52">
-                                    <div class="d-flex flex-column justify-end align-start">
+                                    <div class="flex flex-col">
                                         <div>
                                             {{ proposal.name }}
                                         </div>
@@ -116,22 +130,22 @@ const getProposal = (job, proposal) => {
                                 </td>
                                 <td class="min-w-24">{{ proposal.type }}</td>
                                 <td class="min-w-24">{{ useDateFormat(proposal.created_at, 'M/D/YYYY') }}</td>
+                                <td CLASS="min-w-28">{{ proposal.estimator.name }}</td>
                                 <td class="min-w-24">
                                     {{ $filters.formatCurrency(proposal.scopes.reduce((a, b) => a + b.lines.reduce((c, d) => c + ((d.price * d.quantity*100)/100), 0), 0)) }}
                                 </td>
                                 <td class="min-w-24">
-                                    <v-btn size="small" color="orange-accent-2" @click="getProposal(job.id, proposal.id)">Edit</v-btn>
-                                    <!-- <Link :href="route('proposals.edit', {proposal: proposal.id})">
-                                        <v-btn size="small" color="orange-accent-2">Edit</v-btn>
-                                    </Link> -->
+                                    <Link :href="route('proposals.edit', {proposal: proposal.id})">
+                                        <SecondaryButton class="w-20 h-6 bg-accent text-accent">Edit</SecondaryButton>
+                                    </Link>
                                 </td>
                                 <td class="text-start">
-                                    <div class="d-flex justify-space-between py-1">
+                                    <div class="flex justify-between py-1">
                                         <a :href="route('downloadPDF.pdf', { proposal: proposal.id })">
-                                            <v-btn icon="mdi-download" size="small" color="orange-accent-4" variant="elevated" class="text-black"></v-btn>
+                                            <v-icon size="x-large" class="text-accent">mdi-download</v-icon>
                                         </a>
                                         <a target="_blank" :href="route('browserPDF.pdf', { proposal: proposal.id })">
-                                            <v-btn icon="mdi-file-document-arrow-right" size="small" color="orange-accent-4" variant="elevated" class="text-black"></v-btn>
+                                            <v-icon size="x-large" class="text-accent">mdi-file-document-arrow-right</v-icon>
                                         </a>
                                     </div>
                                 </td>
@@ -139,7 +153,7 @@ const getProposal = (job, proposal) => {
                         </td>
                     </tr>
                 </tbody>
-            </v-table>
+            </table>
         </div>
     </EstimatingLayout>
 </template>

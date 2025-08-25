@@ -6,12 +6,18 @@ namespace Database\Seeders;
 use App\Models\Job;
 use App\Models\Line;
 use App\Models\Scope;
+use App\Models\Client;
+use App\Models\Counter;
+use App\Models\Invoice;
+use App\Models\Product;
 use App\Models\Contract;
+use App\Models\Customer;
 use App\Models\Material;
+use App\Models\Proposal;
+use App\Models\InvoiceItem;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use App\Models\MaterialEffectiveDate;
-use App\Models\Proposal;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
-        // User::factory(50)->create();
 
         // Initial Contract guaranteed
         MaterialEffectiveDate::factory()->create([
@@ -41,9 +46,15 @@ class DatabaseSeeder extends Seeder
         MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['Name' => 'Category #' . $sequence->index + 1])->create();
         Material::factory(50)->create();
 
+        Customer::factory(50)->create();
         Job::factory(250)->create();
         Proposal::factory(400)->create();
         Scope::factory(600)->create();
         Line::factory(950)->create();
+        Counter::factory(1)->create();
+        Product::factory(5)->create();
+        Client::factory(5)->create();
+        Invoice::factory(5)->create();
+        InvoiceItem::factory(5)->create();
     }
 }

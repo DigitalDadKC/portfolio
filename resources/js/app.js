@@ -6,7 +6,6 @@ import { createInertiaApp, Link } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { MotionPlugin } from '@vueuse/motion';
-import 'vuetify/styles';
 import '@mdi/font/css/materialdesignicons.css'
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';

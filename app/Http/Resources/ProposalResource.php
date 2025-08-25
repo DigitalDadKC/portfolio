@@ -20,9 +20,10 @@ class ProposalResource extends JsonResource
             'name' => $this->name,
             'contingency' => $this->contingency,
             'scopes' => ScopeResource::collection($this->scopes),
-            'job' => JobResource::make($this->job),
+            'job' => JobResource::make($this->whenLoaded('job')),
             'type' => $this->type,
             'exclusions' => $this->exclusions,
+            'estimator' => UserResource::make($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

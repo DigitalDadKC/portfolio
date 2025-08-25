@@ -12,25 +12,25 @@
 </script>
 
 <template>
-    <v-app class="d-flex min-h-screen">
-        <v-app-bar class="bg-grey-lighten-2">
+    <v-app class="flex min-h-screen">
+        <v-app-bar class="">
             <slot name="title" />
             <v-app-bar-title>{{ title }}</v-app-bar-title>
             <template v-slot:prepend>
-                <v-app-bar-nav-icon @click.stop="showSidebar = !showSidebar"></v-app-bar-nav-icon>
+                <v-app-bar-nav-icon @click.stop="showSidebar = !showSidebar" class="cursor-pointer bg-blue text-blue"></v-app-bar-nav-icon>
                 <HomeButton></HomeButton>
             </template>
 
             <slot name="links" />
         </v-app-bar>
 
-        <v-navigation-drawer v-model="showSidebar" temporary class="d-flex flex-wrap p-4 bg-grey" elevation="2" width="400">
+        <v-navigation-drawer v-model="showSidebar" temporary class="flex flex-wrap p-4" elevation="2" width="300">
             <v-card>
-                <slot name="sidebar" />
+                <slot name="sidebar"></slot>
             </v-card>
         </v-navigation-drawer>
 
-        <v-main class="bg-grey-lighten-1 text-xs h-full">
+        <v-main class="text-xs h-full">
             <div class="p-2 h-full">
                 <slot />
             </div>

@@ -21,7 +21,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="card border-8 rounded-2xl shadow-md text-lg text-center bg-light-tertiary dark:bg-dark-tertiary font-bold transition-all duration-500 ease-in hover:scale-125 shadow-xl" style="transform-style: preserve-3d;">
+    <div class="card border-8 rounded-2xl text-lg text-center bg-light-tertiary dark:bg-dark-tertiary font-bold transition-all duration-500 ease-in hover:scale-125 shadow-xl" style="transform-style: preserve-3d;">
         <div class="transition-all duration-500 ease-in" style="transform-style: preserve-3d">
             <div class="flex flex-col justify-around items-center h-60" style="transform-style: preserve-3d">
                 <div class="text-accent rounded-sm " style="transform: translateZ(50px)">

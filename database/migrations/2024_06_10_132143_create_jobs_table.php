@@ -10,11 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('states', function (Blueprint $table) {
-            $table->id();
-            $table->string('abbr');
-            $table->string('state');
-        });
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -35,6 +30,7 @@ return new class extends Migration {
             $table->integer('zip');
             $table->timestamp('start_date')->nullable()->default(NULL);
             $table->string('notes')->nullable()->default(NULL);
+            $table->foreignId('customer_id')->constrained();
             $table->timestamps();
         });
         Schema::create('proposals', function (Blueprint $table) {
@@ -42,8 +38,9 @@ return new class extends Migration {
             $table->string('name')->nullable()->default(NULL);
             $table->integer('contingency')->nullable()->default(NULL);
             $table->foreignId('job_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['base', 'alternate', 'change order'])->constrained();
+            $table->enum('type', ['Base', 'Alternate', 'Change Order'])->constrained();
             $table->text('exclusions')->nullable()->default(NULL);
+            $table->foreignId('user_id')->constrained()->default(1);
             $table->timestamps();
         });
         Schema::create('scopes', function (Blueprint $table) {
@@ -83,6 +80,5 @@ return new class extends Migration {
         Schema::dropIfExists('proposals');
         Schema::dropIfExists('jobs');
         Schema::dropIfExists('companies');
-        Schema::dropIfExists('states');
     }
 };

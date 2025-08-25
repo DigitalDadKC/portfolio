@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\State;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,6 +27,7 @@ class JobFactory extends Factory
             'zip' => $this->faker->randomNumber(5, true),
             'start_date' => $this->faker->dateTimeThisYear(),
             'notes' => $this->faker->paragraph(2),
+            'customer_id' => Customer::query()->inRandomOrder()->first()->id,
             'created_at' => $this->faker->dateTimeBetween('-2 years')
         ];
     }

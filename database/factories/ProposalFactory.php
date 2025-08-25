@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\ProposalTypeEnum;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\ProposalType;
+use App\Enums\ProposalTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class ProposalFactory extends Factory
             'job_id' => Job::query()->inRandomOrder()->first()->id,
             'type' => fake()->randomElement(ProposalTypeEnum::cases()),
             'exclusions' => $this->faker->paragraphs(3, true),
+            'user_id' => User::query()->inRandomOrder()->first()->id,
         ];
     }
 }

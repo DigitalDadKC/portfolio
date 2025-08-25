@@ -21,5 +21,16 @@
     </head>
     <body class="font-sans antialiased" style="margin-bottom: 0;">
         @inertia
+        {{-- <div
+            class="calendly-inline-widget"
+            data-url="https://calendly.com/digitaldadkc/30min"
+            style="min-width:320px;height:700px;">
+        </div> --}}
     </body>
 </html>
+
+{{-- <script
+     type="text/javascript"
+     src="https://assets.calendly.com/assets/external/widget.js"
+     async>
+</script> --}}

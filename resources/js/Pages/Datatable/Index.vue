@@ -8,7 +8,7 @@ import Sidebar from '@/Components/Sidebar.vue';
 import SidebarFilter from '@/Components/SidebarFilter.vue';
 import Slider from '@/Components/Slider.vue';
 import Links from './Partials/Links.vue';
-import PortfolioHeader from '@/Layouts/PortfolioHeader.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { useDateFormat } from '@vueuse/core'
 import { useFormatCurrency } from '@/Composables/useFormatCurrency.js';
 import { useOffsetPagination } from '@vueuse/core'
@@ -131,10 +131,10 @@ onMounted(() => {
 </script>
 
 <template>
+    <GuestLayout>
+
     <div class="flex">
         <Head title="Datatable" />
-
-        <PortfolioHeader />
 
         <Sidebar @showSideBar="(sidebar) => showSideBar = sidebar">
             <template #sidebarContents>
@@ -261,5 +261,6 @@ onMounted(() => {
             </div>
         </div>
     </div>
+    </GuestLayout>
 
 </template>

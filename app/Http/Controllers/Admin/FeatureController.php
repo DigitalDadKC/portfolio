@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Feature;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FeatureResource;
 
 class FeatureController extends Controller
 {
@@ -15,7 +16,7 @@ class FeatureController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Features/Index', [
-            'features' => Feature::orderBy('order')->get()
+            'features' => FeatureResource::collection(Feature::orderBy('order')->get())
         ]);
     }
 
@@ -92,7 +93,9 @@ class FeatureController extends Controller
         $current = Feature::get();
         $current->map(function ($feature) use ($request) {
             $order = $request->features[array_search($feature->id, array_column($request->features, 'id'))]['order'];
-            $feature->update(['project_order' => $order]);
+            $feature->update(['order' => $order]);
         });
+
+        return back();
     }
 }

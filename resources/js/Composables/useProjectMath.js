@@ -4,8 +4,8 @@ import { useDeepCopy } from '@/Composables/useDeepCopy';
 let { deepCopy } = useDeepCopy()
 
 export function useProjectMath(form) {
-    let ref_line = { 'id': null, 'description': '', 'unit_of_measurement': { 'id': null, 'UOM': '' }, 'price': null, 'quantity': null, 'total': null, 'days': null };
-    let ref_scope = { 'id': null, 'name': '', 'area': null, 'days': null, 'total': null, 'lines': [] }
+    // let ref_line = { 'id': null, 'description': '', 'unit_of_measurement': { 'id': null, 'UOM': '' }, 'price': null, 'quantity': null, 'total': null, 'days': null };
+    // let ref_scope = { 'id': null, 'name': '', 'area': null, 'days': null, 'total': null, 'lines': [] }
 
     // const lineTotal = (scopeIndex, lineIndex) => {
     //     scopeTotal(scopeIndex)
@@ -28,11 +28,15 @@ export function useProjectMath(form) {
     //     job.days = job.scopes.map(scope => scope.days).reduce((a, b) => a + b, 0)
     // }
 
+    const fillQuantity = (scopeIndex, index) => {
+        form.proposal.scopes[scopeIndex].lines[index].quantity = form.proposal.scopes[scopeIndex].area
+    }
+
     const totals = () => {
         form.proposal.scopes.map(scope => scope.lines.map(line => line.total = ((line.price * line.quantity*100)/100).toLocaleString()))
         form.proposal.scopes.map(scope => scope.total = scope.lines.map(line => ((line.price * line.quantity*100)/100)).reduce((a, b) => a + b, 0).toLocaleString())
         form.proposal.total = form.proposal.scopes.map(scope => scope.lines.map(line => ((line.price * line.quantity*100)/100)).reduce((a, b) => a + b, 0)).reduce((a, b) => a + b, 0).toLocaleString()
     }
 
-    return {ref_line, ref_scope, totals}
+    return { fillQuantity, totals}
 }

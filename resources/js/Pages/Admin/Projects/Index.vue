@@ -21,7 +21,7 @@ const updateProjectOrder = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Projects</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Projects</h2>
         </template>
 
         <div class="py-12">
@@ -42,8 +42,8 @@ const updateProjectOrder = () => {
                     <draggable :list="projects" item-key="index" handle=".handle" @start="drag-true" @end="drag-false" class="flex flex-col gap-2" @change="updateProjectOrder()">
                         <template #item="{element}">
                             <div class="flex items-center justify-start bg-white dark:bg-gray-800 dark:border-gray-700 px-4">
-                                <div class="w-12 py-3 h-100">
-                                        <v-icon size="48" class="handle cursor-pointer bg-indigo-500 text-white rounded  h-100">mdi mdi-drag-horizontal-variant</v-icon>
+                                <div class="w-12 py-3">
+                                    <v-icon size="48" class="handle cursor-pointer bg-indigo-500 text-white rounded  h-100">mdi mdi-drag-horizontal-variant</v-icon>
                                 </div>
                                 <div class="w-60 py-4 ps-4">{{ element.name }}</div>
                                 <div class="w-72 py-4">{{ element.description }}</div>

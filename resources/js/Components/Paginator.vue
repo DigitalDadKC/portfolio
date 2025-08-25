@@ -13,6 +13,7 @@ const props = defineProps({
         :href="link.url"
         v-html="link.label"
         class="bg-grey-lighten-2 rounded-md py-2 px-4"
-        :class="{'text-grey-darken-2': !link.url, 'font-bold text-grey-darken-4 bg-grey-lighten-1': link.active}"
+        :class="{'text-light-tertiary dark:text-dark-tertiary': !link.url, 'font-bold text-light-secondary bg-light-quatrenary dark:bg-dark-quatrenary': link.active}"
+        prefetch
     />
 </template>

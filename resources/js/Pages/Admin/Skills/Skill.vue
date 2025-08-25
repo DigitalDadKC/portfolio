@@ -33,7 +33,7 @@
         if(props.new) {
             form.post(route('skills.store'));
         } else{
-            router.post(`/skills/${props.skill.id}`, {
+            router.post(route('skills.update', props.skill.id), {
                 _method: 'put',
                 name: form.name,
                 image: form.image

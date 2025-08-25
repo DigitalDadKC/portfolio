@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, shallowRef, useTemplateRef, watch } from 'vue';
+import { ref, computed, shallowRef, useTemplateRef } from 'vue';
 import { Link, Head } from '@inertiajs/vue3';
-import { Collapse } from 'vue-collapsed';
-import { NestedVueAccordion } from 'nested-vue-accordion';
-import HomeButton from '@/Components/HomeButton.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { UseFuseOptions } from '@vueuse/integrations';
@@ -59,13 +56,11 @@ const options = computed<UseFuseOptions<DataItem>>(() => ({
 
 const search = shallowRef('')
 const focus = ref(false)
-const filterBy = shallowRef('both')
 const { results } = useFuse(search, data, options);
-const resultSection = useTemplateRef('resultSection')
-const divSection = useTemplateRef('divisionSection')
 const secSection = useTemplateRef('sectionSection')
 
 const selectDivision = (division) => {
+    section.value = null
     div.value = division;
     section.value = div.value.csi_section[0];
     secSection.value.scrollTop = 0
@@ -86,38 +81,22 @@ const selectSearch = async (searchedItem) => {
     focus.value = !focus.value
 }
 
-function findParentId(data, childId) {
-  for (const item of data) {
-    if (item.sections && item.sections.some(child => child.id === childId)) {
-      return item.id;
-    }
-
-    if (item.sections && item.sections.length > 0) {
-      const parentId = findParentId(item.sections, childId);
-      if (parentId !== null) {
-        return parentId;
-      }
-    }
-  }
-  return null;
-}
-
 </script>
 
 <template>
     <Head title="Masterformat/CSI codes" />
 
     <GuestLayout title="CSI Reference">
-        <div class="antialiased bg-gray-50 dark:bg-gray-900">
+        <div class="antialiased bg-gray-50 dark:bg-gray-900" v-motion-fade>
             <main class="p-4 h-auto py-20 md:px-10">
-                <div>
-                    <v-text-field v-model="search" density="compact" hide-details variant="outlined" prepend-inner-icon="mdi-magnify" placeholder="Search divisions and sections..."></v-text-field>
+                <div class="select-all">
+                    <v-text-field v-model="search" density="compact" hide-details variant="outlined" prepend-inner-icon="mdi-magnify" placeholder="Search divisions and sections..." class="select-all"></v-text-field>
                 </div>
-                <div class="relative ms-9">
-                    <div class="absolute bg-light-secondary w-full overflow-auto max-h-80 border-x-2 border-b-2 border-black" ref="resultSection" v-if="results.length > 0">
-                        <div v-for="(result, index) in results" :key="index" class="p-1 cursor-pointer hover:bg-light-tertiary" @click.prevent="selectSearch(result)" :class="{'font-bold text-sm': result.item.category == 'division'}">
+                <div class="relative ms-9 ">
+                    <div class="absolute bg-light-secondary w-full overflow-auto max-h-80 border-x-2 border-b-2 border-black z-10" ref="resultSection" v-motion-fade v-if="results.length > 0">
+                        <div v-for="(result, index) in results" :key="index" class="py-0.5 px-4 cursor-pointer hover:bg-light-tertiary hover:italic hover:font-bold hover:text-md w-full" @click.prevent="selectSearch(result)" :class="{'font-bold text-sm': result.item.category == 'division'}">
                             {{ result.item.division?.code }} {{ result.item.code }} - {{ result.item.name }} - {{ result.item.category }}
-                        </div>d
+                        </div>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
@@ -144,7 +123,7 @@ function findParentId(data, childId) {
                     <div>
                         <h1 class="text-lg uppercase">Subsection</h1>
                         <div class="bg-light-tertiary border-2 rounded-md border-gray-500 dark:border-gray-600 h-96 overflow-auto px-4 py-1">
-                            <div class="p-1 rounded-sm" v-for="(ref_subsection, y) in subsections" :key="y">
+                            <div class="p-1 rounded-sm" v-for="(ref_subsection, subsectionIndex) in subsections" :key="subsectionIndex">
                                 {{ div?.code }} {{ section?.code }} {{ ref_subsection?.code }} - {{ ref_subsection?.name }}
                             </div>
                         </div>
@@ -152,6 +131,12 @@ function findParentId(data, childId) {
                 </div>
             </main>
         </div>
+
+
+
+        <!-- <div class="mb-6" v-motion :initial="{ opacity: 0, y:100}" :visibleOnce="{opacity: 1, y:0}"> -->
+        <!-- <div class="container mx-auto" v-motion :initial="{opacity: 0, y:100}" :visibleOnce="{opacity: 1, y: 0}"> -->
+
     </GuestLayout>
 
 </template>

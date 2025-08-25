@@ -4,6 +4,8 @@ import { Link, Head, useForm, router } from '@inertiajs/vue3';
 import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
 import { useProjectMath } from '@/Composables/useProjectMath';
 import {VDateInput} from 'vuetify/labs/VDateInput';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 import draggable from 'vuedraggable';
 
 const props = defineProps({
@@ -21,14 +23,14 @@ const form = useForm({
     PDF: true
 })
 
-let { lineTotal, totals } = useProjectMath(form)
+let { fillQuantity, totals } = useProjectMath(form)
 
-const end_date = computed(() => {
-    if(!form.proposal.job.start_date) {return ''}
-    let item = new Date(form.proposal.job.start_date);
-    item = new Date(item.setDate(item.getDate()+form.proposal.job.days)).toLocaleDateString()
-    return item
-})
+// const end_date = computed(() => {
+//     if(!form.proposal.job.start_date) {return ''}
+//     let item = new Date(form.proposal.job.start_date);
+//     item = new Date(item.setDate(item.getDate()+form.proposal.job.days)).toLocaleDateString()
+//     return item
+// })
 
 const states = computed(() => {
     return [{id: null, state: 'Select'}, ...props.states]
@@ -46,11 +48,12 @@ const updateProposal = () => {
         name: form.proposal.name,
         type: form.proposal.type,
         exclusions: form.proposal.exclusions
-    }), {
+    }, {
+        preserveScroll: true,
         onSuccess: () => {
             totals()
         }
-    }
+    })
 }
 
 const destroyProposal = () => {
@@ -125,6 +128,17 @@ const removeLine = (index, i) => {
     })
 }
 
+const sort = (scope) => {
+    router.patch(route('lines.sort', scope.id), {
+        lines: scope.lines,
+    }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            totals()
+        }
+    })
+}
+
 watch(() => props.proposal, (item) => {
     form.proposal = props.proposal
 })
@@ -135,16 +149,18 @@ watch(() => props.proposal, (item) => {
 <EstimatingLayout>
         <Head title="Estimating Web App" />
 
-        <v-container class="w-100 w-xl-75 bg-grey-lighten-2 rounded-lg">
-            <v-row class="pa-2">
-                <v-col cols="12" md="6">
-                    <v-img :src="'/img/logo.png'" class="rounded-md" aria-label="company logo" />
-                    <div density="compact" disabled class="text-h5">ABC Company</div>
-                    <div density="compact" disabled class="text-h5">123 Main St</div>
-                    <div density="compact" disabled class="text-h5">Scranton, PA 12345</div>
+        <v-container class="w-100 w-xl-75 bg-light-secondary rounded-lg">
+            <v-row no-gutters>
+                <v-col cols="12" md="5">
+                    <v-img :src="'/img/logo.png'" class="rounded-lg mb-2" aria-label="company logo" />
+                    <v-card>
+                        <v-card-title>{{ props.company.name }}</v-card-title>
+                        <v-card-subtitle>{{ props.company.address }}</v-card-subtitle>
+                        <v-card-subtitle>{{ props.company.city }} {{ props.company.state.abbr }}, {{ props.company.zip }}</v-card-subtitle>
+                    </v-card>
                 </v-col>
 
-                <v-col cols="12" md="6" class="d-flex flex-column ga-1">
+                <v-col cols="12" md="6" offset-md="1" class="flex flex-col bg-light-tertiary rounded-lg">
                     <v-text-field v-model.number="form.proposal.job.number" type="number" :disabled="true" :prefix="`D${new Date(form.proposal.job.created_at).getFullYear()} - `" hide-details density="compact" label="Job Number *" class="bg-grey-lighten-4"></v-text-field>
                     <v-text-field v-model="form.proposal.job.address" hide-details :disabled="true" density="compact" label="Address *" class="bg-grey-lighten-4"></v-text-field>
                     <v-row no-gutters>
@@ -169,42 +185,44 @@ watch(() => props.proposal, (item) => {
 
             <v-row>
                 <v-col cols="12" md="9">
-                    <v-text-field v-model="form.proposal.name" label="Proposal Title" bg-color="white" hide-details @blur="updateProposal()"></v-text-field>
+                    <v-text-field v-model="form.proposal.name" variant="solo" label="Proposal Title" class="text-light-quatrenary" hide-details @blur="updateProposal()"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-select v-model="form.proposal.type" :items="props.types" item-title="" item-value="id" bg-color="white" label="Proposal Type" hide-details @update:modelValue="updateProposal()"></v-select>
+                    <v-select v-model="form.proposal.type" :items="props.types" label="Proposal Type" hide-details @update:modelValue="updateProposal()"></v-select>
                 </v-col>
             </v-row>
 
             <v-row>
                 <v-col>
-                    <form @submit.prevent="submit()" class="pa-4 bg-grey-lighten-1 rounded-md">
-                        <div class="flex justify-end">
-                            <v-btn prepend-icon="mdi-plus-box" @click.prevent="addScope()">Add Scope</v-btn>
+                    <form @submit.prevent="submit()" class="p-4 rounded-md">
+                        <div class="flex items-start justify-end mb-4">
+                            <PrimaryButton class="h-12 w-32 text-center text-large" @click.prevent="addScope()">Add Scope</PrimaryButton>
                         </div>
-                        <div v-for="(scope, scopeIndex) in form.proposal.scopes" :key="scopeIndex" class="bg-grey-lighten-3 rounded-md p-4 d-flex flex-column mb-2">
+                        <div v-for="(scope, scopeIndex) in form.proposal.scopes" :key="scopeIndex" class="bg-light-primary rounded-md p-4 flex flex-col mb-4" v-motion-slide-right>
                             <div class="flex justify-between py-1">
                                 <h1 size="48" class="text-lg">Scope # {{ scopeIndex+1 }}</h1>
-                                <v-btn prepend-icon="mdi-minus" @click.prevent="removeScope(scope.id)">Remove Scope</v-btn>
+                                <PrimaryButton @click.prevent="removeScope(scope.id)">
+                                    <v-icon>mdi-trash-can</v-icon>
+                                </PrimaryButton>
                             </div>
-                            <div class="d-flex flex-column flex-md-row gap-1 w-min">
+                            <div class="flex flex-col md:flex-row gap-1 w-min">
                                 <v-text-field v-model="scope.name" label="Scope Name" hide-details density="compact" placeholder="Name" class="bg-grey-darken-1 md:w-96 text-black" @blur="updateScope(scopeIndex)"></v-text-field>
                                 <v-text-field v-model.number="scope.area" label="Area" hide-details density="compact" placeholder="Area" class="bg-grey-darken-1 md:w-60 text-black" type="number" @blur="updateScope(scopeIndex)"></v-text-field>
                             </div>
                             <div v-if="form.errors['scopes.' + scopeIndex + '.name']" class="text-red-400">{{ form.errors['scopes.' + scopeIndex + '.name']}}</div>
 
                             <div class="flex justify-end">
-                                <v-btn prepend-icon="mdi-plus-box" class="bg-grey-darken-1 w-36" text="Add Line" @click.prevent="addLine(scopeIndex)">Add Line</v-btn>
+                                <PrimaryButton class="w-28" @click.prevent="addLine(scopeIndex)">Add Line</PrimaryButton>
                             </div>
 
                             <div class="bg-grey-darken-1 rounded-md">
-                                <draggable :list="scope.lines" item-key="id" handle=".handle">
+                                <draggable :list="scope.lines" item-key="id" handle=".handle" @change="sort(scope)">
                                     <template #item="{element, index}">
-                                        <div>
-                                            <details class="bg-grey open:bg-grey-lighten-2 duration-500 rounded-md d-block d-md-none" @keyup.space="(event) => {event.preventDefault();}">
+                                        <div v-motion-slide-right>
+                                            <details class="bg-grey open:bg-grey-lighten-2 duration-500 rounded-md block md:hidden" @keyup.space="(event) => {event.preventDefault();}">
                                                 <summary class="flex items-start p-1 text-lg cursor-pointer">
-                                                    <v-icon size="28" class="handle cursor-pointer bg-grey-darken-4 rounded ">mdi mdi-drag-horizontal-variant</v-icon>
-                                                    <v-text-field v-model="element.description" hide-details density="compact" label="Description *" class="bg-grey text-grey-darken-4" @blur="updateLine(scopeIndex, index)"></v-text-field>
+                                                    <v-icon size="28" class="handle cursor-pointer rounded-lg bg-light-tertiary dark:bg-dark-tertiary">mdi mdi-drag-horizontal-variant</v-icon>
+                                                    <v-text-field v-model="element.description" hide-details density="compact" label="Description *" class="" @blur="updateLine(scopeIndex, index)"></v-text-field>
                                                     <button class="rounded-md bg-grey-darken-4 float-right">
                                                         <v-icon size="28" class="bg-grey-darken-4 " @click.prevent="addLine(scopeIndex)" v-if="!index">mdi-plus-box</v-icon>
                                                         <v-icon size="28" class="bg-grey-darken-4 " @click.prevent="removeLine(scopeIndex, index)" v-else>mdi-minus</v-icon>
@@ -218,15 +236,14 @@ watch(() => props.proposal, (item) => {
                                                 </div>
                                             </details>
 
-                                            <div class="d-none d-md-flex d-md-flex-column align-center py-2">
-                                                <v-icon size="48" class="handle cursor-pointer bg-grey-lighten-2 rounded-md mx-1">mdi mdi-drag-horizontal-variant</v-icon>
-                                                <v-text-field v-model="element.description" hide-details density="compact" label="Description *" class="bg-grey-lighten-4 w-1/2" @blur="updateLine(scopeIndex, index)"></v-text-field>
-                                                <v-select v-model="element.unit_of_measurement.id" hide-details :items="uoms" density="compact" label="UOM *" class="bg-grey-lighten-3" item-title="UOM" item-value="id" @update:modelValue="updateLine(scopeIndex, index)"></v-select>
-                                                <v-text-field v-model.number="element.price" hide-details type="number" density="compact" label="Price *" prefix="$" class="bg-grey-lighten-4" @blur="updateLine(scopeIndex, index)"></v-text-field>
-                                                <v-text-field v-model.number="element.quantity" hide-details type="number" density="compact" label="Quantity *" class="bg-grey-lighten-4" @blur="updateLine(scopeIndex, index)"></v-text-field>
-                                                <v-text-field v-model="element.total" density="compact" label="Total" prefix="$"  hide-details readonly class="bg-grey-lighten-4 text-grey-darken-4"></v-text-field>
-                                                <v-icon size="40" class="bg-grey-darken-4 text-white" @click.prevent="addLine(scopeIndex)" v-if="!index">mdi-plus-box</v-icon>
-                                                <v-icon size="40" class="bg-grey-darken-4 text-white" @click.prevent="removeLine(scopeIndex, index)" v-else>mdi-minus</v-icon>
+                                            <div class="hidden md:flex md:flex-row items-center py-1">
+                                                <v-icon size="48" class="handle cursor-pointer bg-light-tertiary dark:bg-dark-tertiary rounded-md mx-1">mdi mdi-drag-horizontal-variant</v-icon>
+                                                <v-text-field v-model="element.description" hide-details density="compact" label="Description *" class="w-1/3" @blur="updateLine(scopeIndex, index)"></v-text-field>
+                                                <v-select v-model="element.unit_of_measurement.id" hide-details :items="uoms" density="compact" label="UOM *" class="w-20" item-title="UOM" item-value="id" @update:modelValue="updateLine(scopeIndex, index)"></v-select>
+                                                <v-text-field v-model.number="element.price" hide-details type="number" density="compact" label="Price *" prefix="$" class="w-20" @blur="updateLine(scopeIndex, index)"></v-text-field>
+                                                <v-text-field v-model.number="element.quantity" hide-details type="number" density="compact" :prepend-inner-icon="'mdi-checkbox-marked'" label="Quantity *" class="w-20" @click:prepend-inner="fillQuantity(scopeIndex, index)" @blur="updateLine(scopeIndex, index)"></v-text-field>
+                                                <v-text-field v-model="element.total" density="compact" label="Total" prefix="$"  hide-details readonly></v-text-field>
+                                                <v-icon size="40" class="bg-light-quatrenary text-light-secondary rounded-lg ml-2" @click.prevent="removeLine(scopeIndex, index)">mdi-minus</v-icon>
                                             </div>
                                             <div v-if="form.errors['proposal.scopes.' + scopeIndex + '.lines.' + index + '.description']" class="text-red-500">{{ form.errors['proposal.scopes.' + scopeIndex + '.lines.' + index + '.description']}}</div>
                                             <div v-if="form.errors['proposal.scopes.' + scopeIndex + '.lines.' + index + '.price']" class="text-red-500">{{ form.errors['proposal.scopes.' + scopeIndex + '.lines.' + index + '.price']}}</div>
@@ -247,15 +264,15 @@ watch(() => props.proposal, (item) => {
                     </form>
 
                     <div>
-                        <v-textarea v-model="form.proposal.exclusions" hide-details label="Exclusions" class="bg-grey-lighten-1" @blur="updateProposal()"></v-textarea>
+                        <v-textarea v-model="form.proposal.exclusions" hide-details label="Exclusions" class="bg-light-tertiary dark:bg-dark-tertiary rounded-lg" @blur="updateProposal()"></v-textarea>
                     </div>
 
                     <div class="flex justify-between mt-2">
-                        <Link :href="route('estimating.index')">
-                            <v-btn type="button">Back</v-btn>
+                        <Link :href="route('estimating.index')" as="button" prefetch>
+                            <PrimaryButton type="button">Back</PrimaryButton>
                         </Link>
                         <!-- <v-btn as="submit" type="submit" :disabled="form.processing" @click="form.PDF = false">Save & Return</v-btn> -->
-                        <v-btn color="red-accent-2" @click="destroyProposal()">Delete Proposal</v-btn>
+                        <DangerButton color="red-accent-2" @click="destroyProposal()">Delete Proposal</DangerButton>
                         <!-- <v-btn as="submit" type="submit" :disabled="form.processing">Generate PDF</v-btn> -->
                     </div>
                 </v-col>

@@ -45,7 +45,6 @@ const logout = () => {
 
 
                         <div class="hidden sm:flex sm:justify-start sm:items-center sm:ms-6">
-
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">

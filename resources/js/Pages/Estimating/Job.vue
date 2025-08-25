@@ -3,8 +3,9 @@ import { computed, onMounted } from 'vue';
 import { Link, Head, useForm } from '@inertiajs/vue3';
 import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
 import { useProjectMath } from '@/Composables/useProjectMath';
-import {VDateInput} from 'vuetify/labs/VDateInput';
-import draggable from 'vuedraggable';
+import { VDateInput } from 'vuetify/labs/VDateInput';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 
 const props = defineProps({
     new: Boolean,
@@ -28,17 +29,17 @@ const form = useForm({
 let { addLine, addScope, removeLine, removeScope, lineTotal, updateScopeDays } = useProjectMath(form)
 
 const end_date = computed(() => {
-    if(!form.start_date) {return ''}
+    if (!form.start_date) { return '' }
     let item = new Date(form.start_date);
-    item = new Date(item.setDate(item.getDate()+form.days)).toLocaleDateString()
+    item = new Date(item.setDate(item.getDate() + form.days)).toLocaleDateString()
     return item
 })
 
 const states = computed(() => {
-    return [{id: null, state: 'Select'}, ...props.states]
+    return [{ id: null, state: 'Select' }, ...props.states]
 })
 const uoms = computed(() => {
-    return [{id: null, UOM: 'Select'}, ...props.unit_of_measurements]
+    return [{ id: null, UOM: 'Select' }, ...props.unit_of_measurements]
 })
 
 const submit = () => {
@@ -58,10 +59,10 @@ const submit = () => {
 }
 
 onMounted(() => {
-    if(form.start_date) {
+    if (form.start_date) {
         form.start_date = new Date(props.job.start_date)
     }
-    if(props.new) {
+    if (props.new) {
         form.created_at = new Date()
     }
 })
@@ -69,7 +70,8 @@ onMounted(() => {
 </script>
 
 <template>
-<EstimatingLayout>
+    <EstimatingLayout>
+
         <Head title="Job" />
 
         <v-container class="w-100 w-xl-75 bg-grey-lighten-2 rounded-lg">
@@ -82,26 +84,15 @@ onMounted(() => {
                         <div density="compact" disabled class="text-h5">Scranton, PA 12345</div>
                     </v-col>
                     <template>
-                        <v-card
-                            class="mx-auto"
-                            color="surface-variant"
-                            image="https://cdn.vuetifyjs.com/docs/images/cards/dark-beach.jpg"
-                            max-width="340"
-                            subtitle="Take a walk down the beach"
-                            title="Evening sunset"
-                        >
+                        <v-card class="mx-auto" color="surface-variant"
+                            image="https://cdn.vuetifyjs.com/docs/images/cards/dark-beach.jpg" max-width="340"
+                            subtitle="Take a walk down the beach" title="Evening sunset">
                             <template v-slot:actions>
-                            <v-btn
-                                append-icon="mdi-chevron-right"
-                                color="red-lighten-2"
-                                text="Book Activity"
-                                variant="outlined"
-                                block
-                            ></v-btn>
+                                <v-btn append-icon="mdi-chevron-right" color="red-lighten-2" text="Book Activity" variant="outlined" block></v-btn>
                             </template>
                         </v-card>
                     </template>
-                    <v-col cols="12" md="6" class="d-flex flex-column ga-2">
+                    <v-col cols="12" md="6" class="flex flex-col bg-light-secondary dark:bg-dark-secondary rounded-lg p-2">
                         <v-text-field v-model.number="form.number" type="number" :prefix="`D${new Date(form.created_at).getFullYear()} - `" hide-details density="compact" label="Job Number *" class="bg-grey-lighten-4"></v-text-field>
                         <div v-if="form.errors.number" class="text-red-400">{{ form.errors.number }}</div>
                         <v-text-field v-model="form.address" hide-details density="compact" label="Address *" class="bg-grey-lighten-4"></v-text-field>
@@ -128,10 +119,10 @@ onMounted(() => {
                     <v-col>
                         <div class="flex justify-end">
                             <div class="flex gap-2">
-                                <Link :href="route('estimating.index')">
-                                    <v-btn type="button">Cancel</v-btn>
+                                <Link :href="route('estimating.index')" prefetch>
+                                    <PrimaryButton type="button">Cancel</PrimaryButton>
                                 </Link>
-                                <v-btn :disabled="form.processing" @click="submit()">Save</v-btn>
+                                <SecondaryButton :disabled="form.processing" @click="submit()">Save</SecondaryButton>
                             </div>
                         </div>
                     </v-col>
@@ -139,5 +130,5 @@ onMounted(() => {
             </v-form>
         </v-container>
 
-</EstimatingLayout>
+    </EstimatingLayout>
 </template>

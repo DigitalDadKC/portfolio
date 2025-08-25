@@ -2,8 +2,7 @@
 import { ref, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
-import { Bar } from 'vue-chartjs';
-import { Line } from 'vue-chartjs';
+import { Bar, Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)

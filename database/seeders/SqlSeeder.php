@@ -21,6 +21,7 @@ class SqlSeeder extends Seeder
             'Features',
             'UnitOfMeasurements',
             'States',
+            'Companies',
             'CsiDivisions',
             'CsiSections',
             'CsiSubsections'

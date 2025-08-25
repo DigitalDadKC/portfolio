@@ -35,8 +35,8 @@ const submit = () => {
 <template>
     <v-dialog v-model="dialog" max-width="800">
         <template v-slot:activator="{ props: activatorProps }">
-            <v-btn v-bind="activatorProps" v-if="props.new" >New Feature</v-btn>
-            <v-btn variant="elevated" v-bind="activatorProps" v-else>
+            <v-btn v-bind="activatorProps" class="cursor-pointer" v-if="props.new" >New Feature</v-btn>
+            <v-btn variant="elevated" class="cursor-pointer" v-bind="activatorProps" v-else>
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
         </template>

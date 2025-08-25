@@ -33,7 +33,7 @@ watch(() => props.feature,
     <div class="pa-4 text-center">
         <v-dialog v-model="dialog" max-width="600">
             <template v-slot:activator="{ props: activatorProps }">
-                <v-btn variant="elevated" v-bind="activatorProps" >
+                <v-btn class="cursor-pointer" variant="elevated" v-bind="activatorProps" >
                     <v-icon>mdi-trash-can</v-icon>
                 </v-btn>
             </template>

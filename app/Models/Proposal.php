@@ -18,4 +18,8 @@ class Proposal extends Model
     public function scopes(): HasMany {
         return $this->hasMany(Scope::class);
     }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

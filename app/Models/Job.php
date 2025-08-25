@@ -16,14 +16,13 @@ class Job extends Model
     protected $casts = [
         'start_date' => 'datetime',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
+    }
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
     public function proposals(): HasMany
     {

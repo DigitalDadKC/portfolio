@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Models\State;
 use Illuminate\Http\Request;
+use App\Http\Resources\CustomerResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class JobResource extends JsonResource
@@ -25,7 +25,7 @@ class JobResource extends JsonResource
             'start_date' => $this->start_date,
             'notes' => $this->notes,
             'proposals' => ProposalResource::collection(resource: $this->whenLoaded('proposals')),
-            'user_id' => $this->user_id,
+            'customer' => CustomerResource::make($this->customer),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

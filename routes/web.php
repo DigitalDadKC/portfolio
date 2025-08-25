@@ -2,20 +2,20 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use App\Http\Controllers\JobController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\SkillController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\Admin\BusinessController;
-use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Estimating\JobController;
+use App\Http\Controllers\Estimating\AdminController;
+use App\Http\Controllers\Estimating\ProposalController;
+use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Masterformat\DivisionController;
 
 /*
@@ -36,12 +36,30 @@ Route::get('/datatable/export', [DatatableController::class, 'export'])->name('e
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.index');
 
+
+Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::resource('/skills', SkillController::class);
+    Route::resource('/projects', ProjectController::class);
+    Route::resource('/features', FeatureController::class);
+    Route::resource('/invoices', InvoiceController::class);
+    Route::resource('/clients', ClientController::class);
+    Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
+    Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
+});
+
+
+// jobs
+Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
+Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
+Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
+Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estimating.edit');
+Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
+
 // proposal
 Route::post('proposals/{job}/{proposal?}', [ProposalController::class, 'create'])->name('proposals');
 Route::get('proposals/edit/{proposal}', [ProposalController::class, 'edit'])->name('proposals.edit');
-Route::put('proposals/update/{proposal}', [ProposalController::class, 'update'])->name('proposals.update');
+Route::put('proposals/update/{proposal}', [ProposalController::class, 'updateProposal'])->name('proposals.update');
 Route::delete('proposals/delete/{proposal}', [ProposalController::class, 'destroy'])->name('proposals.destroy');
-// Route::post('proposals/update/{proposal}/{pdf}', [ProposalController::class, 'update'])->name('proposals.update');
 
 // scopes
 Route::post('proposals/scopes/create/{proposal}', [ProposalController::class, 'createScope'])->name('scopes.create');
@@ -51,30 +69,21 @@ Route::delete('proposals/scopes/delete/{scope}', [ProposalController::class, 'de
 // lines
 Route::post('proposals/scopes/lines/create/{scope}', [ProposalController::class, 'createLine'])->name('lines.create');
 Route::put('proposals/scopes/lines/update/{line}', [ProposalController::class, 'updateLine'])->name('lines.update');
+Route::patch('proposals/scopes/lines/sort/{scope}', [ProposalController::class, 'sortLines'])->name('lines.sort');
 Route::delete('proposals/scopes/lines/delete/{line}', [ProposalController::class, 'destroyLine'])->name('lines.destroy');
 
 Route::get('proposals/download-pdf/{proposal}', [ProposalController::class, 'downloadPDF'])->name('downloadPDF.pdf');
 Route::get('proposals/browser-pdf/{proposal}', [ProposalController::class, 'browserPDF'])->name('browserPDF.pdf');
-Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
-Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
-Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
-Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estimating.edit');
-Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
 Route::get('estimating/report', [JobController::class, 'report'])->name('estimating.report');
-Route::resource('/features', FeatureController::class);
-Route::resource('/company', CompanyController::class);
+Route::resource('/admin', AdminController::class);
+Route::resource('/customers', CustomerController::class);
+
+// company
+Route::post('companies/store', [AdminController::class, 'storeCompany'])->name('companies.store');
+Route::patch('companies/update/{company}', [AdminController::class, 'updateCompany'])->name('companies.update');
+
+
 Route::resource('/masterformat', DivisionController::class);
-
-// 2 METHODS OF CREATING SYMLINKS
-// Route::get('/link', function () {
-//     Artisan::call('storage:link');
-// });
-
-// Route::get('/link', function () {
-//    $target = '/home/dh_2gujjy/raleighgroesbeck-app/storage/app/public';
-//    $shortcut = '/home/dh_2gujjy/raleighgroesbeck.com/storage';
-//    symlink($target, $shortcut);
-// });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
@@ -86,10 +95,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::resource('/skills', SkillController::class);
-    Route::resource('/projects', ProjectController::class);
-    Route::resource('/businesses', BusinessController::class);
-    Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
 });
 
 Route::middleware('auth')->group(function () {
@@ -99,6 +104,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-    Route::patch('/users/{user}', [CompanyController::class, 'update_user'])->name('users.update');
+    Route::patch('/users/{user}', [AdminController::class, 'update_user'])->name('users.update');
 
 require __DIR__ . '/auth.php';
