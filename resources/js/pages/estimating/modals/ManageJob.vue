@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import StartDate from '../partials/StartDate.vue';
-import State from '../Partials/State.vue';
+import State from '../partials/State.vue';
 
 const props = defineProps({
     new: Boolean,
