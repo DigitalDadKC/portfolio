@@ -1,9 +1,9 @@
 <script setup>
     import { computed } from 'vue';
     import { Head, useForm, router } from '@inertiajs/vue3';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import PrimaryButton from '@/Components/PrimaryButton.vue';
-    import InputError from '@/Components/InputError.vue';
+    import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
+    import PrimaryButton from '@/components/PrimaryButton.vue';
+    import InputError from '@/components/InputError.vue';
 
     const props = defineProps({
         new: Boolean,
