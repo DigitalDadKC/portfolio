@@ -2,7 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { Head, router } from "@inertiajs/vue3";
 import { useDateFormat } from "@vueuse/core";
-import EstimatingLayout from "@/layouts/EstimatingLayout.vue";
+import GuestLayout from "@/layouts/GuestLayout.vue";
 import Manage from "./modals/ManageCustomer.vue";
 import Delete from "./modals/DeleteCustomer.vue";
 
@@ -59,7 +59,7 @@ const icon = computed(() => {
 </script>
 
 <template>
-    <EstimatingLayout>
+    <GuestLayout>
 
         <Head title="Customers" />
 
@@ -101,5 +101,5 @@ const icon = computed(() => {
                 </tr>
             </tbody>
         </table>
-    </EstimatingLayout>
+    </GuestLayout>
 </template>
