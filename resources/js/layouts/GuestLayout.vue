@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
-import NavLink from '@/Components/NavLink.vue';
+import NavLink from '@/components/NavLink.vue';
 import { Button } from '@/components/ui/button';
 import { useStorage } from "@vueuse/core";
 import { useDark, useToggle } from "@vueuse/core";

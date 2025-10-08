@@ -1,7 +1,7 @@
 <script setup>
     import {  } from 'vue';
     import { Link, Head } from '@inertiajs/vue3';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PrimaryButton from '@/components/PrimaryButton.vue';
 
 </script>
 
