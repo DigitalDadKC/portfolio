@@ -16,6 +16,6 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Portfolio/Index');
+        return Inertia::render('portfolio/Index');
     }
 }

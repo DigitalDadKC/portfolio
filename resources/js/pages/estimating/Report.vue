@@ -1,12 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
-import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 import { Bar, Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement)
 
+const { formatWithCommas } = useFormatCurrency()
 const props = defineProps({
     'jobs': Object
 })
@@ -108,10 +110,10 @@ const lineChartOptions = {
 </script>
 
 <template>
-    <EstimatingLayout>
+    <GuestLayout title="Reporting">
         <Head title="Reporting" />
 
-        <v-container class="w-100 w-xl-75 bg-grey-lighten-2 rounded-lg">
+        <div class="w-full rounded-lg">
             <v-row>
                 <v-col cols="12" lg="6">
                     <div class="d-flex justify-center">
@@ -173,13 +175,13 @@ const lineChartOptions = {
                                     {{month.month}}
                                 </div>
                                 <div>
-                                    {{$filters.formatCurrency(proposalVolumeData[index]) }}
+                                    {{formatWithCommas(proposalVolumeData[index], 'number') }}
                                 </div>
                             </div>
                         </v-card-item>
                     </v-card>
                 </v-col>
             </v-row>
-        </v-container>
-    </EstimatingLayout>
+        </div>
+    </GuestLayout>
 </template>

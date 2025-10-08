@@ -57,7 +57,7 @@ class JobController extends Controller
         $customers = Customer::whereIn('id', $jobs->get()->pluck('customer_id'))->orderBy('name', 'asc')->get();
         $jobs = ($jobs->paginate($filters['pages'])->isEmpty()) ? JobResource::collection($jobs->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString()) : JobResource::collection($jobs->paginate($filters['pages'])->withQueryString());
 
-        return Inertia::render('Estimating/Index', [
+        return Inertia::render('estimating/Index', [
             'jobs' => fn() => $jobs,
             'states' => $states,
             'customers' => $customers,
@@ -70,7 +70,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Estimating/Job', [
+        return Inertia::render('estimating/Job', [
             'new' => true,
             'job' => $this->ref_job,
             'company' => CompanyResource::collection(Company::all())->first(),
@@ -109,7 +109,7 @@ class JobController extends Controller
     {
         $job = JobResource::collection(Job::where('id', $job->id)->get())->first();
 
-        return Inertia::render('Estimating/Job', [
+        return Inertia::render('estimating/Job', [
             'job' => $job,
             'states' => State::get(),
             'new' => false
@@ -150,7 +150,7 @@ class JobController extends Controller
     public function report(Request $request)
     {
         $jobs = JobResource::collection(Job::with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])->orderBy('created_at', 'desc')->get());
-        return Inertia::render('Estimating/Report', [
+        return Inertia::render('estimating/Report', [
             'jobs' => $jobs
         ]);
     }

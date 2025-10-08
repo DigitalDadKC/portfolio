@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = ProjectResource::collection(Project::with('skills')->orderBy('project_order')->get());
-        return Inertia::render('Admin/Projects/Index', compact('projects'));
+        return Inertia::render('admin/projects/Index', compact('projects'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Projects/Project', [
+        return Inertia::render('admin/projects/Project', [
             'new' => true,
             'skills' => Skill::all(),
         ]);
@@ -69,7 +69,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $project->skills;
-        return Inertia::render('Admin/Projects/Project', [
+        return Inertia::render('admin/projects/Project', [
             'new' => false,
             'project' => ProjectResource::make($project),
             'skills' => SkillResource::collection(Skill::all()),

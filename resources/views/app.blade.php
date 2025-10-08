@@ -17,7 +17,7 @@
 
         <!-- Scripts -->
         @routes
-        @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+        @vite(['resources/js/app.js', "resources/js/pages/{$page['component']}.vue"])
         <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
         @inertiaHead

@@ -16,7 +16,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Invoices/Index');
+        return Inertia::render('admin/invoices/Index');
     }
 
     /**
@@ -24,7 +24,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Invoices/Create');
+        return Inertia::render('admin/invoices/Create');
     }
 
     /**

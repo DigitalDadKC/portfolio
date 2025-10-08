@@ -15,7 +15,7 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Features/Index', [
+        return Inertia::render('admin/features/Index', [
             'features' => FeatureResource::collection(Feature::orderBy('order')->get())
         ]);
     }
@@ -44,22 +44,6 @@ class FeatureController extends Controller
         ]);
 
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

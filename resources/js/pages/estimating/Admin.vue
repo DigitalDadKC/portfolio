@@ -1,14 +1,14 @@
 <script setup>
 import {  } from "vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
-import Users from './Widgets/Users.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import Users from './widgets/Users.vue';
 import Company from './Widgets/Company.vue';
 import LargestProposal from "./Widgets/LargestProposal.vue";
 import RecentJobs from "./Widgets/RecentJobs.vue";
 import DoughnutChart from "./Widgets/DoughnutChart.vue";
 import CurrentMonthlyRevenue from "./Widgets/CurrentMonthlyRevenue.vue";
-import LineChart from "./Widgets/LineChart.vue";
+import LineChart from "./widgets/LineChart.vue";
 
 const props = defineProps({
     new: Boolean,
@@ -28,7 +28,7 @@ const form = useForm({
 </script>
 
 <template>
-    <EstimatingLayout>
+    <GuestLayout>
 
         <Head title="Admin" />
 
@@ -62,5 +62,5 @@ const form = useForm({
             </div>
         </main>
 
-    </EstimatingLayout>
+    </GuestLayout>
 </template>

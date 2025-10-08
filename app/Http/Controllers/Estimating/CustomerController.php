@@ -32,7 +32,7 @@ class CustomerController extends Controller
 
         $filtered_states = StateResource::collection(State::whereIn('id', $customers->pluck('state_id'))->orderBy('state', 'asc')->get());
 
-        return Inertia::render('Estimating/Customers', [
+        return Inertia::render('estimating/Customers', [
             'customers' => fn() => $customers,
             'states' => StateResource::collection(State::orderBy('state')->get()),
             'filtered_states' => $filtered_states,

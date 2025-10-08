@@ -18,7 +18,7 @@ class SkillController extends Controller
     public function index()
     {
         $skills = SkillResource::collection(Skill::all());
-        return Inertia::render('Admin/Skills/Index', compact('skills'));
+        return Inertia::render('admin/skills/Index', compact('skills'));
     }
 
     /**
@@ -26,7 +26,7 @@ class SkillController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Skills/Skill', [
+        return Inertia::render('admin/skills/Skill', [
             'new' => true,
         ]);
     }
@@ -59,7 +59,7 @@ class SkillController extends Controller
      */
     public function edit(Skill $skill)
     {
-        return Inertia::render('Admin/Skills/Skill', [
+        return Inertia::render('admin/skills/Skill', [
             'new' => false,
             'skill' => SkillResource::make($skill),
         ]);

@@ -43,7 +43,7 @@ class AdminController extends Controller
         };
         $jobs = JobResource::collection(Job::with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])->orderBy('created_at', 'desc')->get());
 
-        return Inertia::render('Estimating/Admin', [
+        return Inertia::render('estimating/Admin', [
             'new' => $new,
             'company' => $company,
             'jobs' => $jobs,

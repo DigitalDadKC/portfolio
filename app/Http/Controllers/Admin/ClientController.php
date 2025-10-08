@@ -17,7 +17,7 @@ class ClientController extends Controller
     {
         $clients = ClientResource::collection(Client::with('outreaches')->latest()->get());
 
-        return Inertia::render('admin/clients/index', [
+        return Inertia::render('admin/clients/Index', [
             'clients' => $clients
         ]);
     }

@@ -1,9 +1,8 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { Link, Head, useForm } from '@inertiajs/vue3';
-import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { useProjectMath } from '@/Composables/useProjectMath';
-// import { VDateInput } from 'vuetify/labs/VDateInput';
 import { Button } from '@/Components/ui/button';
 import { Textarea } from '@/Components/ui/textarea';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -60,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <EstimatingLayout>
+    <GuestLayout>
 
         <Head title="Job" />
 
@@ -118,5 +117,5 @@ onMounted(() => {
             </v-form>
         </div>
 
-    </EstimatingLayout>
+    </GuestLayout>
 </template>

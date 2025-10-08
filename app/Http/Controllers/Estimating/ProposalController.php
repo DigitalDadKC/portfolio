@@ -111,7 +111,7 @@ class ProposalController extends Controller
     {
         $proposal = ProposalResource::collection(Proposal::where('id', $proposal->id)->with('job', 'scopes', 'scopes.lines', 'scopes.lines.unit_of_measurement')->get())->first();
 
-        return Inertia::render('Estimating/Proposal', [
+        return Inertia::render('estimating/Proposal', [
             'new' => false,
             'proposal' => $proposal,
             'company' => CompanyResource::collection(Company::all())->first(),
