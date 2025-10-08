@@ -1,15 +1,15 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import FrontendLayout from '@/Layouts/Frontend.vue';
-import Hero from './Portfolio/Frontend/Hero.vue';
-import Promote from './Portfolio/Frontend/Promote.vue';
-import About from './Portfolio/Frontend/About.vue';
-import Skills from './Portfolio/Frontend/Skills.vue';
-import Portfolio from './Portfolio/Frontend/Portfolio.vue';
-import Services from './Portfolio/Frontend/Services.vue';
-import Contact from './Portfolio/Frontend/Contact.vue';
-import Features from './Portfolio/Frontend/Features.vue';
-import Calendar from './Portfolio/Frontend/Calendar.vue';
+import FrontendLayout from '@/layouts/Frontend.vue';
+import Hero from './portfolio/frontend/Hero.vue';
+import Promote from './portfolio/frontend/Promote.vue';
+import About from './portfolio/frontend/About.vue';
+import Skills from './portfolio/frontend/Skills.vue';
+import Portfolio from './portfolio/frontend/Portfolio.vue';
+import Services from './portfolio/frontend/Services.vue';
+import Contact from './portfolio/frontend/Contact.vue';
+import Features from './portfolio/frontend/Features.vue';
+import Calendar from './portfolio/frontend/Calendar.vue';
 
 defineProps({
     skills: Object,
