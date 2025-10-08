@@ -1,0 +1,1 @@
+import{c as e,o as t,t as n,y as o}from"./app-B36-XCD0.js";const l={class:"flex items-center text-black"},c={key:0},r={key:1},p={__name:"InputLabel",props:{value:{type:String}},setup(s){return(a,_)=>(t(),e("label",l,[s.value?(t(),e("span",c,n(s.value),1)):(t(),e("span",r,[o(a.$slots,"default")]))]))}};export{p as _};
