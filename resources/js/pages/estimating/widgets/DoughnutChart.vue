@@ -1,5 +1,5 @@
 <script setup>
-import { useCharts } from '@/Composables/useCharts';
+import { useCharts } from '@/composables/useCharts';
 import { Doughnut } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, ArcElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
 

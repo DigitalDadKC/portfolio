@@ -2,9 +2,9 @@
 import { ref, computed, watch } from "vue";
 import { Head, router } from "@inertiajs/vue3";
 import { useDateFormat } from "@vueuse/core";
-import EstimatingLayout from "@/Layouts/EstimatingLayout.vue";
-import Manage from "./Modals/ManageCustomer.vue";
-import Delete from "./Modals/DeleteCustomer.vue";
+import EstimatingLayout from "@/layouts/EstimatingLayout.vue";
+import Manage from "./modals/ManageCustomer.vue";
+import Delete from "./modals/DeleteCustomer.vue";
 
 const props = defineProps({
     customers: Object,

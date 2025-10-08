@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useForm, Link } from "@inertiajs/vue3";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
+import PrimaryButton from "@/components/PrimaryButton.vue";
+import SecondaryButton from "@/components/SecondaryButton.vue";
 
 const props = defineProps({
     customer: Object,

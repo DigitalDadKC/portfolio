@@ -1,13 +1,13 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import { Input } from '@/Components/ui/input';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import InputError from '@/components/InputError.vue';
+import { Input } from '@/components/ui/input';
 import { Label } from 'reka-ui';
-import { Checkbox } from '@/Components/ui/checkbox';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import FormattedInput from '@/Components/FormattedInput.vue';
+import { Checkbox } from '@/components/ui/checkbox';
+import PrimaryButton from '@/components/PrimaryButton.vue';
+import FormattedInput from '@/components/FormattedInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import ApplicationLogo from '@/components/ApplicationLogo.vue';
 
 defineProps({
     canResetPassword: {

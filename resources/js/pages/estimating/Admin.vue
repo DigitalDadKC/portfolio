@@ -3,11 +3,11 @@ import {  } from "vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import Users from './widgets/Users.vue';
-import Company from './Widgets/Company.vue';
-import LargestProposal from "./Widgets/LargestProposal.vue";
-import RecentJobs from "./Widgets/RecentJobs.vue";
-import DoughnutChart from "./Widgets/DoughnutChart.vue";
-import CurrentMonthlyRevenue from "./Widgets/CurrentMonthlyRevenue.vue";
+import Company from './widgets/Company.vue';
+import LargestProposal from "./widgets/LargestProposal.vue";
+import RecentJobs from "./widgets/RecentJobs.vue";
+import DoughnutChart from "./widgets/DoughnutChart.vue";
+import CurrentMonthlyRevenue from "./widgets/CurrentMonthlyRevenue.vue";
 import LineChart from "./widgets/LineChart.vue";
 
 const props = defineProps({

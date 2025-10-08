@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Label } from '@/Components/ui/label';
+import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const model = defineModel()

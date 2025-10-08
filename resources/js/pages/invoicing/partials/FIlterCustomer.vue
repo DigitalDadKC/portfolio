@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Link } from '@inertiajs/vue3';
 import { ChevronDown } from 'lucide-vue-next';

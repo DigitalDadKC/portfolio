@@ -1,5 +1,5 @@
 <script setup>
-import Service from '@/components/Portfolio/Service.vue';
+import Service from '@/components/portfolio/Service.vue';
 import { CodeXml, Download, Earth, FileSpreadsheet, Gauge, Lock } from 'lucide-vue-next';
 
 const service_items = [

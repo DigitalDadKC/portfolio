@@ -1,8 +1,8 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import Manage from './Modals/Manage.vue';
-import Destroy from './Modals/Destroy.vue';
+import Manage from './modals/Manage.vue';
+import Destroy from './modals/Destroy.vue';
 import draggable from 'vuedraggable';
 import { Grip } from 'lucide-vue-next';
 

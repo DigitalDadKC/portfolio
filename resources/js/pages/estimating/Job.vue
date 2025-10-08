@@ -1,12 +1,12 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { Link, Head, useForm } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { useProjectMath } from '@/Composables/useProjectMath';
-import { Button } from '@/Components/ui/button';
-import { Textarea } from '@/Components/ui/textarea';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import { useProjectMath } from '@/composables/useProjectMath';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import PrimaryButton from '@/components/PrimaryButton.vue';
+import SecondaryButton from '@/components/SecondaryButton.vue';
 
 const props = defineProps({
     new: Boolean,

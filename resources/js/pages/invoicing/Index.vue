@@ -1,15 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import Search from './Partials/Search.vue';
-import Paginator from './Partials//Paginator.vue';
-import FilterCustomer from './Partials/FIlterCustomer.vue';
-import FilterPaid from './Partials/FilterPaid.vue';
-import Pages from './Partials/Pages.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import Search from './partials/Search.vue';
+import Paginator from './partials//Paginator.vue';
+import FilterCustomer from './partials/FIlterCustomer.vue';
+import FilterPaid from './partials/FilterPaid.vue';
+import Pages from './partials/Pages.vue';
 import { useDateFormat } from '@vueuse/core';
-import { useFormatCurrency } from '@/Composables/useFormatCurrency';
-import Manage from './Partials/Manage.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
+import Manage from './partials/Manage.vue';
 // import { initFlowbite } from 'flowbite'
 import { Download, File } from 'lucide-vue-next';
 

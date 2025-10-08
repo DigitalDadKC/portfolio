@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, shallowRef, useTemplateRef } from 'vue';
 import { Link, Head } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { UseFuseOptions } from '@vueuse/integrations';
 

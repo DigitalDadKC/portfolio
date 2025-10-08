@@ -1,9 +1,9 @@
 <script setup>
     import { Head, Link, router, useForm } from '@inertiajs/vue3';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import PrimaryButton from '@/Components/PrimaryButton.vue';
-    import Table from '@/Components/Table.vue';
-    import ClientModal from './Modals/ClientModal.vue';
+    import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
+    import PrimaryButton from '@/components/PrimaryButton.vue';
+    import Table from '@/components/Table.vue';
+    import ClientModal from './modals/ClientModal.vue';
     import { useDateFormat } from '@vueuse/core';
 
     const props = defineProps({

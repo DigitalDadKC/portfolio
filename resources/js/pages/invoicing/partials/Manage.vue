@@ -3,15 +3,15 @@ import { ref, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { cn } from "@/lib/utils";
 import { Label } from 'reka-ui';
-import { Button } from '@/Components/ui/button';
-import { Textarea } from '@/Components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import FormattedInput from '@/Components/FormattedInput.vue';
-import { useFormatCurrency } from '@/Composables/useFormatCurrency';
+import FormattedInput from '@/components/FormattedInput.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 import { useDateFormat } from '@vueuse/core';
 import { Pencil, CalendarIcon, Trash2 } from 'lucide-vue-next';
 

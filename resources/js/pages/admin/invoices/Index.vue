@@ -1,6 +1,6 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Table from '@/Components/Table.vue';
+import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
+import Table from '@/components/Table.vue';
 
 </script>
 

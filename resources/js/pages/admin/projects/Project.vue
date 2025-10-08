@@ -1,10 +1,10 @@
 <script setup>
     import { computed, onMounted } from 'vue';
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+    import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
     import { Head, useForm, router } from '@inertiajs/vue3';
-    import PrimaryButton from '@/Components/PrimaryButton.vue';
-    import InputError from '@/Components/InputError.vue';
-    import InputLabel from '@/Components/InputLabel.vue';
+    import PrimaryButton from '@/components/PrimaryButton.vue';
+    import InputError from '@/components/InputError.vue';
+    import InputLabel from '@/components/InputLabel.vue';
 
     const props = defineProps({
         new: Boolean,

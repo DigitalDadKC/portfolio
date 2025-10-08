@@ -1,12 +1,12 @@
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useForm} from '@inertiajs/vue3';
-import DialogModal from '@/Components/DialogModal.vue';
-import Header from '@/Components/Portfolio/Header.vue';
-import SectionButton from '@/Components/SectionButton.vue';
-import BidInput from '@/Components/Estimating/BidInput.vue';
-import TextInput from '@/Components/TextInput.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import DialogModal from '@/components/DialogModal.vue';
+import Header from '@/components/portfolio/Header.vue';
+import SectionButton from '@/components/SectionButton.vue';
+import BidInput from '@/components/estimating/BidInput.vue';
+import TextInput from '@/components/TextInput.vue';
+import InputLabel from '@/components/InputLabel.vue';
 
 const props = defineProps({
     show: Boolean,

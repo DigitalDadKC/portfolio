@@ -1,10 +1,10 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import Card from '@/Components/Portfolio/Card.vue';
-import Header from '@/Components/Portfolio/Header.vue';
-import PortfolioHeader from '@/Layouts/PortfolioHeader.vue';
-import HomeButton from '@/Components/HomeButton.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import Card from '@/components/portfolio/Card.vue';
+import Header from '@/components/portfolio/Header.vue';
+import PortfolioHeader from '@/layouts/PortfolioHeader.vue';
+import HomeButton from '@/components/HomeButton.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 
 </script>
 

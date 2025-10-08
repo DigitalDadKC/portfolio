@@ -1,5 +1,5 @@
 <script setup>
-import ManageUser from '../Modals/ManageUser.vue';
+import ManageUser from '../modals/ManageUser.vue';
 
 const props = defineProps({
     users: Object,

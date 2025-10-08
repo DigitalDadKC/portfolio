@@ -1,7 +1,7 @@
 <script setup>
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+    import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
     import { Head, Link, router } from '@inertiajs/vue3';
-    import Table from '@/Components/Table.vue';
+    import Table from '@/components/Table.vue';
     import draggable from 'vuedraggable';
 import { Grip, Pencil, Trash2 } from 'lucide-vue-next';
 

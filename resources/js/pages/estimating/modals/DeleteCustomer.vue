@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import DangerButton from '@/Components/DangerButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import DangerButton from '@/components/DangerButton.vue';
+import SecondaryButton from '@/components/SecondaryButton.vue';
 
 const props = defineProps({
     customer: Object,

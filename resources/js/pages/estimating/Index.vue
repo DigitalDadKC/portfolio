@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { Link, Head, router } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 import Paginator from '@/components/Paginator.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import SearchBox from './Partials/SearchBox.vue';
-import Pages from './Partials/Pages.vue';
-import Address from './Partials/State.vue';
-import Customer from './Partials/Customer.vue';
-import ManageJob from './Modals/ManageJob.vue';
+import SecondaryButton from '@/components/SecondaryButton.vue';
+import SearchBox from './partials/SearchBox.vue';
+import Pages from './partials/Pages.vue';
+import Address from './partials/State.vue';
+import Customer from './partials/Customer.vue';
+import ManageJob from './modals/ManageJob.vue';
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
 import { Download, FileText, } from 'lucide-vue-next';

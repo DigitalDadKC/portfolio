@@ -1,5 +1,5 @@
 <script setup>
-import { useFormatCurrency } from "@/Composables/useFormatCurrency";
+import { useFormatCurrency } from "@/composables/useFormatCurrency";
 
 const { formatWithCommas } = useFormatCurrency()
 const props = defineProps({

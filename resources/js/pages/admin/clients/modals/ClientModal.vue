@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import { Input } from '@/Components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Label } from 'reka-ui';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil } from 'lucide-vue-next';
 

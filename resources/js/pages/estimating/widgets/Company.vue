@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 import { useForm, router } from '@inertiajs/vue3'
-import ManageCompany from '../Modals/ManageCompany.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
+import ManageCompany from '../modals/ManageCompany.vue'
+import SecondaryButton from '@/components/SecondaryButton.vue'
 
 const props = defineProps({
     company: Object,

@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useFormatCurrency } from "@/Composables/useFormatCurrency";
+import { useFormatCurrency } from "@/composables/useFormatCurrency";
 import { useDateFormat } from '@vueuse/core';
 
 const { formatWithCommas } = useFormatCurrency()

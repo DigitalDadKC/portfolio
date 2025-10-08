@@ -1,15 +1,15 @@
 <script setup>
 import { computed, onMounted, watch } from 'vue';
 import { Link, Head, useForm, router } from '@inertiajs/vue3';
-import EstimatingLayout from '@/Layouts/EstimatingLayout.vue';
-import { useProjectMath } from '@/Composables/useProjectMath';
+import GuestLayout from '@/layouts/GuestLayout.vue';
+import { useProjectMath } from '@/composables/useProjectMath';
 import { Label } from 'reka-ui';
-import { Button } from '@/Components/ui/button';
-import { Input } from '@/Components/ui/input';
-import { Textarea } from '@/Components/ui/textarea';
-import FormattedInput from '@/Components/FormattedInput.vue';
-import Uom from './Partials/Uom.vue';
-import Type from './Partials/Type.vue';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import FormattedInput from '@/components/FormattedInput.vue';
+import Uom from './partials/Uom.vue';
+import Type from './partials/Type.vue';
 import draggable from 'vuedraggable';
 import { Trash2, Grip, Plus, GripVertical } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
@@ -146,7 +146,7 @@ watch(() => props.proposal, (item) => {
 </script>
 
 <template>
-    <EstimatingLayout>
+    <GuestLayout>
         <Head title="Estimating Web App" />
 
         <div class="max-w-6xl bg-light-secondary dark:bg-dark-tertiary rounded-lg p-4">
@@ -313,5 +313,5 @@ watch(() => props.proposal, (item) => {
             </div>
         </div>
 
-</EstimatingLayout>
+</GuestLayout>
 </template>
