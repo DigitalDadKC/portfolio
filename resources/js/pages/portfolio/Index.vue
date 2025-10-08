@@ -2,8 +2,6 @@
 import { Head } from '@inertiajs/vue3';
 import Card from '@/components/portfolio/Card.vue';
 import Header from '@/components/portfolio/Header.vue';
-import PortfolioHeader from '@/layouts/PortfolioHeader.vue';
-import HomeButton from '@/components/HomeButton.vue';
 import GuestLayout from '@/layouts/GuestLayout.vue';
 
 </script>
