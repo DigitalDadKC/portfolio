@@ -1,5 +1,5 @@
 <script setup>
-import Icon from '@/Components/Portfolio/Icon.vue';
+import Icon from '@/components/portfolio/Icon.vue';
 
 const props = defineProps({
     front: {
