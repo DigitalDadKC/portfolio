@@ -3,6 +3,9 @@
     import { Head, useForm, router } from '@inertiajs/vue3';
     import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
     import PrimaryButton from '@/components/PrimaryButton.vue';
+    import FormattedInput from '@/components/FormattedInput.vue';
+    import { Input } from '@/components/ui/input';
+    import { Label } from '@/components/ui/label';
     import InputError from '@/components/InputError.vue';
 
     const props = defineProps({
@@ -15,13 +18,24 @@
         image: props.skill?.image
     });
 
+    console.log(props.skill)
+    console.log(form.image)
+
     const picture = computed(() => {
-        return (form.image.type?.startsWith('image')) ? URL.createObjectURL(form.image) : form.image
+        if(!form.image) {
+            return
+        }
+        if (typeof form.image == 'object') {
+            return URL.createObjectURL(form.image)
+        } else {
+            return form.image
+        }
+        return URL.createObjectURL(form.image)
+        // return (form.image?.type?.startsWith('image')) ? URL.createObjectURL(form.image) : form.image
     })
 
     const handleImage = (e) => {
         form.image = e.target.files[0]
-
     }
 
     const submit = () => {
@@ -38,7 +52,7 @@
 </script>
 
 <template>
-    <Head title="Edit Skill" />
+    <Head title="Skill" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -46,19 +60,24 @@
         </template>
 
         <div class="py-12">
-            <div class="max-w-md mx-auto sm:px-6 lg:px-8 dark:bg-white">
+        {{ form.image }}
+            <div class="max-w-md mx-auto sm:px-6 lg:px-8 ">
                 <form @submit.prevent="submit" class="p-4">
                     <div>
-                        <v-text-field v-model="form.name"></v-text-field>
+                        <Label for="name">Skill</Label>
+                        <FormattedInput id="name" width="full" class="bg-light-primary dark:bg-dark-primary" v-model="form.name" />
                         <InputError class="mt-2" :message="$page.props.errors.name" />
                     </div>
                     <div class="mt-2">
-                        <v-file-input type="file" accept="image/*" label="Skill Photo" @input="handleImage($event)"></v-file-input>
+                        <Label for="image">Image</Label>
+                        <Input id="image" type="file" class="bg-light-primary dark:bg-dark-primary" @input="handleImage($event)" />
                         <InputError class="mt-2" :message="$page.props.errors.image" />
                     </div>
 
                     <div>
-                        <v-img height="255" aspect-ratio="16/9" :src="picture"></v-img>
+                        <img :src="picture" />
+                        <img :src="form.image" />
+                        <img src="skills/04wVReVUz0XrfGq2TTW0o075ETJfuaoqP0lf1RmX.jpg" />
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
@@ -67,6 +86,7 @@
                     </div>
                 </form>
             </div>
+            {{ picture }}
         </div>
     </AuthenticatedLayout>
 </template>

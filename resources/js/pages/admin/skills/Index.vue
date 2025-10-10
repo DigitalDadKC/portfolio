@@ -36,6 +36,7 @@ import { Pencil, Trash2 } from 'lucide-vue-next';
                 <tr v-for="skill in props.skills" :key="skill.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ skill.id }}</th>
                     <td class="px-6 py-4">{{ skill.name }}</td>
+                    <td>{{ skill }}</td>
                     <td class="px-6 py-4"><img :src="skill.image" alt="" class="w-12 h-12 rounded-full"></td>
                     <td class="px-6 py-4 flex">
                         <Link :href="route('skills.edit', skill.id)" class="font-medium hover:text-blue-700 mr-2">
