@@ -1,54 +1,58 @@
 <script setup>
     import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
-    import { Head, Link } from '@inertiajs/vue3';
-    import Table from '@/components/Table.vue';
-import { Pencil, Trash2 } from 'lucide-vue-next';
+    import { Head } from '@inertiajs/vue3';
+    import Manage from './modals/Manage.vue';
+    import Delete from './modals/Delete.vue';
+    import { useDateFormat } from '@vueuse/core';
+    import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
     const props = defineProps({
         skills: Object
     })
 
+    const newSkill = {
+        id: null,
+        name: '',
+        image: null,
+    }
+
 </script>
 
 <template>
-    <Head title="Skills Index" />
+    <Head title="Skills" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Skills</h2>
         </template>
 
-        <Table>
-            <template v-slot:add>
-                <Link :href="route('skills.create')" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 hover:dark:bg-indigo-700 text-white rounded-md">New Skill</Link>
-            </template>
-
-            <template v-slot:header-cells>
-                <tr>
-                    <th scope="col" class="px-6 py-3">ID</th>
-                    <th scope="col" class="px-6 py-3">Name</th>
-                    <th scope="col" class="px-6 py-3">Image</th>
-                    <th scope="col" class="px-6 py-3"></th>
-                </tr>
-            </template>
-
-            <template v-slot:data>
-                <tr v-for="skill in props.skills" :key="skill.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ skill.id }}</th>
-                    <td class="px-6 py-4">{{ skill.name }}</td>
-                    <td>{{ skill }}</td>
-                    <td class="px-6 py-4"><img :src="skill.image" alt="" class="w-12 h-12 rounded-full"></td>
-                    <td class="px-6 py-4 flex">
-                        <Link :href="route('skills.edit', skill.id)" class="font-medium hover:text-blue-700 mr-2">
-                            <Pencil></Pencil>
-                        </Link>
-                        <Link :href="route('skills.destroy', skill.id)" method="delete" as="button" type="button" class="font-medium text-red-500 hover:text-red-700 mr-2">
-                            <Trash2 class="cursor-pointer"></Trash2>
-                        </Link>
-                    </td>
-                </tr>
-            </template>
-        </Table>
+        <div class="container mx-auto w-full p-4 mt-20 bg-light-primary dark:bg-dark-primary rounded-lg">
+            <Table>
+                <TableHeader class="bg-light-quatrenary">
+                    <TableRow>
+                        <TableHead>Skill</TableHead>
+                        <TableHead>Image</TableHead>
+                        <TableHead>Created</TableHead>
+                        <TableHead>Updated</TableHead>
+                        <TableHead class="text-center"><Manage :new="true" :skill="newSkill"></Manage></TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow v-for="skill in props.skills" :key="skill.id">
+                        <TableCell>{{ skill.name }}</TableCell>
+                        <TableCell><img :src="skill.image" class="w-12 h-12 rounded-full" /></TableCell>
+                        <TableCell>{{ useDateFormat(skill.created_at, 'MM d, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(skill.updated_at, 'MM d, YYYY') }}</TableCell>
+                        <TableCell>
+                            <div class="flex justify-around">
+                                <Manage :new="false" :skill></Manage>
+                                <Delete :skill></Delete>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </div>
 
     </AuthenticatedLayout>
 </template>

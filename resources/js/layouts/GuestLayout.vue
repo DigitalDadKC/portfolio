@@ -49,11 +49,14 @@ onMounted(() => {
             :class="{ 'bg-light-primary dark:bg-dark-secondary border-b-2 -translate-y-3': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
             <div class="flex flex-wrap items-center justify-between mx-auto p-2">
                 <Link href="/" class="flex">
-                <img src="img/dad.png" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }"
-                    :enter="{ x: Math.floor(Math.random() * 1) + 1, y: Math.floor(Math.random() * 1) + 1, transition: { repeat: Infinity, repeatType: 'loop', repeatDelay: 100 } }" />
-                <span
-                    class="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white transform duration-500 mt-1 ml-2">igitalDadKC
-                    - {{ props.title }}</span>
+                    <img src="img/dad.png" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }"
+                        :enter="{ x: Math.floor(Math.random() * 1) + 1, y: Math.floor(Math.random() * 1) + 1,
+                        transition: { repeat: Infinity, repeatType: 'loop', repeatDelay: 100 } }"
+                    />
+                    <div class="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white transform duration-500 mt-1 ml-2">
+                        igitalDadKC
+                        <span v-if="props.title">{{ `- ${props.title}` }}</span>
+                    </div>
                 </Link>
                 <div class="flex space-x-3 md:space-x-0">
                     <button data-collapse-toggle="navbar-sticky" type="button"
@@ -83,13 +86,19 @@ onMounted(() => {
             </div>
         </nav>
 
-        <SidebarProvider class="grid justify-center">
-            <AppSidebar />
-            <SidebarTrigger class="mt-20" />
-            <main>
-                <slot />
-            </main>
+        <SidebarProvider class="grid justify-center" v-if="showSidebar">
+            <slot name="sidebar">
+                <AppSidebar />
+                <SidebarTrigger class="mt-20" />
+            </slot>
         </SidebarProvider>
+
+        <main class="pt-24">
+            <slot />
+        </main>
+    </div>
+</template>
+
 
 
         <!--
@@ -141,8 +150,3 @@ onMounted(() => {
                 </div>
             </div>
         </nav> -->
-
-        <main class="pt-24">
-        </main>
-    </div>
-</template>

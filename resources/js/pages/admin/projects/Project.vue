@@ -10,8 +10,6 @@
         new: Boolean,
         skills: Array,
         project: Object,
-        errors: Object,
-        options: Array,
     })
 
     const form = useForm({

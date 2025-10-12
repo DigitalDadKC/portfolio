@@ -48,7 +48,7 @@ class SkillController extends Controller
                 'image' => $image
             ]);
 
-            return Redirect::route('skills.index')->with('message', 'Skill created successfully!');
+            return back()->with('message', 'Skill created successfully!');
         }
 
         return Redirect::back();

@@ -20,18 +20,9 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = ProjectResource::collection(Project::with('skills')->orderBy('project_order')->get());
-        return Inertia::render('admin/projects/Index', compact('projects'));
-    }
+        $skills = SkillResource::collection(Skill::orderBy('name')->get());
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('admin/projects/Project', [
-            'new' => true,
-            'skills' => Skill::all(),
-        ]);
+        return Inertia::render('admin/projects/Index', compact('projects', 'skills'));
     }
 
     /**
@@ -61,19 +52,6 @@ class ProjectController extends Controller
         $project->skills()->sync($request->skills);
 
         return Redirect::route('projects.index')->with('message', 'Project created successfully!');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Project $project)
-    {
-        $project->skills;
-        return Inertia::render('admin/projects/Project', [
-            'new' => false,
-            'project' => ProjectResource::make($project),
-            'skills' => SkillResource::collection(Skill::all()),
-        ]);
     }
 
     /**
