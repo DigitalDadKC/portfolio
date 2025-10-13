@@ -39,7 +39,7 @@ class InvoiceController extends Controller
             ? InvoiceResource::collection($invoices->with('invoice_items.material.material_unit_size', 'invoice_items.material.material_category')->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString())
             : InvoiceResource::collection($invoices->with('invoice_items.material.material_unit_size', 'invoice_items.material.material_category')->paginate($filters['pages'])->withQueryString());
 
-        return inertia('Invoicing/Index', [
+        return inertia('invoicing/Index', [
             'invoices' => fn() => $invoices,
             'customers' => CustomerResource::collection(Customer::with('state')->orderBy('name')->get()),
             'materials' => MaterialResource::collection(Material::orderBy('name')->get()),

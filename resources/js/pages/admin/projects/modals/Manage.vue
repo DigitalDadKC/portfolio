@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import InputError from '@/components/InputError.vue';
+import Skills from '../partials/Skills.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
@@ -18,7 +19,9 @@ const isDialogOpen = ref(false)
 const form = useForm({
     id: props.project.id,
     name: props.project.name,
+    description: props.project.description,
     image: props.project.image,
+    url: props.project.url,
     skills: props.project.skills,
 })
 
@@ -41,6 +44,8 @@ const submit = () => {
         router.post(route('projects.update', props.project.id), {
             _method: 'put',
             name: form.name,
+            description: form.description,
+            url: form.url,
             image: form.image
         }, {
             onSuccess: () => {
@@ -63,27 +68,38 @@ const submit = () => {
             </Button>
         </DialogTrigger>
 
-        <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6">
-                <DialogTitle>{{(props.new) ? 'New Skill' : 'Edit Skill' }}</DialogTitle>
+                <DialogTitle>{{(props.new) ? 'New Project' : 'Edit Project' }}</DialogTitle>
                 <DialogDescription>
-                    {{ (props.new) ? 'New Project' : `Edit ${props.project.name}` }}
+                    {{ (props.new) ? 'New Project' : `${props.project.name}` }}
                 </DialogDescription>
             </DialogHeader>
 
-            <div>
+            <div class="flex flex-col gap-4">
                 <div>
                     <Label for="name">Name</Label>
                     <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.name" />
                 </div>
-            </div>
-            <div class="mt-2">
-                <Label for="image">Image</Label>
-                <Input id="image" type="file" class="bg-white dark:bg-dark-tertiary hover:bg-input/50" @input="handleImage($event)" />
-                <InputError class="mt-2" :message="$page.props.errors.image" />
-            </div>
-            <div class="flex justify-center">
-                <img :src="picture" class="w-60 h-60" />
+                <div>
+                    <Label for="name">Description</Label>
+                    <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.description" />
+                </div>
+                <div>
+                    <Label for="name">Project URL</Label>
+                    <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.url" />
+                </div>
+                <div>
+                    <Skills v-model="project.skills" :project :skills></Skills>
+                </div>
+                <div class="mt-2">
+                    <Label for="image">Image</Label>
+                    <Input id="image" type="file" class="bg-white dark:bg-dark-tertiary hover:bg-input/50" @input="handleImage($event)" />
+                    <InputError class="mt-2" :message="$page.props.errors.image" />
+                </div>
+                <div class="flex justify-center">
+                    <img :src="picture" class="w-60 h-60" />
+                </div>
             </div>
 
             <DialogFooter class="p-6 pt-0">

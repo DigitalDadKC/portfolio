@@ -1,11 +1,11 @@
 <script setup lang="ts">
-    import { shallowRef, useTemplateRef } from 'vue'
+    import { shallowRef, useTemplateRef, nextTick } from 'vue'
     import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
     import { Head, router } from '@inertiajs/vue3';
     import Manage from './modals/Manage.vue';
     import Delete from './modals/Delete.vue';
     import draggable from 'vuedraggable';
-    import { Grip, Pencil, Trash2 } from 'lucide-vue-next';
+    import { Grip, GripHorizontal, Pencil, Trash2 } from 'lucide-vue-next';
     import { useDateFormat } from '@vueuse/core';
     import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
     import { useSortable } from '@vueuse/integrations/useSortable'
@@ -25,11 +25,28 @@
     }
 
     const updateProjectOrder = () => {
-        props.projects.map((project, index) => project.project_order = index + 1)
         router.post(route('projects.sort'), {
-            'projects': props.projects
+            'projects': list.value
         })
     }
+
+
+    const el = useTemplateRef<HTMLElement>('el')
+    const list = shallowRef(props.projects)
+
+
+    const { option } = useSortable(el, list, {
+        handle: '.handle',
+        animation: 200,
+        onSort: (e) => {
+        nextTick(() => {
+            list.value.forEach((item, index) => {
+                item.order = index
+            })
+            updateProjectOrder()
+        })
+        },
+    })
 
 </script>
 
@@ -41,40 +58,48 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Projects</h2>
         </template>
 
-        <div class="container mx-auto w-full p-4 mt-20 bg-light-primary dark:bg-dark-primary rounded-lg">
-            <div class="flex justify-end m-2 p-2">
-                <div>Project</div>
-                <div>Image</div>
-                <div>Skills</div>
-                <div>Created</div>
-                <div>Updated</div>
-                <div class="text-center"><Manage :new="divue" :project="newProject" :skills></Manage></div>
-            </div>
-            <draggable :list="projects" item-key="index" handle=".handle" @start="drag-true" @end="drag-false" class="flex flex-col" @change="updateProjectOrder()">
-                <template #item="{element}">
-                    <div class="flex items-center justify-between bg-white dark:bg-gray-800 dark:border-gray-700 px-4">
-                        <div>
-                            <Grip class="handle cursor-pointer"></Grip>
-                        </div>
-                        <div>{{element.name}}</div>
-                        <div>{{element.description}}</div>
-                        <div>
-                            <div v-for="skill in element.skills" :key="skill.id">
+        <div class="container mx-auto">
+            <Table class="w-full mt-20 bg-light-primary dark:bg-dark-primary">
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Project</TableHead>
+                        <TableHead>Image</TableHead>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Skills</TableHead>
+                        <TableHead>Image</TableHead>
+                        <TableHead>URL</TableHead>
+                        <TableHead>Active</TableHead>
+                        <TableHead>Created</TableHead>
+                        <TableHead>Updated</TableHead>
+                        <TableHead class="text-center"><Manage :new="true" :project="newProject" :skills></Manage></TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
+                    <TableRow v-for="project in list" :key="project.id" class="w-full">
+                        <TableCell class="p-3">
+                            <GripHorizontal class="handle cursor-pointer w-8 h-8"></GripHorizontal>
+                        </TableCell>
+                        <TableCell>{{ project.name }}</TableCell>
+                        <TableCell>{{ project.description }}</TableCell>
+                        <TableCell>
+                            <div v-for="skill in project.skills" :key="skill.id">
                                 {{ skill.name }}
                             </div>
-                        </div>
-                        <div><img :src="element.image" /></div>
-                        <div>{{ element.order }}</div>
-                        <div>{{ !!element.active }}</div>
-                        <div>
+                        </TableCell>
+                        <TableCell><img :src="project.image" /></TableCell>
+                        <TableCell>{{ project.url }}</TableCell>
+                        <TableCell>{{ !!project.active }}</TableCell>
+                        <TableCell>{{ useDateFormat(project.created_at, 'MM d, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(project.updated_at, 'MM d, YYYY') }}</TableCell>
+                        <TableCell>
                             <div class="flex justify-around">
-                                <Manage :new="false" :project="element" :skills></Manage>
-                                <Delete :project="element"></Delete>
+                                <Manage :new="false" :project :skills></Manage>
+                                <Delete :project></Delete>
                             </div>
-                        </div>
-                    </div>
-                </template>
-            </draggable>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </div>
 
     </AuthenticatedLayout>

@@ -20,9 +20,11 @@ class ProjectResource extends JsonResource
             'description' => $this->description,
             'image' => asset('/storage/' . $this->image),
             'skills' => SkillResource::collection($this->skills),
-            'project_url' => $this->project_url,
-            'project_order' => $this->project_order,
+            'url' => $this->url,
+            'order' => $this->order,
             'active' => $this->active,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

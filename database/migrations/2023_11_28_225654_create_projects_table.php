@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('description')->nullable()->default(NULL);
             $table->string('image')->nullable()->default(NULL);
-            $table->string('project_url')->nullable();
-            $table->integer('project_order');
+            $table->string('url')->nullable();
+            $table->integer('order');
             $table->boolean('active')->default(1);
             $table->timestamps();
         });

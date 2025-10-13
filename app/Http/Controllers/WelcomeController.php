@@ -16,7 +16,7 @@ class WelcomeController extends Controller
     public function welcome()
     {
         $skills = SkillResource::collection(Skill::all());
-        $projects = ProjectResource::collection(Project::with('skills')->where('active', 1)->orderBy('project_order')->get());
+        $projects = ProjectResource::collection(Project::with('skills')->where('active', 1)->orderBy('order')->get());
         $features = FeatureResource::collection(Feature::orderBy('order')->get());
 
         return Inertia::render('Welcome', compact('skills', 'projects', 'features'));

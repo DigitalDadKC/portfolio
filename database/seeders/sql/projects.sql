@@ -1,4 +1,4 @@
-INSERT INTO `projects` (`id`, `name`, `description`, `image`, `project_url`, `project_order`, `created_at`, `updated_at`) VALUES
+INSERT INTO `projects` (`id`, `name`, `description`, `image`, `url`, `order`, `created_at`, `updated_at`) VALUES
 (1, 'Operator Logbook', '', 'projects/tXvk8xuK8MIOd32y7aqXIHD5pBD6uLZBQmyheOwu.png', 'https://github.com/DigitalDadKC/VBA-OperatorLogbook', 5, '2024-02-28 19:44:53', '2024-02-28 19:44:53'),
 (2, 'Production Line Efficiency Logbook', '', 'projects/eQkzEPmapfPyr5zGCLYBA8EPzfPHL42Uzw1btmXn.png', 'https://github.com/DigitalDadKC/VBA-ProductionLineEfficiencyLog', 6, '2024-02-28 19:46:09', '2024-02-28 19:46:09'),
 (3, 'Construction Estimating Software', 'Sample Project Estimate', 'projects/pWI4BQ2HX5P7eP90JBBNs5jllY4XZFJQvqHSgc2p.png', 'http://localhost:8000/estimating', 1, '2024-02-28 19:46:54', '2025-08-29 17:12:40'),

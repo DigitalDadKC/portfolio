@@ -19,7 +19,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = ProjectResource::collection(Project::with('skills')->orderBy('project_order')->get());
+        $projects = ProjectResource::collection(Project::with('skills')->orderBy('order')->get());
         $skills = SkillResource::collection(Skill::orderBy('name')->get());
 
         return Inertia::render('admin/projects/Index', compact('projects', 'skills'));
@@ -96,10 +96,10 @@ class ProjectController extends Controller
 
     public function sort(Request $request)
     {
-        $current = Project::get();
-        $current->map(function ($project) use ($request) {
-            $order = $request->projects[array_search($project->id, array_column($request->projects, 'id'))]['project_order'];
-            $project->update(['project_order' => $order]);
+        $projects = Project::orderBy('order')->get();
+        $projects->map(function($project, $key) use ($request) {
+            $target_project = array_find($request->projects, fn($item) => $item['id'] == $project->id);
+            $project->update(['order' => $target_project['order']]);
         });
     }
 }
