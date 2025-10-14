@@ -74,10 +74,12 @@ class FeatureController extends Controller
 
     public function sort(Request $request)
     {
-        $current = Feature::get();
-        $current->map(function ($feature) use ($request) {
-            $order = $request->features[array_search($feature->id, array_column($request->features, 'id'))]['order'];
-            $feature->update(['order' => $order]);
+        $features = Feature::orderBy('order')->get();
+        $features->map(function($feature) use ($request) {
+            $target_feature = array_find($request->features ?? [], fn($item) => $item['id'] == $feature->id);
+            if($target_feature) {
+                $feature->update(['order' => $target_feature['order']]);
+            };
         });
 
         return back();

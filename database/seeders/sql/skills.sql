@@ -1,13 +1,13 @@
 INSERT INTO `skills` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'HTML5', 'skills/Rdn7FR35kPopvqTrRaywgOZZNLCipnwan2pDszSz.svg', '2023-12-29 00:26:31', '2025-10-12 02:25:33'),
-(2, 'CSS3', 'skills/PjJn8pQ4lKMklPsqRbHlwOrSMFe2BistdQjYMBlD.svg', '2023-12-29 00:34:56', '2025-10-12 02:26:16'),
-(3, 'JavaScript', 'skills/DWd3d4dvWIaqoaWuq5dWNuUGaE61h0YjjnrizjAV.svg', '2023-12-29 00:38:27', '2025-10-12 02:26:23'),
-(4, 'jQuery', 'skills/FmcQClrNcfuTvqJ5frVJIimf9lauGdhv4UU5uyPI.svg', '2023-12-29 00:42:08', '2025-10-12 03:56:49'),
-(5, 'Tailwind', 'skills/t3HeJny8swOAazZlPzJRWiwKfYgT9GIk7pHoDxCC.svg', '2023-12-29 00:43:34', '2025-10-12 03:56:56'),
-(6, 'Laravel', 'skills/y5qyTUKedz75up2OubRlQVquY4JZQwzoOaqaZwHM.svg', '2023-12-29 00:46:08', '2025-10-12 03:59:15'),
-(7, 'Livewire', 'skills/syX5sW4CbnxQDkiAkWhPTExbnILHvDwZLLOH0k07.svg', '2023-12-29 00:50:38', '2025-10-12 03:59:22'),
-(8, 'Vue', 'skills/PmyKFP1jNrliovTdR5en2wAX7DX5lbh6uDTBDhjB.svg', '2023-12-29 00:53:55', '2025-10-12 03:59:32'),
-(9, 'Bootstrap', 'skills/Dc8zKwdXTjb4X4jJWtGZ3DOFGR6rWiPbe6Xc2mRG.svg', '2024-01-03 06:51:56', '2025-10-12 03:59:39'),
-(10, 'Excel VBA', 'skills/39YXtFxDKnytsDCaHUpJhYLRury9acE9ysWAe3nv.svg', '2024-01-03 07:35:56', '2025-10-12 03:59:45');
+(1, 'HTML5', 'skills/S0eYtH4DmnrrHmuyJz8TMEL4aegWxt93AuE2mEHU.svg', '2023-12-29 18:26:31', '2025-10-14 02:51:22'),
+(2, 'CSS3', 'skills/9ZUoMj1mdQ923IltiyxruWonE7X0PMZA359BbzY5.svg', '2023-12-29 18:34:56', '2025-10-14 02:51:30'),
+(3, 'JavaScript', 'skills/1CzVryz9LIIjrnrK8veqynfgEnqDLAr1ciBNoaaH.svg', '2023-12-29 18:38:27', '2025-10-14 02:51:42'),
+(4, 'jQuery', 'skills/72SZLZsgHFvZjQiggoTpAZGh93iUpgzHb7W5juUl.svg', '2023-12-29 18:42:08', '2025-10-14 02:51:52'),
+(5, 'Tailwind', 'skills/bA2px27xVoDdlFBckZz1JriENeqgH2M334BB0grq.svg', '2023-12-29 18:43:34', '2025-10-14 02:52:02'),
+(6, 'Laravel', 'skills/Yz9gJAt8JwQvOnbRBh5Jnpd3O2YCSLe111NyObKi.svg', '2023-12-29 18:46:08', '2025-10-14 02:52:09'),
+(7, 'Livewire', 'skills/Cf9xPNww6gMVl3ebaxBRhJOCpkrZS5AfBeISK0BT.svg', '2023-12-29 18:50:38', '2025-10-14 02:52:39'),
+(8, 'Vue', 'skills/DzaWqZWACvloroYXZJLISQgeymPBpmdjOy6NQTwY.svg', '2023-12-29 18:53:55', '2025-10-14 02:52:33'),
+(9, 'Bootstrap', 'skills/Tu4kqLMSPeLg3hHWzRm9gBosCOXTp3OBSbmaVuvh.svg', '2024-01-04 00:51:56', '2025-10-14 02:52:47'),
+(10, 'Excel VBA', 'skills/pxvp4oqpDAos4obArQfAvQjLWrA90yDZolmcrZmq.svg', '2024-01-04 01:35:56', '2025-10-14 19:28:23');
 
 COMMIT;

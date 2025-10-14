@@ -1,30 +1,57 @@
-<script setup>
+<script setup lang="ts">
+import { shallowRef, useTemplateRef, nextTick, watch } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
-import draggable from 'vuedraggable';
-import { Grip } from 'lucide-vue-next';
+import { GripHorizontal } from 'lucide-vue-next';
+import { useDateFormat } from '@vueuse/core';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useSortable } from '@vueuse/integrations/useSortable'
 
 const props = defineProps({
     features: Object,
 })
 
-const newfeature = {
+const newFeature = {
     id: null,
     name: ''
 }
 
+const el = useTemplateRef<HTMLElement>('el')
+const list = shallowRef(props.features)
+
+const { option } = useSortable(el, list, {
+    handle: '.handle',
+    animation: 200,
+    onSort: (e) => {
+    nextTick(() => {
+        list.value.forEach((item, index) => {
+            item.order = index
+        })
+        updateFeatureOrder()
+    })
+    },
+})
+
 const updateFeatureOrder = () => {
-    props.features.map((feature, index) => feature.order = index + 1)
     router.post(route('features.sort'), {
         'features': props.features
+    }, {
+        preserveScroll: true,
     })
 }
+
+watch(() => (props.features), (features) => {
+    list.value = features
+}, {
+    deep: true,
+})
 
 </script>
 
 <template>
+
     <Head title="Features" />
 
     <AuthenticatedLayout>
@@ -32,42 +59,35 @@ const updateFeatureOrder = () => {
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Features</h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end m-2 p-2">
-                    <Link :href="route('projects.create')" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 hover:dark:bg-indigo-700 text-white rounded-md">New Feature</Link>
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex justify-between px-8 text-xs text-start text-gray-200 uppercase bg-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                        <div scope="col" class="py-3">Name</div>
-                        <div scope="col" class="py-3">Actions</div>
-                    </div>
-
-                    <draggable :list="features" item-key="index" handle=".handle" @start="drag-true" @end="drag-false" class="flex flex-col" @change="updateFeatureOrder()">
-                        <template #item="{element}">
-                            <div class="flex items-center justify-between bg-white dark:bg-gray-800 dark:border-gray-700 px-4">
-                                <div class="flex">
-                                    <div class="w-12 py-3">
-                                        <Grip class="handle cursor-pointer"></Grip>
-                                        <!-- <v-icon size="48" class="handle cursor-pointer bg-indigo-500 text-white rounded  h-100">mdi mdi-drag-horizontal-variant</v-icon> -->
-                                    </div>
-                                    <div class="py-4 ps-4">{{ element.name }}</div>
-                                </div>
-                                <div>
-                                    <Link :href="route('projects.edit', element.id)" class="font-medium text-blue-500 hover:text-blue-700 mr-2">Edit</Link>
-                                    <Link :href="route('projects.destroy', element.id)" method="delete" as="button" type="button" class="font-medium text-red-500 hover:text-red-700 mr-2">Delete</Link>
-                                </div>
-                            </div>
-                        </template>
-                    </draggable>
-                </div>
-            </div>
+        <div class="container mx-auto w-full mt-20">
+            <Table class="bg-light-primary dark:bg-dark-primary w-full">
+                <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
+                    <TableRow>
+                        <TableHead class="p-6 text-black"></TableHead>
+                        <TableHead class="p-6 text-black">Feature</TableHead>
+                        <TableHead class="text-black">Created</TableHead>
+                        <TableHead class="text-black">Updated</TableHead>
+                        <TableHead class="text-black text-end">
+                            <Manage :new="true" :feature="newFeature"></Manage>
+                        </TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
+                    <TableRow v-for="feature in list" :key="feature.id" class="w-full">
+                        <TableCell class="p-3">
+                            <GripHorizontal class="handle cursor-pointer w-8 h-8"></GripHorizontal>
+                        </TableCell>
+                        <TableCell>{{ feature.name }}</TableCell>
+                        <TableCell>{{ useDateFormat(feature.created_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(feature.updated_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell class="flex justify-end gap-4">
+                                <Manage :new="false" :feature></Manage>
+                                <Destroy :feature></Destroy>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </div>
-    </AuthenticatedLayout>
-</template>
 
-<style scoped>
-    .v-table thead {
-        background-color: orange;
-    }
-</style>
+</AuthenticatedLayout>
+</template>

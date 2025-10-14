@@ -26,3 +26,4 @@ yarn-error.log
 /.vscode
 /.zed
 /database/seeders/sql/users.sql
+/database/seeders/AdminSeeder.php

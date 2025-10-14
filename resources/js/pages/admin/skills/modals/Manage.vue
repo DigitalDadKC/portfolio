@@ -33,6 +33,7 @@ const submit = () => {
         form.post(route('skills.store'), {
             onSuccess: () => {
                 isDialogOpen.value = false
+                form.reset()
             }
         });
     } else {
@@ -43,6 +44,7 @@ const submit = () => {
         }, {
             onSuccess: () => {
                 isDialogOpen.value = false
+                form.reset()
             }
         });
     }

@@ -35,7 +35,7 @@
 
     <div id="outro" style="font-style: italic; color: #77685D">
         <p style="padding: 0; margin: 0;">
-            <a href="https://www.raleighgroesbeck.com" aria-label="Visit my site">
+            <a href="https://www.digitaldadkc.com" aria-label="Visit my site">
                 <img src="{{ asset('img/dad.png') }}" alt="logo" id="image" width="30" />
             </a>
         </p>
@@ -44,10 +44,10 @@
         <p style="padding: 0; margin: 0">Digital Dad, LLC</p>
         <p id="line-break" style="font-weight: bold; color: #ac6b34; padding: 0; margin: 0;">____________________________</p>
         <p style="padding: 0; margin: 0;">Portfolio:
-            <a href="https://www.raleighgroesbeck.com" aria-label="Visit my site">www.raleighgroesbeck.com</a>
+            <a href="https://www.digitaldadkc.com" aria-label="Visit my site">www.digitaldadkc.com</a>
         </p>
         <p style="padding: 0; margin: 0;">Email:
-            <a href="mailto:raleighgroesbeck.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a>
+            <a href="mailto:raleighgroesbeck@gmail.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a>
         </p>
         <p style="padding: 0; margin: 0;">Schedule a meeting:
             <a href="https://calendly.com/digitaldadkc" aria-label="Email Me">Calendly</a>

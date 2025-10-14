@@ -7,10 +7,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { MotionPlugin } from '@vueuse/motion';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Portfolio';
+const appName = 'Portfolio';
 
 createInertiaApp({
-    title: (title) => `${appName} - ` + title,
+    title: (title) => (title ? `${title} ${appName}` : appName),
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const VueApp = createApp({ render: () => h(App, props) })

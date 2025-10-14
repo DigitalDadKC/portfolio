@@ -1,57 +1,59 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-vue-next';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const props = defineProps({
     feature: Object
 })
 
-const dialog = ref(false)
-
+const isDialogOpen = ref(false)
 const form = useForm({
     id: props.feature.id,
     name: props.feature.name,
 })
 
-const destroy = () => {
+const submit = () => {
     form.delete(route('features.destroy', form.id), {
         onSuccess: () => {
-            dialog.value = false
+            isDialogOpen.value = false
         }
     })
 }
 
 watch(() => props.feature,
 (item) => {
-    form.id = item.name;
-    form.name = props.name;
+    form.id = item.id;
+    form.name = item.name;
 })
 
 </script>
 
 <template>
-    <div class="pa-4 text-center">
-        <v-dialog v-model="dialog" max-width="600">
-            <template v-slot:activator="{ props: activatorProps }">
-                <v-btn class="cursor-pointer" variant="elevated" v-bind="activatorProps" >
-                    <v-icon>mdi-trash-can</v-icon>
-                </v-btn>
-            </template>
 
-            <v-card prepend-icon="mdi-trash-can" title="DELETE">
-                <v-card-text>
-                    <v-row dense>
-                        <v-col cols="12">
-                            <v-text-field v-model="form.name" label="Feature" disabled></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
+    <Dialog v-model:open="isDialogOpen">
+        <DialogTrigger as-child>
+            <Button class="cursor-pointer">
+                <Trash2></Trash2>
+            </Button>
+        </DialogTrigger>
 
-                <v-card-actions>
-                    <v-btn text="Close" variant="plain" @click="dialog = false; form.reset()"></v-btn>
-                    <v-btn color="red" text="Delete" @click="destroy()"></v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </div>
+        <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+            <DialogHeader class="p-6">
+                <DialogTitle>{{ `Delete ${props.feature.name} ?` }}</DialogTitle>
+                <DialogDescription>
+                    Are you sure?
+                </DialogDescription>
+            </DialogHeader>
+
+            <DialogFooter class="p-6 pt-0">
+                <div class="flex gap-2">
+                    <Button variant="secondary" class="cursor-pointer" @click="isDialogOpen = false">Cancel</Button>
+                    <Button type="submit" class="cursor-pointer" :disabled="form.processing" @click="submit()">Yes</Button>
+                </div>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
 </template>

@@ -44,10 +44,10 @@ class ProjectController extends Controller
         $project = Project::create([
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $image,
-            'project_url' => $request->project_url,
-            'project_order' => Project::count() + 1,
+            'url' => $request->url,
+            'order' => Project::count() + 1,
             'active' => $request->active,
+            'image' => $image,
         ]);
         $project->skills()->sync($request->skills);
 
@@ -64,6 +64,7 @@ class ProjectController extends Controller
             'skills.*' => 'required',
         ]);
 
+        $skills = array_column($request->skills ?? [], 'id');
         $image = $project->image;
         if ($request->hasFile('image')) {
             if($image) {
@@ -75,11 +76,11 @@ class ProjectController extends Controller
         $project->update([
             'name' => $request->name,
             'description' => $request->description,
-            'project_url' => $request->project_url,
+            'url' => $request->url,
             'image' => $image,
             'active' => $request->active,
         ]);
-        $project->skills()->sync($request->skills);
+        $project->skills()->sync($skills);
 
         return Redirect::route('projects.index')->with('message', 'Project updated successfully!');
     }

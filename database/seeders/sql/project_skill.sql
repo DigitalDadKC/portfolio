@@ -1,7 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
 INSERT INTO `project_skill` (`id`, `skill_id`, `project_id`) VALUES
 (3, 3, 3),
 (14, 2, 3),
@@ -27,6 +23,12 @@ INSERT INTO `project_skill` (`id`, `skill_id`, `project_id`) VALUES
 (34, 1, 4),
 (35, 1, 3),
 (36, 10, 2),
-(37, 10, 1);
+(37, 10, 1),
+(38, 2, 7),
+(39, 1, 7),
+(40, 3, 7),
+(41, 6, 7),
+(42, 5, 7),
+(43, 8, 7);
 
 COMMIT;

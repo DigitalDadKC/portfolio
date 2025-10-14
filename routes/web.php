@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\OutreachController;
+use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\SkillController;

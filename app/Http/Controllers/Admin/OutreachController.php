@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Mail\OutreachMail;
 use App\Models\Outreach;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OutreachController extends Controller
 {

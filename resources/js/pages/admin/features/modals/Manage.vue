@@ -1,30 +1,35 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Pencil, Plus } from 'lucide-vue-next';
 
 const props = defineProps({
     new: Boolean,
     feature: Object,
 })
 
-const dialog = ref(false)
+const isDialogOpen = ref(false)
 const form = useForm({
     id: props.feature?.id,
     name: props.feature?.name
 })
 
 const submit = () => {
-    if(props.new) {
+    if (props.new) {
         form.post(route('features.store'), {
             onSuccess: () => {
-                dialog.value = false
+                isDialogOpen.value = false
                 form.reset()
             }
         })
     } else {
         form.patch(route('features.update', form.id), {
             onSuccess: () => {
-                dialog.value = false
+                isDialogOpen.value = false
             }
         })
     }
@@ -33,27 +38,36 @@ const submit = () => {
 </script>
 
 <template>
-    <v-dialog v-model="dialog" max-width="800">
-        <template v-slot:activator="{ props: activatorProps }">
-            <v-btn v-bind="activatorProps" class="cursor-pointer" v-if="props.new" >New Feature</v-btn>
-            <v-btn variant="elevated" class="cursor-pointer" v-bind="activatorProps" v-else>
-                <v-icon>mdi-cog</v-icon>
-            </v-btn>
-        </template>
+    <Dialog v-model:open="isDialogOpen">
+        <DialogTrigger as-child>
+            <Button class="cursor-pointer" v-if="props.new">
+                <Plus></Plus>
+                New Feature
+            </Button>
+            <Button class="cursor-pointer" v-else>
+                <Pencil class="cursor-pointer"></Pencil>
+            </Button>
+        </DialogTrigger>
 
-        <v-card prepend-icon="mdi-office-building" :title="(props.new) ? 'New Feature' : `Edit Feature: ${props.feature.name}`">
-            <v-card-text>
-                <v-row>
-                    <v-col cols="12">
-                        <v-text-field density="compact" v-model="form.name" hide-details label="Name"></v-text-field>
-                    </v-col>
-                </v-row>
-            </v-card-text>
+        <DialogContent
+            class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+            <DialogHeader class="p-6">
+                <DialogTitle>{{ (props.new) ? 'New Feature' : 'Edit Feature' }}</DialogTitle>
+            </DialogHeader>
 
-            <v-card-actions>
-                <v-btn text="Close" variant="plain" @click="dialog = false; form.reset(); form.clearErrors()"></v-btn>
-                <v-btn color="primary" text="Save" @click="loading = !loading; submit()"></v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+            <div class="flex flex-col gap-4">
+                <Label for="name">Name</Label>
+                <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
+                    v-model="form.name" />
+            </div>
+
+            <DialogFooter class="p-6 pt-0">
+                <div class="flex gap-2">
+                    <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false">Cancel</Button>
+                    <Button type="submit" class="cursor-pointer" :disabled="form.processing"
+                        @click="submit()">Save</Button>
+                </div>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
 </template>

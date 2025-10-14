@@ -4,9 +4,10 @@ import { useForm, router } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import InputError from '@/components/InputError.vue';
 import Skills from '../partials/Skills.vue';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -22,6 +23,7 @@ const form = useForm({
     description: props.project.description,
     image: props.project.image,
     url: props.project.url,
+    active: !!props.project.active,
     skills: props.project.skills,
 })
 
@@ -46,10 +48,13 @@ const submit = () => {
             name: form.name,
             description: form.description,
             url: form.url,
-            image: form.image
+            image: form.image,
+            active: form.active,
+            skills: form.skills,
         }, {
+            preserveScroll: true,
             onSuccess: () => {
-                isDialogOpen.value = false
+                isDialogOpen.value = false;
             }
         });
     }
@@ -61,19 +66,16 @@ const submit = () => {
         <DialogTrigger as-child>
             <Button class="cursor-pointer" v-if="props.new">
                 <Plus></Plus>
-                New Skill
+                New Project
             </Button>
             <Button class="cursor-pointer" v-else>
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>
         </DialogTrigger>
 
-        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6">
                 <DialogTitle>{{(props.new) ? 'New Project' : 'Edit Project' }}</DialogTitle>
-                <DialogDescription>
-                    {{ (props.new) ? 'New Project' : `${props.project.name}` }}
-                </DialogDescription>
             </DialogHeader>
 
             <div class="flex flex-col gap-4">
@@ -82,15 +84,19 @@ const submit = () => {
                     <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.name" />
                 </div>
                 <div>
-                    <Label for="name">Description</Label>
-                    <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.description" />
+                    <Label for="description">Description</Label>
+                    <Input id="description" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.description" />
                 </div>
                 <div>
-                    <Label for="name">Project URL</Label>
-                    <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.url" />
+                    <Label for="url">Project URL</Label>
+                    <Input id="url" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.url" />
                 </div>
                 <div>
-                    <Skills v-model="project.skills" :project :skills></Skills>
+                    <Label for="active">{{ (form.active) ? `Active` : `Inactive` }}</Label>
+                    <Switch id="active" v-model="form.active" />
+                </div>
+                <div>
+                    <Skills v-model="form.skills" :project :skills></Skills>
                 </div>
                 <div class="mt-2">
                     <Label for="image">Image</Label>
