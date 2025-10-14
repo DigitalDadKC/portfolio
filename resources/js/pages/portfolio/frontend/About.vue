@@ -2,7 +2,7 @@
     <section id="about" class="section bg-light-secondary dark:bg-dark-tertiary">
         <div class="container mx-auto" v-motion :initial="{opacity: 0, y:100}" :visibleOnce="{opacity: 1, y: 0}">
             <div class="flex flex-col md:flex-row gap-12">
-                <img class="h-auto max-w-xl rounded-lg shadow-xl shadow-light-tertiary dark:shadow-dark-primary" src="img/profile.jpg" alt="Profile" />
+                <img class="max-h-96 max-w-xl rounded-lg shadow-xl shadow-light-tertiary dark:shadow-dark-primary" src="img/profile.jpg" alt="Profile" />
                 <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
                     <div class="flex-flex-col">
                         <h2 class="text-3xl lg:text-4xl font-medium lg:font-bold mb-3 text-light-quatrenary dark:text-dark-quatrenary">My Journey</h2>
