@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex justify-center w-full bg-light-primary dark:bg-dark-primary">
+    <div class="min-h-screen bg-light-secondary dark:bg-dark-secondary">
 
         <nav class="fixed z-20 w-full transition duration-500 bg-light-primary border-gray-200 dark:bg-dark-primary"
             :class="{ 'bg-light-primary dark:bg-dark-secondary border-b-2 -translate-y-3': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">

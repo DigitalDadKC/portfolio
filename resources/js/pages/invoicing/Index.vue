@@ -68,8 +68,8 @@ const update_customers = (data) => {
     <Head title="Invoices"></Head>
 
     <GuestLayout title="Invoicing Software">
-        <template #title>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Invoicing Software</h2>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Invoicing</h2>
         </template>
 
         <section class="bg-light-secondary dark:bg-dark-secondary h-full p-3 sm:p-5">

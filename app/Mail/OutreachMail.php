@@ -27,7 +27,7 @@ class OutreachMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Construction Software',
+            subject: 'Transform Spreadsheets into Software!',
         );
     }
 
