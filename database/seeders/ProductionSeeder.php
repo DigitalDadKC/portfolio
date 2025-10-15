@@ -2,13 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Job;
 use App\Models\Line;
 use App\Models\Scope;
 use App\Models\Client;
 use App\Models\Invoice;
-use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Material;
 use App\Models\Proposal;
@@ -17,10 +16,10 @@ use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
-class DatabaseSeeder extends Seeder
+class ProductionSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
