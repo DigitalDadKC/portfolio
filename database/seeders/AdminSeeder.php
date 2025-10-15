@@ -25,21 +25,21 @@ class AdminSeeder extends Seeder
                 'name' => 'Jim Halpert',
                 'email' => 'jimhalpert@dundermifflin.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('KSUwildcat#5'),
+                'password' => bcrypt(env('USER_PASSWORD')),
                 'role' => 'guest'
             ],
             [
                 'name' => 'Pam Beesley',
                 'email' => 'pambeesley@dundermifflin.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('KSUwildcat#5'),
+                'password' => bcrypt(env('USER_PASSWORD')),
                 'role' => 'estimator'
             ],
             [
                 'name' => 'Michael Scott',
                 'email' => 'michaelscott@dundermifflin.com',
                 'email_verified_at' => now(),
-                'password' => bcrypt('KSUwildcat#5'),
+                'password' => bcrypt(env('USER_PASSWORD')),
                 'role' => 'manager'
             ],
         ];
