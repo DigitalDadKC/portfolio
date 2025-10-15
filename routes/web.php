@@ -112,3 +112,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}', [AdminController::class, 'update_user'])->name('users.update');
 
 require __DIR__ . '/auth.php';
+
+// Route::get('/link', function () {
+//     $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+//     $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
+//     symlink($targetFolder, $linkFolder);
+//     echo 'success';
+// });
+
+// 2 METHODS OF CREATING SYMLINKS
+// Route::get('/link', function () {
+//     Artisan::call('storage:link');
+//     return 'ok!';
+// });
