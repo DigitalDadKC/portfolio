@@ -15,6 +15,8 @@ use App\Models\InvoiceItem;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductionSeeder extends Seeder
 {
@@ -23,7 +25,25 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ProductionSqlSeeder::class);
+        $models = [
+            'MaterialUnitSize',
+            'Skills',
+            'Projects',
+            'Features',
+            'UnitOfMeasurements',
+            'States',
+            'Companies',
+            'CsiDivisions',
+            'CsiSections',
+            'CsiSubsections'
+        ];
+        foreach ($models as $model) {
+            $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
+            DB::unprepared(file_get_contents($path));
+            $this->command->info($model . ' Model Seeded!');
+        }
+        DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
