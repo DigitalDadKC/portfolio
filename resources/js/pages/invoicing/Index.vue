@@ -42,6 +42,7 @@ const newInvoice = {
 }
 
 const getInvoices = () => {
+    console.log(search.value)
     router.reload({
         data: {
             search: search.value,

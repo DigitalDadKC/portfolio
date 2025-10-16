@@ -48,18 +48,19 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/skills', SkillController::class);
     Route::resource('/projects', ProjectController::class);
     Route::resource('/features', FeatureController::class);
-    Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
+    // Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::resource('/clients', ClientController::class);
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
 });
 
 // jobs
-Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
-Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
-Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
-Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estimating.edit');
-Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
+Route::resource('/estimating', JobController::class);
+// Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
+// Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
+// Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
+// Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estimating.edit');
+// Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
 
 // proposal
 Route::post('proposals/{job}/{proposal?}', [ProposalController::class, 'create'])->name('proposals');
