@@ -20,7 +20,7 @@ use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
-use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+// use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
 use App\Mail\OutreachMail;
 
 /*
@@ -43,16 +43,16 @@ Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio
 Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.index');
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::resource('/skills', SkillController::class);
-    Route::resource('/projects', ProjectController::class);
-    Route::resource('/features', FeatureController::class);
-    // Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
-    Route::resource('/clients', ClientController::class);
-    Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
-    Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
-});
+// Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+//     Route::resource('/skills', SkillController::class);
+//     Route::resource('/projects', ProjectController::class);
+//     Route::resource('/features', FeatureController::class);
+//     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
+//     Route::resource('/clients', ClientController::class);
+//     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
+//     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
+// });
 
 // jobs
 Route::resource('/estimating', JobController::class);
