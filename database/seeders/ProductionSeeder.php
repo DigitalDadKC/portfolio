@@ -23,7 +23,7 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(SqlSeeder::class);
+        $this->call(ProductionSqlSeeder::class);
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
