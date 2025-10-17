@@ -69,9 +69,6 @@ const getJobs = () => {
                     <tr class="uppercase">
                         <th colspan="10">
                             <div class="flex flex-col md:flex-row justify-between px-2 py-4">
-                                <!-- <Link :href="route('estimating.create')" as="button" class="" prefetch>
-                                    <Button>Add Job</Button>
-                                </Link> -->
                                 <ManageJob :new="true" :job="newJob" :states></ManageJob>
                                 <div>
                                     <Paginator :links="props.jobs.meta.links" @update:model-value="getJobs()" />

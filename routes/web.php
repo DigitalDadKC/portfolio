@@ -53,7 +53,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 });
 
 // jobs
-Route::resource('/estimating', JobController::class);
 Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
 Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
 Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
