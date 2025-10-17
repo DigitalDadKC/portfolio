@@ -20,21 +20,21 @@ use App\Http\Resources\CompanyResource;
 
 class JobController extends Controller
 {
-    private $ref_state;
-    private $ref_uom;
-    private $ref_line;
-    private $ref_scope;
-    private $ref_proposal;
-    private $ref_job;
+    // private $ref_state;
+    // private $ref_uom;
+    // private $ref_line;
+    // private $ref_scope;
+    // private $ref_proposal;
+    // private $ref_job;
 
     public function __construct()
     {
-        $this->ref_state = collect([['id' => NULL, 'abbr' => '', 'state' => '']])->mapInto(State::class)->first();
-        $this->ref_uom = collect([['id' => NULL, 'UOM' => '']])->mapInto(UnitOfMeasurement::class)->first();
-        $this->ref_line = collect([['id' => NULL, 'description' => '', 'unit_of_measurement' => $this->ref_uom, 'price' => NULL, 'quantity' => NULL, 'total' => NULL, 'days' => NULL]])->mapInto(Line::class);
-        $this->ref_scope = collect([['id' => NULL, 'name' => '', 'area' => NULL, 'days' => NULL, 'total' => NULL, 'lines' => $this->ref_line]])->mapInto(Scope::class);
-        $this->ref_proposal = collect([['id' => NULL, 'name' => '', 'contingency' => NULL, 'type' => 'base', 'total' => NULL, 'scope' => $this->ref_scope]])->mapInto(Proposal::class);
-        $this->ref_job = collect([['id' => NULL, 'number' => NULL, 'address' => '', 'city' => '', 'state' => $this->ref_state, 'total' => NULL, 'days' => NULL, 'start_date' => NULL, 'notes' => NULL, 'exclusions' => NULL, 'proposals' => $this->ref_proposal]])->mapInto(Job::class)->first();
+        // $this->ref_state = collect([['id' => NULL, 'abbr' => '', 'state' => '']])->mapInto(State::class)->first();
+        // $this->ref_uom = collect([['id' => NULL, 'UOM' => '']])->mapInto(UnitOfMeasurement::class)->first();
+        // $this->ref_line = collect([['id' => NULL, 'description' => '', 'unit_of_measurement' => $this->ref_uom, 'price' => NULL, 'quantity' => NULL, 'total' => NULL, 'days' => NULL]])->mapInto(Line::class);
+        // $this->ref_scope = collect([['id' => NULL, 'name' => '', 'area' => NULL, 'days' => NULL, 'total' => NULL, 'lines' => $this->ref_line]])->mapInto(Scope::class);
+        // $this->ref_proposal = collect([['id' => NULL, 'name' => '', 'contingency' => NULL, 'type' => 'base', 'total' => NULL, 'scope' => $this->ref_scope]])->mapInto(Proposal::class);
+        // $this->ref_job = collect([['id' => NULL, 'number' => NULL, 'address' => '', 'city' => '', 'state' => $this->ref_state, 'total' => NULL, 'days' => NULL, 'start_date' => NULL, 'notes' => NULL, 'exclusions' => NULL, 'proposals' => $this->ref_proposal]])->mapInto(Job::class)->first();
     }
     /**
      * Display a listing of the resource.
@@ -90,6 +90,8 @@ class JobController extends Controller
             'city' => 'required',
             'state_id' => 'required',
             'zip' => 'required|min:5|max:5',
+            'customer_id' => 'required',
+            'start_date' => 'required',
         ]);
 
         Job::create([
@@ -100,6 +102,7 @@ class JobController extends Controller
             'start_date' => $request->start_date,
             'zip' => $request->zip,
             'notes' => $request->notes,
+            'customer_id' => $request->customer_id,
         ]);
 
         return to_route('estimating.index');

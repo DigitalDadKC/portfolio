@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Label } from '@/components/ui/label';
+import { Label } from 'reka-ui';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const model = defineModel()
@@ -13,7 +13,7 @@ const props = defineProps({
     <div>
         <Label for="customer">Customer</Label>
         <Select id="customer" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
-            <SelectTrigger class="w-full cursor-pointer bg-white dark:bg-dark-tertiary dark:text-dark-quatrenary">
+            <SelectTrigger class="w-full cursor-pointer">
                 <SelectValue placeholder="Select customer" />
             </SelectTrigger>
             <SelectContent>

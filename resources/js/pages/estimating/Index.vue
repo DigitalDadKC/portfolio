@@ -32,7 +32,10 @@ const newJob = {
     'address': '',
     'city': '',
     'state_id': null,
-    'zip': null
+    'customer_id': null,
+    'zip': null,
+    'start_date': '',
+    'created_at': '',
 }
 
 const states = computed(() => {
@@ -62,6 +65,9 @@ const getJobs = () => {
     <Head title="Estimating" />
 
     <GuestLayout title="Construction Estimating Software">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Estimating</h2>
+        </template>
 
         <div class="container mx-auto">
             <table class="table table-auto bg-light-secondary dark:bg-dark-secondary rounded-lg">
@@ -69,7 +75,7 @@ const getJobs = () => {
                     <tr class="uppercase">
                         <th colspan="10">
                             <div class="flex flex-col md:flex-row justify-between px-2 py-4">
-                                <ManageJob :new="true" :job="newJob" :states></ManageJob>
+                                <ManageJob :new="true" :job="newJob" :states :customers></ManageJob>
                                 <div>
                                     <Paginator :links="props.jobs.meta.links" @update:model-value="getJobs()" />
                                     <div class="mt-2">
@@ -93,7 +99,7 @@ const getJobs = () => {
                         <th class="text-center hidden xl:table-cell">
                             <Customer v-model="customer_id" :customers @update:model-value="getJobs()"></Customer>
                         </th>
-                        <th class="bg-light-tertiary text-black rounded-t-sm">
+                        <th class="bg-light-quatrenary border-b-black border-b-4 py-2 text-black rounded-t-sm">
                             <div class="text-center text-lg">
                                 Proposals
                             </div>
@@ -114,19 +120,16 @@ const getJobs = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs">
+                    <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs bg-light-tertiary">
                         <td class="p-2">
                             <div class="flex items-center justify-between">
                                 {{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}
-                                <ManageJob :new="false" :job :states></ManageJob>
+                                <ManageJob :new="false" :job :states :customers></ManageJob>
                             </div>
                         </td>
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
                         <td class="hidden xl:table-cell max-w-96">{{ job.customer.name }}</td>
-                        <td class="bg-light-tertiary px-2 py-1">
-                            <!-- <Link method="post" as="button" :href="route('proposals', { job: job.id })">
-                                <PrimaryButton class="h-6">New Proposal</PrimaryButton>
-                            </Link> -->
+                        <td class="bg-light-quatrenary px-2 py-1">
                             <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
                                 <td class="min-w-52">
                                     {{ proposal.name }}
@@ -146,10 +149,10 @@ const getJobs = () => {
                                 <td class="w-full">
                                     <div class="flex py-1">
                                         <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
-                                            <Download class="text-accent"></Download>
+                                            <Download class="text-light-primary"></Download>
                                         </a>
                                         <a target="_blank" :href="route('proposals.browserPDF', { proposal: proposal.id })">
-                                            <FileText class="text-accent"></FileText>
+                                            <FileText class="text-light-primary"></FileText>
                                         </a>
                                     </div>
                                 </td>

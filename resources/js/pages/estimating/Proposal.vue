@@ -146,10 +146,14 @@ watch(() => props.proposal, (item) => {
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Estimating Web App" />
+    <Head title="Proposal" />
 
-        <div class="max-w-6xl bg-light-secondary dark:bg-dark-tertiary rounded-lg p-4">
+    <GuestLayout title="Construction Estimating Software">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Proposal</h2>
+        </template>
+
+        <div class="max-w-6xl mx-auto bg-light-primary dark:bg-dark-tertiary rounded-lg p-4">
             <div class="flex justify-between gap-4 mb-4">
                 <div class="flex w-1/2 flex-col">
                     <div class="grid grid-cols-4">
@@ -205,7 +209,7 @@ watch(() => props.proposal, (item) => {
 
             <form @submit.prevent="submit()" class="flex flex-col rounded-md">
                 <div class="flex items-start justify-end mb-4">
-                    <Button class="h-12 w-32 bg-light-primary dark:bg-dark-primary dark:text-dark-quatrenary" @click.prevent="addScope()"><Plus></Plus>Add Scope</Button>
+                    <Button class="h-12 w-32 cursor-pointer" @click.prevent="addScope()"><Plus></Plus>Add Scope</Button>
                 </div>
                 <div v-for="(scope, scopeIndex) in form.proposal.scopes" :key="scopeIndex" class="relative bg-light-tertiary rounded-md p-2 my-6" v-motion-slide-right>
                     <div class="absolute flex gap-2 bg-light-quatrenary -top-10 rounded-t-lg p-2">
@@ -223,7 +227,7 @@ watch(() => props.proposal, (item) => {
                                 <FormattedInput width="48" :id="`scope-area-${scopeIndex}`" v-model="scope.area" type="number" @blur="updateScope(scopeIndex)" />
                             </div>
                         </div>
-                        <Button class="bg-light-primary dark:bg-dark-primary dark:text-dark-quatrenary" @click.prevent="addLine(scopeIndex)"><Plus></Plus>Add Line</Button>
+                        <Button class="cursor-pointer" @click.prevent="addLine(scopeIndex)"><Plus></Plus>Add Line</Button>
                     </div>
                     <div v-if="form.errors['scopes.' + scopeIndex + '.name']" class="text-red-400">{{ form.errors['scopes.' + scopeIndex + '.name']}}</div>
 
@@ -304,10 +308,10 @@ watch(() => props.proposal, (item) => {
 
             <div class="flex justify-between mt-2">
                 <Link :href="route('estimating.index')" as="button" prefetch>
-                    <Button>Back</Button>
+                    <Button class="cursor-pointer">Back</Button>
                 </Link>
                 <!-- <v-btn as="submit" type="submit" :disabled="form.processing" @click="form.PDF = false">Save & Return</v-btn> -->
-                <Button variant="destructive" @click="destroyProposal()">Delete</Button>
+                <Button class="cursor-pointer" variant="destructive" @click="destroyProposal()">Delete</Button>
                 <!-- <DangerButton color="red-accent-2" @click="destroyProposal()">Delete Proposal</DangerButton> -->
                 <!-- <v-btn as="submit" type="submit" :disabled="form.processing">Generate PDF</v-btn> -->
             </div>

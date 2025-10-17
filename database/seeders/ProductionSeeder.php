@@ -55,7 +55,6 @@ class ProductionSeeder extends Seeder
         Proposal::factory(400)->create();
         Scope::factory(600)->create();
         Line::factory(950)->create();
-        Client::factory(200)->create();
         Invoice::factory(100)->create();
         InvoiceItem::factory(250)->create();
     }

@@ -49,7 +49,7 @@ onMounted(() => {
             :class="{ 'bg-light-primary dark:bg-dark-secondary border-b-2 -translate-y-3': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
             <div class="flex flex-wrap items-center justify-between mx-auto p-2">
                 <Link href="/" class="flex">
-                    <img src="img/dad.png" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }"
+                    <img src="/img/dad.png" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }"
                         :enter="{ x: Math.floor(Math.random() * 1) + 1, y: Math.floor(Math.random() * 1) + 1,
                         transition: { repeat: Infinity, repeatType: 'loop', repeatDelay: 100 } }"
                     />
