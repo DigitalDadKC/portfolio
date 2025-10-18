@@ -6,36 +6,36 @@ import { Check } from "lucide-vue-next"
 
 const model = defineModel()
 const props = defineProps({
-    skills: Object,
+    user: Object,
+    roles: Object,
 })
 
 </script>
 
 <template>
     <div>
-        <Label for="skill" class="text-right">Skill</Label>
-        <Select id="skill" onValueChange="{setSelectedValue}" value="{selectedValue}" multiple v-model="model">
+        <Label for="role" class="text-right">Role</Label>
+        <Select id="role" onValueChange="{setSelectedValue}" value="{selectedValue}" multiple v-model="model">
             <SelectTrigger
                 class="w-full bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/5 cursor-pointer">
-                <!-- <SelectValue placeholder="Select a skill" /> -->
-                {{model.map(skill => skill.name).join(', ')}}
+                {{model.map(role => role.name).join(', ')}}
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Categories</SelectLabel>
-                    <SelectItem v-for="skill in props.skills" :key="skill.id" :value="skill.id" :data-selected="true"
-                    @select.prevent="(e) => {
-                        let skillToAdd = props.skills.find(skill => skill.id === e.detail.value)
-                        if(!model.map(skill => skill.id).includes(skillToAdd.id)) {
-                            model.push(skillToAdd)
+                    <SelectItem v-for="role in props.roles" :key="role.id" :value="role.id" :data-selected="true"
+                        @select.prevent="(e) => {
+                        let roleToAdd = props.roles.find(role => role.id === e.detail.value)
+                        if(!model.map(role => role.id).includes(roleToAdd.id)) {
+                            model.push(roleToAdd)
                         } else {
-                            model.splice(model.indexOf(skillToAdd.id, 1))
+                            model.splice(model.indexOf(roleToAdd.id, 1))
                         }
                     }"
                     >
-                        {{ skill.name }}
+                        {{ role.name }} - {{ role.id }}
                         <span class="absolute right-2 flex size-3.5 items-center justify-center">
-                            <Check :class="cn('ml-auto h-20 w-20')" v-if="model.map(item => item.id).includes(skill.id)" />
+                            <Check :class="cn('ml-auto h-20 w-20')" v-if="model.map(item => item.id).includes(role.id)" />
                         </span>
                     </SelectItem>
                 </SelectGroup>

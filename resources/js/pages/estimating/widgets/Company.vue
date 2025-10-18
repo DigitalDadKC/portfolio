@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useForm, router } from '@inertiajs/vue3'
 import ManageCompany from '../modals/ManageCompany.vue'
-import SecondaryButton from '@/components/SecondaryButton.vue'
+import { Building } from 'lucide-vue-next'
 
 const props = defineProps({
     company: Object,
@@ -58,8 +58,8 @@ const submit = () => {
 
 <template>
     <div class="relative">
-        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-6 left-0">
-            <v-icon size="x-large">mdi-card-account-details</v-icon>
+        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-10 left-0">
+            <Building></Building>
         </div>
 
         <div class="fixed right-6 flex justify-end">

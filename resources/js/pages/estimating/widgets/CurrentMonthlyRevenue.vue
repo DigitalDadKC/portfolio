@@ -1,5 +1,6 @@
 <script setup>
 import { useFormatCurrency } from "@/composables/useFormatCurrency";
+import { CircleDollarSign } from "lucide-vue-next";
 
 const { formatWithCommas } = useFormatCurrency()
 const props = defineProps({
@@ -15,8 +16,8 @@ const previous_month_revenue = previous_month_jobs.flatMap(job => job.proposals.
 
 <template>
     <div class="relative">
-        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-6 left-0">
-            <v-icon size="x-large">mdi-currency-usd</v-icon>
+        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-10 left-0">
+            <CircleDollarSign></CircleDollarSign>
         </div>
 
         <div class="pl-16">

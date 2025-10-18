@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useFormatCurrency } from "@/composables/useFormatCurrency";
 import { useDateFormat } from '@vueuse/core';
+import { BadgeDollarSign } from 'lucide-vue-next';
 
 const { formatWithCommas } = useFormatCurrency()
 const props = defineProps({
@@ -28,15 +29,14 @@ props.jobs.forEach(job => {
 
 <template>
     <div class="relative">
-        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-6 left-0">
-            <v-icon size="x-large">mdi-arrow-up-bold</v-icon>
+        <div class="p-3 bg-white inline-flex border-2 rounded-lg border-light-quatrenary dark:border-dark-quatrenary absolute -top-10 left-0">
+            <BadgeDollarSign></BadgeDollarSign>
         </div>
 
         <div class="pl-16">
             <h5 class="my-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Largest Proposal</h5>
         </div>
-
-            <ul>
+            <ul class="text-sm">
                 <li class="font-normal text-gray-700 dark:text-gray-400 py-0.5">
                     Job #: {{ biggest_job.number }}
                 </li>
@@ -53,6 +53,5 @@ props.jobs.forEach(job => {
                     Date {{ useDateFormat(biggest_job.created_at, 'MMM DD, YYYY') }}
                 </li>
             </ul>
-
     </div>
 </template>

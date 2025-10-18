@@ -21,7 +21,8 @@
         <table style="width: 100%">
             <tr>
                 <td style="width: 50%">
-                    {{-- <img src={{ asset('/storage/' . (optional($company)->logo)) }} alt="company logo" width="200" /> --}}
+                    <img src={{ asset('/storage/' . (optional($company)->logo)) }} alt="company logo" width="200" />
+                    {{ $company->logo }}
                 </td>
                 <td style="width: 25%;">
                     <div><h2 style="margin: 0; color: #3d4dfc;">INVOICE</h2></div>
@@ -76,7 +77,7 @@
                         <td style="padding: 0.5rem; text-align: right;">${{number_format($item->unit_price/100 * $item->quantity, 2)}}</td>
                     </tr>
                     @php
-                        $subtotal +=  number_format($item->unit_price/100 * $item->quantity, 2)
+                        $subtotal +=  number_format($item->price/100 * $item->quantity, 2)
                     @endphp
                 @endforeach
             </table>

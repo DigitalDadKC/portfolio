@@ -75,7 +75,7 @@ class AdminController extends Controller
                 'address' => $request->address,
                 'city' => $request->city,
                 'state_id' => $request->state_id,
-                'zip_code' => $request->zip,
+                'zip' => $request->zip,
                 'terms' => $request->terms,
                 'logo' => $logo
             ]);
@@ -111,7 +111,7 @@ class AdminController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state_id' => $request->state_id,
-            'zip_code' => $request->zip,
+            'zip' => $request->zip,
             'logo' => $logo,
             'terms' => $request->terms,
         ]);
