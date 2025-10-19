@@ -1,16 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import DangerButton from '@/components/DangerButton.vue';
-import SecondaryButton from '@/components/SecondaryButton.vue';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-vue-next';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 const props = defineProps({
     customer: Object,
     errors: Object
 })
 
-const dialog = ref(false)
-
+const isDialogOpen = ref(false)
 const form = useForm({
     id: props.customer.id,
     name: props.customer.name,
@@ -19,34 +19,41 @@ const form = useForm({
 const submit = () => {
         form.delete(route('customers.destroy', {customer: form.id}), {
             onSuccess: () => {
-                dialog.value = false
+                isDialogOpen.value = false
             }
+        }, {
+            preserveState: true,
         })
     }
 
-
-watch(
-    () => props.customer,
-    (customer) => {
-        (form.id = customer.id),
-        (form.name = customer.name);
-    }
-);
-
+watchEffect(() => {
+    Object.assign(form, props.customer)
+})
 
 </script>
 
 <template>
-    <!-- <v-dialog v-model="dialog" max-width="600">
-        <template v-slot:activator="{ props: activatorProps }">
-            <v-icon v-bind="activatorProps" size="32">mdi-trash-can</v-icon>
-        </template>
+    <Dialog v-model:open="isDialogOpen">
+        <DialogTrigger as-child>
+            <Button class="cursor-pointer">
+                <Trash2></Trash2>
+            </Button>
+        </DialogTrigger>
 
-        <v-card :title="`Delete ${props.customer.name}?`">
-            <v-card-actions>
-                <SecondaryButton @click=" dialog = false; form.reset(); form.clearErrors();">Cancel</SecondaryButton>
-                <DangerButton @click="submit()">Delete</DangerButton>
-            </v-card-actions>
-        </v-card>
-    </v-dialog> -->
+        <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+            <DialogHeader class="p-6">
+                <DialogTitle>{{ `Delete ${props.customer.name} ?` }}</DialogTitle>
+                <DialogDescription>
+                    Are you sure?
+                </DialogDescription>
+            </DialogHeader>
+
+            <DialogFooter class="p-6 pt-0">
+                <div class="flex gap-2">
+                    <Button variant="secondary" class="cursor-pointer" @click="isDialogOpen = false">Cancel</Button>
+                    <Button type="submit" class="cursor-pointer" :disabled="form.processing" @click="submit()">Yes</Button>
+                </div>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
 </template>

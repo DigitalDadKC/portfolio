@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->integer('zip');
             $table->timestamp('start_date')->nullable()->default(NULL);
             $table->string('notes')->nullable()->default(NULL);
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('proposals', function (Blueprint $table) {

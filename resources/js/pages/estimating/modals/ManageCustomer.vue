@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import State from "../partials/State.vue";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil } from "lucide-vue-next";
-import { useDateFormat } from '@vueuse/core';
 
 const props = defineProps({
     customer: Object,
@@ -26,14 +25,14 @@ const submit = () => {
     if (props.new) {
         form.post(route("customers.store"), {
             onSuccess: () => {
-                dialog.value = false;
+                isDialogOpen.value = false;
                 form.reset()
             },
         });
     } else {
         form.patch(route("customers.update", { customer: form.id }), {
             onSuccess: () => {
-                dialog.value = false;
+                isDialogOpen.value = false;
             },
             preserveState: "errors",
         });
@@ -48,28 +47,30 @@ watchEffect(() => {
 </script>
 
 <template>
-        <Dialog v-model:open="isDialogOpen">
+    <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
             <Button class="cursor-pointer" v-if="props.new">Add Customer</Button>
-            <Pencil class="cursor-pointer" v-else />
+            <Button class="cursor-pointer" v-else>
+                <Pencil />
+            </Button>
         </DialogTrigger>
-        <DialogContent class=" overflow-auto">
+        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary overflow-auto">
             <DialogHeader>
                 <DialogTitle>{{ `${(props.new) ? 'New Customer' : `Edit ${props.customer.name}`}` }}</DialogTitle>
                 <DialogDescription>
                     <div class="grid grid-cols-4 gap-2">
-                        <div class="col-span-4">
+                        <div class="col-span-3">
                             <Label for="customer">Name</Label>
-                            <Input v-model="form.name" width="full" />
+                            <Input v-model="form.name" width="full" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" />
                         </div>
-                        <div class="col-span-4">
-                            <State :states v-model="form.state_id"></State>
+                        <div class="col-span-1">
+                            <Label for="state">State</Label>
+                            <State id="state" :states v-model="form.state_id"></State>
                         </div>
                         <div class="col-span-4">
                             <h2 class="text-lg text-end">Jobs</h2>
                             <div v-for="job in props.customer.jobs" :key="job.id" class="flex justify-end">
-                                <Link :href="route('estimating.edit', job.id)">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>
-                                <!-- Job #{{ job.number }} - {{ useDateFormat(job.start_date, 'MMM D, YYYY') }} {{ job.city }} - {{ job.state.state }} -->
+                                <Link :href="route('estimating.edit', job.id)" class="hover:bg-light-tertiary hover:text-light-primary px-2 rounded-xs py-1">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>
                             </div>
                         </div>
                     </div>
@@ -88,43 +89,4 @@ watchEffect(() => {
             </DialogFooter>
         </DialogContent>
     </Dialog>
-
-
-    <!-- <v-dialog v-model="dialog" max-width="600">
-        <template v-slot:activator="{ props: activatorProps }">
-            <v-icon v-bind="activatorProps" size="52" v-if="props.new">mdi-plus-box</v-icon>
-            <v-icon v-bind="activatorProps" size="32" v-else>mdi-pencil</v-icon>
-        </template>
-
-        <v-card :title="props.new ? 'New Customer' : `Edit ${props.customer.name ?? ''}`">
-            <v-card-text>
-                <v-row>
-                    <v-col cols="12">
-                        <v-text-field density="compact" v-model="form.name" label="Name"></v-text-field>
-                        <h1 v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</h1>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-autocomplete density="compact" v-model="form.state_id" :items="props.states" label="State"item-title="state" item-value="id" clearable></v-autocomplete>
-                    <h1 v-if="form.errors.state_id" class="text-red-500">{{ form.errors.state_id }}</h1>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="12">
-                        <v-card title="Jobs" subtitle="click on a job">
-                            <v-card-text v-for="job in props.customer.jobs" :key="job.id">
-                                <Link :href="route('estimating.edit', job.id)" prefetch>
-                                    {{job.number}} - ({{ job.city }}, {{ job.state.abbr }})
-                                </Link>
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-card-text>
-
-            <v-card-actions>
-                <SecondaryButton text="Close" variant="plain" @click=" dialog = false; form.reset(); form.clearErrors();">Cancel</SecondaryButton>
-                <PrimaryButton color="primary" text="Save" @click="submit()">Save</PrimaryButton>
-            </v-card-actions>
-        </v-card>
-    </v-dialog> -->
 </template>

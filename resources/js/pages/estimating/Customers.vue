@@ -70,18 +70,18 @@ const icon = computed(() => {
             <TableHeader class="p-4">
                 <TableRow class="uppercase bg-light-tertiary dark:bg-dark-tertiary">
                     <TableHead class="py-4">
-                        <Label>Customer</Label>
-                        <div class="flex justify-between items-center gap-4">
-                            <SearchBox v-model="search" @update:model-value="getCustomers()"></SearchBox>
+                        <Label for="search" class="text-black">Customer</Label>
+                        <div class="flex items-center gap-2">
+                            <SearchBox id="search" v-model="search" @update:model-value="getCustomers()"></SearchBox>
                             <icon class="cursor-pointer" @click="order = order == 'asc' ? 'desc' : 'asc'" />
                         </div>
                     </TableHead>
                     <TableHead>
-                        <Label>State</Label>
-                        <State v-model="state" :states @update:model-value="getCustomers()"></State>
+                        <Label for="state" class="text-black">State</Label>
+                        <State id="state" v-model="state" :states @update:model-value="getCustomers()"></State>
                     </TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead>Updated</TableHead>
+                    <TableHead class="text-black">Created</TableHead>
+                    <TableHead class="text-black">Updated</TableHead>
                     <TableHead colspan="2" class="text-end">
                         <Manage :new="true" :customer="newCustomer" :states></Manage>
                     </TableHead>

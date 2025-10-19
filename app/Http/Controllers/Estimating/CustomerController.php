@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StateResource;
 use App\Http\Resources\CustomerResource;
-use App\Http\Requests\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -41,18 +39,15 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCustomerRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'state_id' => 'required'
+        ]);
+
         Customer::create([
             'name' => $request->name,
             'state_id' => $request->state_id
@@ -62,26 +57,15 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $customer)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer)
+    public function update(Request $request, Customer $customer)
     {
+        $request->validate([
+            'name' => 'required|unique:customers,name,'.$customer->id,
+            'state_id' => 'required'
+        ]);
+
         $customer->update([
             'name' => $request->name,
             'state_id' => $request->state_id

@@ -42,8 +42,8 @@ onMounted(() => {
 <template>
     <div class="min-h-screen bg-light-secondary dark:bg-dark-secondary">
         <SidebarProvider :defaultOpen="showSidebar" style="--sidebar-width: 20rem; --sidebar-width-mobile: 20rem;" class="justify-center">
-            <nav class="fixed z-20 w-full transition duration-500 bg-light-primary border-gray-200 dark:bg-dark-primary"
-                :class="{ 'bg-light-primary dark:bg-dark-secondary border-b-2 -translate-y-3': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
+            <nav class="fixed z-20 w-full transition duration-500"
+                :class="{ 'bg-light-primary dark:bg-dark-secondary -translate-y-1 border-b-4 border-black': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
                 <div class="flex flex-wrap items-center justify-between mx-auto p-2">
                     <div class="flex items-center gap-8">
                         <SidebarTrigger />
@@ -70,15 +70,6 @@ onMounted(() => {
                     </div>
                     <div class="hidden md:flex items-center justify-between gap-4 w-full md:w-auto" id="navbar-sticky">
                         <slot name="navigation" />
-                        <!-- <ul
-                            class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:border-dark-tertiary">
-                            <li v-for="(navigation, index) in navigations" :key="index" class="py-2">
-                                <Link :href="navigation.url"
-                                    class="text-light-quatrenary dark:text-dark-quatrenary hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-tertiary"
-                                    :class="{ 'text-base': scrollBackground, 'text-lg': !scrollBackground }"
-                                    :aria-label="navigation.name" aria-current="page">{{ navigation.name }}</Link>
-                            </li>
-                        </ul> -->
                         <Button
                             class="cursor-pointer bg-light-quatrenary text-light-secondary dark:bg-dark-quatrenary dark:text-dark-primary py-2 rounded-lg"
                             @click="toggleDark()">
