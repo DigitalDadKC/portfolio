@@ -29,7 +29,7 @@ const props = defineProps({
                         if(!model.map(skill => skill.id).includes(skillToAdd.id)) {
                             model.push(skillToAdd)
                         } else {
-                            model.splice(model.indexOf(skillToAdd.id, 1))
+                            model.splice(model.map(skill => skill.id).indexOf(skillToAdd.id), 1)
                         }
                     }"
                     >

@@ -1,10 +1,15 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import { Head, router } from "@inertiajs/vue3";
+import {  router } from "@inertiajs/vue3";
 import { useDateFormat } from "@vueuse/core";
-import GuestLayout from "@/layouts/GuestLayout.vue";
+import EstimatingLayout from "@/layouts/EstimatingLayout.vue";
+import { Label } from "@/components/ui/label";
 import Manage from "./modals/ManageCustomer.vue";
 import Delete from "./modals/DeleteCustomer.vue";
+import SearchBox from "./partials/SearchBox.vue";
+import State from './partials/State.vue';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { ArrowDown, ArrowUp } from "lucide-vue-next";
 
 const props = defineProps({
     customers: Object,
@@ -54,52 +59,49 @@ const getCustomers = () => {
 };
 
 const icon = computed(() => {
-    return order.value == "desc" ? "mdi-arrow-up-box" : "mdi-arrow-down-box";
+    return order.value == "desc" ? ArrowUp : ArrowDown;
 })
 </script>
 
 <template>
-    <GuestLayout>
+    <EstimatingLayout>
 
-        <Head title="Customers" />
-
-        <table class="container mx-auto">
-            <thead>
-                <tr>
-                    <th colspan="6" class="text-2xl text-center py-4">
-                        CUSTOMERS<Manage :new="true" :customer="newCustomer" :states></Manage>
-                    </th>
-                </tr>
-                <tr class="uppercase bg-light-primary">
-                    <th>
-                        <v-text-field v-model="search" density="compact" hide-details label="Search customers..."
-                            :prepend-inner-icon="icon" @click:prepend-inner="order = order == 'asc' ? 'desc' : 'asc'"
-                            @input="getCustomers()"></v-text-field>
-                    </th>
-                    <th>
-                        <v-select v-model="state" density="compact" hide-details="auto" :items="filtered_states"
-                            item-title="state" item-value="id" label="State"
-                            @update:model-value="getCustomers()"></v-select>
-                    </th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th colspan="2"></th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-light-secondary text-center">
-                <tr v-for="(customer, index) in props.customers" :key="index">
-                    <td class="py-2 px-4">{{ customer.name }}</td>
-                    <td>{{ customer.state.state }}</td>
-                    <td>{{ useDateFormat(customer.created_at, "M.D.YYYY") }}</td>
-                    <td>{{ useDateFormat(customer.updated_at, "M.D.YYYY") }}</td>
-                    <td>
+        <Table class="bg-light-primary dark:bg-dark-primary w-300">
+            <TableHeader class="p-4">
+                <TableRow class="uppercase bg-light-tertiary dark:bg-dark-tertiary">
+                    <TableHead class="py-4">
+                        <Label>Customer</Label>
+                        <div class="flex justify-between items-center gap-4">
+                            <SearchBox v-model="search" @update:model-value="getCustomers()"></SearchBox>
+                            <icon class="cursor-pointer" @click="order = order == 'asc' ? 'desc' : 'asc'" />
+                        </div>
+                    </TableHead>
+                    <TableHead>
+                        <Label>State</Label>
+                        <State v-model="state" :states @update:model-value="getCustomers()"></State>
+                    </TableHead>
+                    <TableHead>Created</TableHead>
+                    <TableHead>Updated</TableHead>
+                    <TableHead colspan="2" class="text-end">
+                        <Manage :new="true" :customer="newCustomer" :states></Manage>
+                    </TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody class="divide-y divide-light-secondary">
+                <TableRow v-for="(customer, index) in props.customers" :key="index">
+                    <TableCell class="py-2 px-4">{{ customer.name }}</TableCell>
+                    <TableCell>{{ customer.state.state }}</TableCell>
+                    <TableCell>{{ useDateFormat(customer.created_at, "M.D.YYYY") }}</TableCell>
+                    <TableCell>{{ useDateFormat(customer.updated_at, "M.D.YYYY") }}</TableCell>
+                    <TableCell>
                         <Manage :new="false" :customer :states />
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         <Delete :customer="customer" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </GuestLayout>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
+
+    </EstimatingLayout>
 </template>

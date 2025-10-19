@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const model = defineModel()
 const props = defineProps({
@@ -10,7 +9,6 @@ const props = defineProps({
 </script>
 
 <template>
-    <Label for="state">State</Label>
     <Select id="state" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
         <SelectTrigger class="w-full bg-white dark:bg-dark-tertiary dark:text-dark-quatrenary">
             <SelectValue placeholder="Select state" />

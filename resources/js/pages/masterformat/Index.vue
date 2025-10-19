@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, shallowRef, useTemplateRef } from 'vue';
-import { Link, Head } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+import FormattedInput from '@/components/FormattedInput.vue';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-vue-next';
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { UseFuseOptions } from '@vueuse/integrations';
@@ -84,13 +87,18 @@ const selectSearch = async (searchedItem) => {
 </script>
 
 <template>
-    <Head title="Masterformat/CSI codes" />
+    <Head title="Masterformat" />
 
     <GuestLayout title="Masterformat (CSI) Reference">
-        <div class="antialiased bg-gray-50 dark:bg-gray-900" v-motion-fade>
+        <div class="antialiased bg-light-primary dark:bg-gray-900" v-motion-fade>
             <main class="p-4 h-auto py-20 md:px-10">
-                <div class="select-all">
-                    <v-text-field v-model="search" density="compact" hide-details variant="outlined" prepend-inner-icon="mdi-magnify" placeholder="Search divisions and sections..." class="select-all"></v-text-field>
+                <div class="relative w-full items-center">
+                    <!-- <FormattedInput v-model="search" width="full" /> -->
+                    <Input v-model="search" class="pl-10 bg-light-secondary dark:bg-dark-secondary" />
+                    <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                        <Search class="size-6" />
+                    </span>
+                    <!-- <v-text-field v-model="search" density="compact" hide-details variant="outlined" prepend-inner-icon="mdi-magnify" placeholder="Search divisions and sections..." class="select-all"></v-text-field> -->
                 </div>
                 <div class="relative ms-9 ">
                     <div class="absolute bg-light-secondary w-full overflow-auto max-h-80 border-x-2 border-b-2 border-black z-10" ref="resultSection" v-motion-fade v-if="results.length > 0">

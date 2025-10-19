@@ -1,7 +1,7 @@
 <script setup>
 import {  } from "vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import GuestLayout from '@/layouts/GuestLayout.vue';
+import EstimatingLayout from '@/layouts/EstimatingLayout.vue';
 import Users from './widgets/Users.vue';
 import Company from './widgets/Company.vue';
 import LargestProposal from "./widgets/LargestProposal.vue";
@@ -28,7 +28,7 @@ const form = useForm({
 </script>
 
 <template>
-    <GuestLayout>
+    <EstimatingLayout>
 
         <Head title="Admin" />
 
@@ -62,5 +62,5 @@ const form = useForm({
             </div>
         </main>
 
-    </GuestLayout>
+    </EstimatingLayout>
 </template>

@@ -1,8 +1,13 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watchEffect } from "vue";
 import { useForm, Link } from "@inertiajs/vue3";
-import PrimaryButton from "@/components/PrimaryButton.vue";
-import SecondaryButton from "@/components/SecondaryButton.vue";
+import { Input } from "@/components/ui/input";
+import { Label } from 'reka-ui';
+import { Button } from '@/components/ui/button';
+import State from "../partials/State.vue";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Pencil } from "lucide-vue-next";
+import { useDateFormat } from '@vueuse/core';
 
 const props = defineProps({
     customer: Object,
@@ -10,8 +15,7 @@ const props = defineProps({
     new: Boolean,
 });
 
-const dialog = ref(false);
-
+const isDialogOpen = ref(false)
 const form = useForm({
     id: props.customer.id,
     name: props.customer.name,
@@ -36,18 +40,57 @@ const submit = () => {
     }
 };
 
-watch(
-    () => props.customer,
-    (customer) => {
-        (form.id = customer.id),
-            (form.name = customer.name),
-            (form.state_id = customer.state.id);
-    }
-);
+watchEffect(() => {
+    Object.assign(form, props.customer)
+    form.state_id = props.customer.state.id
+})
+
 </script>
 
 <template>
-    <v-dialog v-model="dialog" max-width="600">
+        <Dialog v-model:open="isDialogOpen">
+        <DialogTrigger as-child>
+            <Button class="cursor-pointer" v-if="props.new">Add Customer</Button>
+            <Pencil class="cursor-pointer" v-else />
+        </DialogTrigger>
+        <DialogContent class=" overflow-auto">
+            <DialogHeader>
+                <DialogTitle>{{ `${(props.new) ? 'New Customer' : `Edit ${props.customer.name}`}` }}</DialogTitle>
+                <DialogDescription>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="col-span-4">
+                            <Label for="customer">Name</Label>
+                            <Input v-model="form.name" width="full" />
+                        </div>
+                        <div class="col-span-4">
+                            <State :states v-model="form.state_id"></State>
+                        </div>
+                        <div class="col-span-4">
+                            <h2 class="text-lg text-end">Jobs</h2>
+                            <div v-for="job in props.customer.jobs" :key="job.id" class="flex justify-end">
+                                <Link :href="route('estimating.edit', job.id)">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>
+                                <!-- Job #{{ job.number }} - {{ useDateFormat(job.start_date, 'MMM D, YYYY') }} {{ job.city }} - {{ job.state.state }} -->
+                            </div>
+                        </div>
+                    </div>
+                </DialogDescription>
+            </DialogHeader>
+
+            <div v-for="(error, index) in form.errors" :key="index">
+                <p class="text-red-500">
+                    {{ error }}
+                </p>
+            </div>
+
+            <DialogFooter>
+                <Button class="cursor-pointer" variant="outline" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
+                <Button class="cursor-pointer" @click="loading = !loading; submit()">Save</Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+
+
+    <!-- <v-dialog v-model="dialog" max-width="600">
         <template v-slot:activator="{ props: activatorProps }">
             <v-icon v-bind="activatorProps" size="52" v-if="props.new">mdi-plus-box</v-icon>
             <v-icon v-bind="activatorProps" size="32" v-else>mdi-pencil</v-icon>
@@ -83,5 +126,5 @@ watch(
                 <PrimaryButton color="primary" text="Save" @click="submit()">Save</PrimaryButton>
             </v-card-actions>
         </v-card>
-    </v-dialog>
+    </v-dialog> -->
 </template>

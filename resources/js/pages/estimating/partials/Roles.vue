@@ -25,11 +25,11 @@ const props = defineProps({
                     <SelectLabel>Categories</SelectLabel>
                     <SelectItem v-for="role in props.roles" :key="role.id" :value="role.id" :data-selected="true"
                         @select.prevent="(e) => {
-                        let roleToAdd = props.roles.find(role => role.id === e.detail.value)
-                        if(!model.map(role => role.id).includes(roleToAdd.id)) {
-                            model.push(roleToAdd)
+                        let target_role = props.roles.find(role => role.id === e.detail.value)
+                        if(!model.map(role => role.id).includes(target_role.id)) {
+                            model.push(target_role)
                         } else {
-                            model.splice(model.indexOf(roleToAdd.id, 1))
+                            model.splice(model.map(role => role.id).indexOf(target_role.id), 1)
                         }
                     }"
                     >

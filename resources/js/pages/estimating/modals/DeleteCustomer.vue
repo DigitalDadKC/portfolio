@@ -37,7 +37,7 @@ watch(
 </script>
 
 <template>
-    <v-dialog v-model="dialog" max-width="600">
+    <!-- <v-dialog v-model="dialog" max-width="600">
         <template v-slot:activator="{ props: activatorProps }">
             <v-icon v-bind="activatorProps" size="32">mdi-trash-can</v-icon>
         </template>
@@ -48,5 +48,5 @@ watch(
                 <DangerButton @click="submit()">Delete</DangerButton>
             </v-card-actions>
         </v-card>
-    </v-dialog>
+    </v-dialog> -->
 </template>

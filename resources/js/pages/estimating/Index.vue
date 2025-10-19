@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Link, Head, router } from '@inertiajs/vue3';
-import GuestLayout from '@/layouts/GuestLayout.vue';
+import { Link, router } from '@inertiajs/vue3';
+import EstimatingLayout from '@/layouts/EstimatingLayout.vue';
 import Paginator from '@/components/Paginator.vue';
+import { Label } from '@/components/ui/label';
 import SecondaryButton from '@/components/SecondaryButton.vue';
 import SearchBox from './partials/SearchBox.vue';
 import Pages from './partials/Pages.vue';
@@ -11,7 +12,7 @@ import Customer from './partials/Customer.vue';
 import ManageJob from './modals/ManageJob.vue';
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
-import { Download, FileText, } from 'lucide-vue-next';
+import { Download, FileText } from 'lucide-vue-next';
 
 const props = defineProps({
     jobs: Object,
@@ -62,15 +63,21 @@ const getJobs = () => {
 </script>
 
 <template>
-    <Head title="Estimating" />
-
-    <GuestLayout title="Construction Estimating Software">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Estimating</h2>
+    <EstimatingLayout>
+        <template #navigation>
+            <ul
+                class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:border-dark-tertiary">
+                <li v-for="(link, index) in links" :key="index" class="py-2">
+                    <Link :href="link.url"
+                        class="text-light-quatrenary dark:text-dark-quatrenary hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-tertiary"
+                        :class="{ 'text-base': scrollBackground, 'text-lg': !scrollBackground }"
+                        :aria-label="navigation.name" aria-current="page">{{ navigation.name }}</Link>
+                </li>
+            </ul>
         </template>
 
-        <div class="container mx-auto">
-            <table class="table table-auto bg-light-secondary dark:bg-dark-secondary rounded-lg">
+        <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-4">
+            <table class="table table-auto rounded-lg bg-light-secondary dark:bg-dark-secondary">
                 <thead>
                     <tr class="uppercase">
                         <th colspan="10">
@@ -91,9 +98,11 @@ const getJobs = () => {
                     </tr>
                     <tr>
                         <th class="pl-2">
+                            <Label>Job #</Label>
                             <SearchBox v-model="search" @update:model-value="getJobs()"></SearchBox>
                         </th>
                         <th>
+                            <Label for="state">State</Label>
                             <Address v-model="state_id" :states @update:model-value="getJobs()"></Address>
                         </th>
                         <th class="text-center hidden xl:table-cell">
@@ -120,7 +129,7 @@ const getJobs = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs bg-light-tertiary">
+                    <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs border-2 border-black">
                         <td class="p-2">
                             <div class="flex items-center justify-between">
                                 {{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}
@@ -129,7 +138,7 @@ const getJobs = () => {
                         </td>
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
                         <td class="hidden xl:table-cell max-w-96">{{ job.customer.name }}</td>
-                        <td class="bg-light-quatrenary px-2 py-1">
+                        <td class="bg-light-tertiary dark:bg-dark-tertiary border-2 border-black px-2 py-1">
                             <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
                                 <td class="min-w-52">
                                     {{ proposal.name }}
@@ -162,5 +171,5 @@ const getJobs = () => {
                 </tbody>
             </table>
         </div>
-    </GuestLayout>
+    </EstimatingLayout>
 </template>

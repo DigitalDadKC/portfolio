@@ -152,7 +152,7 @@ watch(() => props.proposal, (item) => {
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Proposal</h2>
         </template>
 
-        <div class="max-w-6xl mx-auto bg-light-primary dark:bg-dark-tertiary rounded-lg p-4">
+        <div class="max-w-6xl mx-auto bg-light-primary dark:bg-dark-tertiary rounded-lg p-4 mt-8">
             <div class="flex justify-between gap-4 mb-4">
                 <div class="flex w-1/2 flex-col">
                     <div class="grid grid-cols-4">

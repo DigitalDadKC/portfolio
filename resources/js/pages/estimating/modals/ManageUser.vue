@@ -46,7 +46,6 @@ watchEffect(() => {
                 <DialogTitle>Manage Company</DialogTitle>
                 <DialogDescription>Edit Company Details</DialogDescription>
             </DialogHeader>
-            {{ form.user.name }}
             <div class="grid grid-cols-4 gap-4 py-4 overflow-y-auto px-6">
                 <div class="col-span-2">
                     <Label for="name">Name</Label>
