@@ -4,10 +4,11 @@ import { Link, router } from '@inertiajs/vue3';
 import EstimatingLayout from '@/layouts/EstimatingLayout.vue';
 import Paginator from '@/components/Paginator.vue';
 import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import SecondaryButton from '@/components/SecondaryButton.vue';
 import SearchBox from './partials/SearchBox.vue';
 import Pages from './partials/Pages.vue';
-import Address from './partials/State.vue';
+import State from './partials/State.vue';
 import Customer from './partials/Customer.vue';
 import ManageJob from './modals/ManageJob.vue';
 import { useDateFormat } from '@vueuse/core';
@@ -76,10 +77,10 @@ const getJobs = () => {
             </ul>
         </template>
 
-        <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-4">
-            <table class="table table-auto rounded-lg bg-light-secondary dark:bg-dark-secondary">
+        <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-8">
+            <table class="table table-auto bg-light-primary dark:bg-dark-primary border-2 border-black">
                 <thead>
-                    <tr class="uppercase">
+                    <tr class="uppercase border-2 border-black">
                         <th colspan="10">
                             <div class="flex flex-col md:flex-row justify-between px-2 py-4">
                                 <ManageJob :new="true" :job="newJob" :states :customers></ManageJob>
@@ -103,12 +104,12 @@ const getJobs = () => {
                         </th>
                         <th>
                             <Label for="state">State</Label>
-                            <Address v-model="state_id" :states @update:model-value="getJobs()"></Address>
+                            <State v-model="state_id" :states @update:model-value="getJobs()"></State>
                         </th>
                         <th class="text-center hidden xl:table-cell">
                             <Customer v-model="customer_id" :customers @update:model-value="getJobs()"></Customer>
                         </th>
-                        <th class="bg-light-quatrenary border-b-black border-b-4 py-2 text-black rounded-t-sm">
+                        <th class="bg-light-tertiary dark:bg-dark-tertiary border-b-black border-b-4 py-2 text-black rounded-t-sm">
                             <div class="text-center text-lg">
                                 Proposals
                             </div>
@@ -127,7 +128,7 @@ const getJobs = () => {
                             </table>
                         </th>
                     </tr>
-                </thead>
+            </thead>
                 <tbody>
                     <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs border-2 border-black">
                         <td class="p-2">
@@ -138,11 +139,14 @@ const getJobs = () => {
                         </td>
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
                         <td class="hidden xl:table-cell max-w-96">{{ job.customer.name }}</td>
-                        <td class="bg-light-tertiary dark:bg-dark-tertiary border-2 border-black px-2 py-1">
+                        <td class="bg-light-secondary dark:bg-dark-secondary border-2 border-black px-2 py-1">
+                            <tr>
+                                <Link :href="route('proposals.store', { job: job.id })" method="post">
+                                    <Button>NEW PROPOSAL</Button>
+                                </Link>
+                            </tr>
                             <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
-                                <td class="min-w-52">
-                                    {{ proposal.name }}
-                                </td>
+                                <td class="min-w-52">{{ proposal.name }}</td>
                                 <td class="min-w-24">{{ proposal.type }}</td>
                                 <td class="min-w-24">{{ useDateFormat(proposal.created_at, 'M/D/YYYY') }}</td>
                                 <td CLASS="min-w-28">{{ proposal.estimator.name }}</td>
@@ -152,16 +156,16 @@ const getJobs = () => {
                                 </td>
                                 <td class="min-w-24">
                                     <Link :href="route('proposals.edit', { proposal: proposal.id })">
-                                    <SecondaryButton class="w-20 h-6 bg-accent text-accent">Edit</SecondaryButton>
+                                        <Button variant="outline" >EDIT PROPOSAL</Button>
                                     </Link>
                                 </td>
                                 <td class="w-full">
                                     <div class="flex py-1">
                                         <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
-                                            <Download class="text-light-primary"></Download>
+                                            <Download class="text-accent"></Download>
                                         </a>
                                         <a target="_blank" :href="route('proposals.browserPDF', { proposal: proposal.id })">
-                                            <FileText class="text-light-primary"></FileText>
+                                            <FileText class="text-accent"></FileText>
                                         </a>
                                     </div>
                                 </td>

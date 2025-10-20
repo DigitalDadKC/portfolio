@@ -10,7 +10,7 @@ const props = defineProps({
 
 <template>
     <Select id="state" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
-        <SelectTrigger class="w-full bg-white dark:bg-dark-tertiary dark:text-dark-quatrenary">
+        <SelectTrigger class="w-full bg-light-tertiary dark:bg-dark-tertiary dark:text-dark-quatrenary">
             <SelectValue placeholder="Select state" />
         </SelectTrigger>
         <SelectContent>

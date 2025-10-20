@@ -46,7 +46,7 @@ onMounted(() => {
                 :class="{ 'bg-light-primary dark:bg-dark-secondary -translate-y-1 border-b-4 border-black': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
                 <div class="flex flex-wrap items-center justify-between mx-auto p-2">
                     <div class="flex items-center gap-8">
-                        <SidebarTrigger />
+                        <SidebarTrigger class="z-20" />
                         <Link href="/" class="flex">
 
                             <img src="/img/dad.svg" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }" :enter="{

@@ -60,8 +60,8 @@ watchEffect(() => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer" v-if="props.new">New Job</Button>
-            <Button class="cursor-pointer" v-else>EDIT</Button>
+            <Button class="cursor-pointer" v-if="props.new">NEW JOB</Button>
+            <Button class="cursor-pointer" v-else>EDIT JOB</Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6 pb-0">

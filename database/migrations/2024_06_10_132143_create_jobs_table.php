@@ -38,7 +38,7 @@ return new class extends Migration {
             $table->string('name')->nullable()->default(NULL);
             $table->integer('contingency')->nullable()->default(NULL);
             $table->foreignId('job_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['Base', 'Alternate', 'Change Order'])->constrained();
+            $table->enum('type', ['Base', 'Alternate', 'Change Order'])->nullable()->default(NULL)->constrained();
             $table->text('exclusions')->nullable()->default(NULL);
             $table->foreignId('user_id')->constrained()->default(1);
             $table->timestamps();

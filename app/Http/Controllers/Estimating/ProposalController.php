@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Estimating;
 
 use App\Models\Job;
 use App\Models\Line;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Scope;
 use App\Models\State;
@@ -14,13 +15,13 @@ use App\Enums\ProposalTypeEnum;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\UnitOfMeasurement;
 use App\Http\Resources\JobResource;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\LineResource;
 use App\Http\Resources\ScopeResource;
 use App\Http\Resources\StateResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ProposalResource;
 use App\Http\Resources\UnitofmeasurementResource;
-use App\Http\Controllers\Controller;
 
 class ProposalController extends Controller
 {
@@ -61,47 +62,12 @@ class ProposalController extends Controller
      */
     public function store(Job $job, Request $request)
     {
-        $request->validate([
-            'proposal.name' => 'required',
-            'proposal.type' => 'required',
-            'proposal.scopes.*.lines.*.description' => 'required',
-            'proposal.scopes.*.lines.*.price' => 'required',
-            'proposal.scopes.*.lines.*.quantity' => 'required',
-            'proposal.scopes.*.lines.*.unit_of_measurement.id' => 'required'
-        ]);
-
         $proposal = Proposal::create([
-            'name' => $request->proposal['name'],
-            'contingency' => $request->proposal['contingency'],
-            'job_id' => $request->proposal['job']['id'],
-            'type' => $request->proposal['type'],
+            'job_id' => $job->id,
+            'user_id' => User::query()->inRandomOrder()->first()->id,
         ]);
 
-        foreach ($request->proposal['scopes'] as $scope) {
-            $newScope = Scope::create(
-                [
-                    'name' => $scope['name'],
-                    'area' => $scope['area'],
-                    'proposal_id' => $proposal->id
-                ]
-            );
-
-            foreach ($scope['lines'] as $key=>$line) {
-                Line::create(
-                    [
-                        'order' => $key,
-                        'description' => $line['description'],
-                        'unit_of_measurement_id' => $line['unit_of_measurement']['id'],
-                        'days' => $line['days'],
-                        'price' => $line['price']*100,
-                        'quantity' => $line['quantity']*100,
-                        'scope_id' => $newScope->id
-                    ]
-                );
-            }
-        }
-
-        return to_route('estimating.index');
+        return to_route('proposals.edit', ['proposal' => $proposal->id]);
     }
 
     /**

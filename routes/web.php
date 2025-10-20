@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\Estimating\JobController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Estimating\AdminController;
@@ -39,6 +40,10 @@ Route::get('/datatable', [DatatableController::class, 'index'])->name('datatable
 Route::get('/datatable/export', [DatatableController::class, 'export'])->name('export');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.index');
+Route::resource('/admin/products', ProductController::class);
+Route::post('/checkout', [ProductController::class, 'checkout'])->name('checkout');
+Route::get('/success', [ProductController::class, 'success'])->name('checkout.success');
+Route::post('/cancel', [ProductController::class, 'cancel'])->name('checkout.cancel');
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
@@ -60,7 +65,7 @@ Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estim
 Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
 
 // proposal
-Route::post('proposals/{job}/{proposal?}', [ProposalController::class, 'create'])->name('proposals');
+Route::post('proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');
 Route::get('proposals/edit/{proposal}', [ProposalController::class, 'edit'])->name('proposals.edit');
 Route::put('proposals/update/{proposal}', [ProposalController::class, 'updateProposal'])->name('proposals.update');
 Route::delete('proposals/delete/{proposal}', [ProposalController::class, 'destroy'])->name('proposals.destroy');

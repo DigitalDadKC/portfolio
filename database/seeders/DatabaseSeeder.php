@@ -8,6 +8,7 @@ use App\Models\Line;
 use App\Models\Scope;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Product;
 use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Material;
@@ -32,12 +33,13 @@ class DatabaseSeeder extends Seeder
         Material::factory(50)->create();
 
         Customer::factory(50)->create();
-        Job::factory(250)->create();
-        Proposal::factory(400)->create();
-        Scope::factory(600)->create();
-        Line::factory(950)->create();
+        Job::factory(50)->create();
+        Proposal::factory(100)->create();
+        Scope::factory(250)->create();
+        Line::factory(400)->create();
         Client::factory(200)->create();
         Invoice::factory(100)->create();
         InvoiceItem::factory(250)->create();
+        Product::factory(3)->create();
     }
 }

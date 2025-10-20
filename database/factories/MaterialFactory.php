@@ -20,6 +20,7 @@ class MaterialFactory extends Factory
     {
         $unit_size_ids = MaterialUnitSize::pluck('id')->toArray();
         $category_ids = MaterialCategory::pluck('id')->toArray();
+
         return [
             'sku' => strtoupper(fake()->randomLetter() . fake()->unique()->numberBetween(0, 10000)),
             'name' => "Product " . fake()->words(2, true),
