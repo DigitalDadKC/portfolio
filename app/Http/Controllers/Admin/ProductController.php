@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function checkout(Request $request)
     {
-        \Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
 
         $products = Product::all();
         $lineItems = [];
