@@ -2,21 +2,22 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Job;
 use App\Models\Line;
 use App\Models\Scope;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Material;
 use App\Models\Proposal;
 use App\Models\InvoiceItem;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductionSeeder extends Seeder
 {
@@ -57,5 +58,6 @@ class ProductionSeeder extends Seeder
         Line::factory(950)->create();
         Invoice::factory(100)->create();
         InvoiceItem::factory(250)->create();
+        Product::factory(3)->create();
     }
 }
