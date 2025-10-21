@@ -60,7 +60,7 @@ class ProductController extends Controller
     }
 
     public function success(Request $request) {
-        \Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
 
         $sessionId = $request->get('session_id');
 
