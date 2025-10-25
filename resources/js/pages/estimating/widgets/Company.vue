@@ -1,59 +1,12 @@
-<script setup>
-import { computed } from 'vue'
-import { useForm, router } from '@inertiajs/vue3'
+<script setup lang="ts">
 import ManageCompany from '../modals/ManageCompany.vue'
 import { Building } from 'lucide-vue-next'
+import CompanyDrawer from './CompanyDrawer.vue';
 
 const props = defineProps({
     company: Object,
     states: Object,
 })
-
-const form = useForm({
-    id: props.company?.id,
-    name: props.company?.name,
-    address: props.company?.address,
-    city: props.company?.city,
-    state_id: props.company.state?.id,
-    zip: props.company?.zip,
-    logo: props.company?.logo
-})
-
-const image = computed(() => {
-    if (!form.logo) {
-        return
-    }
-    if (typeof form.logo == 'object') {
-        return URL.createObjectURL(form.logo)
-    } else {
-        return form.logo
-    }
-})
-
-const submit = () => {
-    if (props.new) {
-        form.post(route('companies.store'), {
-            onSuccess: (page) => {
-                form.id = page.props.flash.message
-                form.name = props.company.name
-                form.address = props.company.address
-                form.city = props.company.city
-                form.state_id = props.company.state.id,
-                form.zip = props.company.zip
-            }
-        })
-    } else {
-        router.patch(route('companies.update', { company: form.id }), {
-            name: form.name,
-            address: form.address,
-            city: form.city,
-            state_id: form.state_id,
-            zip: form.zip,
-        }, {
-            preserveScroll: true,
-        })
-    }
-}
 </script>
 
 <template>
@@ -62,8 +15,9 @@ const submit = () => {
             <Building></Building>
         </div>
 
-        <div class="fixed right-6 flex justify-end">
-            <ManageCompany :company :states></ManageCompany>
+        <div class="flex justify-end">
+            <!-- <ManageCompany :company :states></ManageCompany> -->
+            <CompanyDrawer :company :states></CompanyDrawer>
         </div>
 
         <div class="flex justify-between pl-16">

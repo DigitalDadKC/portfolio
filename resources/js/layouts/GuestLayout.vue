@@ -14,10 +14,9 @@ const props = defineProps({
     title: String,
 })
 
-const showSidebar = useStorage('my-flag', true)
+const isSidebarOpen = useStorage('sidebar-state', true)
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const showMobileMenu = ref('false')
 const scrollBackground = ref(false)
 
 const navigations = [
@@ -41,12 +40,12 @@ onMounted(() => {
 
 <template>
     <div class="min-h-screen bg-light-secondary dark:bg-dark-secondary">
-        <SidebarProvider :defaultOpen="showSidebar" style="--sidebar-width: 20rem; --sidebar-width-mobile: 20rem;" class="justify-center">
+        <SidebarProvider :defaultOpen="isSidebarOpen" style="--sidebar-width: 20rem; --sidebar-width-mobile: 20rem;" class="justify-center">
             <nav class="fixed z-20 w-full transition duration-500"
                 :class="{ 'bg-light-primary dark:bg-dark-secondary -translate-y-1 border-b-4 border-black': scrollBackground, ' dark:bg-dark-primary': !scrollBackground }">
                 <div class="flex flex-wrap items-center justify-between mx-auto p-2">
                     <div class="flex items-center gap-8">
-                        <SidebarTrigger class="z-20" />
+                        <SidebarTrigger class="z-20" @click="isSidebarOpen = !isSidebarOpen" />
                         <Link href="/" class="flex">
                             <ApplicationLogo :scrollBackground />
                             <div

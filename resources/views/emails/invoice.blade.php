@@ -3,9 +3,10 @@
     <h1 style="font-family: Brush">
         Hello There {{ $invoice['client']['company'] }}!
     </h1>
-    <div>
+
+    <h6>
         {{ $invoice['total_price'] }}
-    </div>
+    </h6>
 
     <div>
         {{ $invoice['client']['email'] }}
@@ -20,10 +21,6 @@
     </div>
 
     <div>
-        <img src="{{ 'storage/' . $company['logo'] }}" />
         <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
-        <img src="{{ asset('/public/img/dad.svg') }}" alt="logo" id="image" width="30" />
-        <img src="{{ asset('public/img/dad.png') }}" alt="logo" id="image" width="30" />
-        <img src="{{ asset('img/dad.svg') }}" alt="logo" id="image" width="30" />
     </div>
 </body>

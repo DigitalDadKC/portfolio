@@ -57,6 +57,7 @@ const submit = () => {
                 <DialogTitle>Manage Company</DialogTitle>
                 <DialogDescription>Edit Company Details</DialogDescription>
             </DialogHeader>
+
             <div class="grid grid-cols-4 gap-4 py-4 overflow-y-auto px-6">
                 <div class="col-span-2">
                     <Label for="name">Name</Label>
@@ -102,6 +103,7 @@ const submit = () => {
                     <img :src="picture" class="w-full" />
                 </div>
             </div>
+            
             <DialogFooter class="flex gap-2 p-6">
                 <Button class="cursor-pointer" variant="outline" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
                 <Button class="cursor-pointer" type="submit" :disabled="form.processing" @click="submit()">Save</Button>

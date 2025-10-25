@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Skill;
 use App\Models\State;
 use App\Models\Company;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Resources\JobResource;
@@ -18,6 +19,7 @@ use App\Http\Resources\SkillResource;
 use App\Http\Resources\StateResource;
 use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProposalResource;
 
 class AdminController extends Controller
 {
@@ -47,6 +49,7 @@ class AdminController extends Controller
             'new' => $new,
             'company' => $company,
             'jobs' => $jobs,
+            'proposals' => ProposalResource::collection(Proposal::orderBy('created_at', 'desc')->get()),
             'states' => StateResource::collection(State::all()),
             'users' => UserResource::collection(User::with('roles')->get()),
             'roles' => RoleResource::collection(Role::all()),

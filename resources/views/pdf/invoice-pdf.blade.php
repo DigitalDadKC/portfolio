@@ -1,4 +1,8 @@
 <div>
+    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
+</div>
+
+<div>
     {{ $clientInvoice->id }}
 </div>
 
