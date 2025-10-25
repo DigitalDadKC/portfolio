@@ -57,7 +57,7 @@ watchEffect(() => {
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-1">
                         <Label for="number">Number</Label>
-                        <Input id="number" width="full" class="bg-white" v-model="form.number" />
+                        <Input id="number" width="full" class="bg-white" v-model="form.number" :disabled="true" />
                     </div>
                     <div class="col-span-2">
                     </div>

@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('number')->unique();
             $table->date('date_created');
             $table->date('due_date');
-            $table->decimal('total_price', 6, 2);
             $table->text('terms_and_conditions');
             $table->string('paid');
             $table->string('session_id')->nullable()->default(NULL);

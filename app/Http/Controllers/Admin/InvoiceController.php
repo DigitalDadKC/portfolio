@@ -40,6 +40,9 @@ class InvoiceController extends Controller
             'due_date' => 'required',
             'terms_and_conditions' => 'required',
             'client_id' => 'required',
+            'line_items.*.description' => 'required',
+            'line_items.*.price' => 'required|numeric',
+            'line_items.*.quantity' => 'required|integer',
         ]);
 
         $invoice = ClientInvoice::create([
@@ -73,13 +76,11 @@ class InvoiceController extends Controller
             'number' => 'required',
             'date_created' => 'required',
             'due_date' => 'required',
-            'total_price' => 'required',
             'terms_and_conditions' => 'required',
             'client_id' => 'required',
         ]);
 
         $invoice->update([
-            'total_price' => $request->total_price,
             'number' => $request->number,
             'date_created' => $request->date_created,
             'due_date' => $request->due_date,
@@ -87,6 +88,21 @@ class InvoiceController extends Controller
             'paid' => 'unpaid',
             'client_id' => $request->client_id,
         ]);
+
+        $idsToKeep = collect($request->client_invoice_items)->pluck('id')->toArray();
+        ClientInvoiceItem::where('client_invoice_id', $invoice->id)->whereNotIn('id', $idsToKeep)->delete();
+
+        foreach ($request->line_items as $item) {
+            ClientInvoiceItem::updateOrCreate([
+                'id' => $item['id'] ?? null,
+            ], [
+                    'description' => $item['description'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'client_invoice_id' => $invoice['id'],
+                ]
+            );
+        }
 
         return back()->with('success', 'Invoice created successfully.');
     }

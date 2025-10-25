@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Pencil, Plus } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import Line from '../partials/Line.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 
 const props = defineProps({
     new: Boolean,
@@ -18,6 +19,7 @@ const props = defineProps({
     clients: Object,
 })
 
+const { formatWithCommas } = useFormatCurrency();
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.invoice.id,
@@ -122,6 +124,10 @@ const removeItem = (e) => {
                         <div v-for="(item, index) in form.line_items" :key="index" class="mb-2">
                             <Line :item :index @update-item="(e) => updateItem(index, e)" @remove-item="removeItem(index)" />
                         </div>
+                    </div>
+                    <div class="flex justify-end">
+                        {{ form.line_items.length
+                            ? `Total: ` + formatWithCommas(form.line_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency') : 'No line items added yet.' }}
                     </div>
                     <div>
                         <div class="col-span-6">

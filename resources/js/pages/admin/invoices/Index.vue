@@ -58,7 +58,7 @@ const newInvoice = {
                         <TableCell class="p-3">{{ invoice.number }}</TableCell>
                         <TableCell class="p-3">{{ invoice.client.company }}</TableCell>
                         <TableCell class="p-3">{{ invoice.client.email }}</TableCell>
-                        <TableCell class="p-3">{{ formatWithCommas(invoice.total_price, 'currency') }}</TableCell>
+                        <TableCell class="p-3">{{ formatWithCommas(invoice.client_invoice_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency') }}</TableCell>
                         <TableCell class="p-3">{{ useDateFormat(invoice.date_created, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="p-3">{{ useDateFormat(invoice.due_date, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
