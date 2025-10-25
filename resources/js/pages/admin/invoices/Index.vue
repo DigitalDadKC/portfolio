@@ -7,19 +7,27 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
+import { descriptors } from 'chart.js/dist/core/core.defaults';
 
 const props = defineProps({
     invoices: Object,
     clients: Object,
 })
 
+console.log(props.invoices)
+
 const { formatWithCommas } = useFormatCurrency();
 const newInvoice = {
     id: null,
-    number: null,
+    number: 100+props.invoices.length,
     date_created: new Date(),
     due_date: new Date().setDate(new Date().getDate() + 30),
-    total_price: null,
+    line_items: [{
+        id: null,
+        description: '',
+        price: 0,
+        quantity: 1,
+    }],
     terms_and_conditions: '',
     client_id: null,
 }

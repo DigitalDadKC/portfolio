@@ -14,6 +14,7 @@ use App\Models\Material;
 use App\Models\Proposal;
 use App\Models\InvoiceItem;
 use App\Models\ClientInvoice;
+use App\Models\ClientInvoiceItem;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -38,8 +39,9 @@ class DatabaseSeeder extends Seeder
         Scope::factory(150)->create();
         Line::factory(200)->create();
 
-        Client::factory(50)->create();
-        // ClientInvoice::factory(100)->create();
+        Client::factory(20)->create();
+        ClientInvoice::factory(50)->create();
+        ClientInvoiceItem::factory(100)->create();
 
         Product::factory(3)->create();
         Invoice::factory(100)->create();

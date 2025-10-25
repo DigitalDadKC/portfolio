@@ -8,6 +8,6 @@ INSERT INTO `skills` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
 (7, 'Livewire', 'skills/Cf9xPNww6gMVl3ebaxBRhJOCpkrZS5AfBeISK0BT.svg', '2023-12-29 18:50:38', '2025-10-14 02:52:39'),
 (8, 'Vue', 'skills/DzaWqZWACvloroYXZJLISQgeymPBpmdjOy6NQTwY.svg', '2023-12-29 18:53:55', '2025-10-14 02:52:33'),
 (9, 'Bootstrap', 'skills/Tu4kqLMSPeLg3hHWzRm9gBosCOXTp3OBSbmaVuvh.svg', '2024-01-04 00:51:56', '2025-10-14 02:52:47'),
-(10, 'Excel VBA', 'skills/pxvp4oqpDAos4obArQfAvQjLWrA90yDZolmcrZmq.svg', '2024-01-04 01:35:56', '2025-10-14 19:28:23');
+(10, 'Excel VBA', 'skills/3c1qsbdxa8KIw6U2tjQysfcBmrh6F76Aoeg5SQoS.svg', '2024-01-04 01:35:56', '2025-10-14 19:28:23');
 
 COMMIT;

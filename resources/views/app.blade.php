@@ -12,7 +12,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="http://localhost:8000/img/dad.png">
+        <link rel="icon" type="image/x-icon" :href="public_path('/img/dad.svg')">
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"><!-- Calendly badge widget begin -->
 
         <!-- Scripts -->

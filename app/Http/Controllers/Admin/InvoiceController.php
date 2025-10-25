@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\ClientInvoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\ClientInvoiceItem;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -23,7 +24,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return Inertia::render('admin/invoices/Index', [
-            'invoices' => ClientInvoice::with('client')->get(),
+            'invoices' => ClientInvoice::with('client', 'client_invoice_items')->get(),
             'clients' => Client::orderBy('name')->get(),
         ]);
     }
@@ -37,13 +38,11 @@ class InvoiceController extends Controller
             'number' => 'required',
             'date_created' => 'required',
             'due_date' => 'required',
-            'total_price' => 'required',
             'terms_and_conditions' => 'required',
             'client_id' => 'required',
         ]);
 
         $invoice = ClientInvoice::create([
-            'total_price' => $request->total_price,
             'number' => $request->number,
             'date_created' => $request->date_created,
             'due_date' => $request->due_date,
@@ -51,6 +50,16 @@ class InvoiceController extends Controller
             'paid' => 'unpaid',
             'client_id' => $request->client_id,
         ]);
+
+        foreach ($request->line_items as $item) {
+            ClientInvoiceItem::create([
+                    'description' => $item['description'],
+                    'price' => $item['price'],
+                    'quantity' => $item['quantity'],
+                    'client_invoice_id' => $invoice['id'],
+                ]
+            );
+        }
 
         return back()->with('success', 'Invoice created successfully.');
     }

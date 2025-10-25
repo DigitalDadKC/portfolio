@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import Input from '@/components/FormattedInput.vue';
 import { Label } from 'reka-ui';
@@ -30,6 +30,11 @@ const form = useForm({
 const submit = () => {
     router.get(route('admin.invoices.send', props.invoice.id))
 }
+
+watchEffect(() => {
+    Object.assign(form, props.invoice)
+    form.client_id = props.invoice.client.id
+})
 </script>
 
 <template>
@@ -62,15 +67,15 @@ const submit = () => {
                     </div>
                     <div class="col-span-1">
                         <Label for="due_date">Due Date</Label>
-                        <InvoiceDate v-model="form.due_date" />
+                        <InvoiceDate v-model="form.due_date" :disabled="true" />
                     </div>
                     <div class="col-span-1 col-start-6">
                         <Label for="price">Price</Label>
-                        <Input id="price" class="bg-white" width="full" type="currency" v-model="form.total_price" />
+                        <Input id="price" class="bg-white" width="full" type="currency" v-model="form.total_price" :disabled="true" />
                     </div>
                     <div class="col-span-6">
                         <Label for="terms_and_conditions">Terms & Conditions</Label>
-                        <Textarea id="terms_and_conditions" class="bg-white" v-model="form.terms_and_conditions" />
+                        <Textarea id="terms_and_conditions" class="bg-white" v-model="form.terms_and_conditions" :disabled="true" />
                     </div>
                 </div>
 

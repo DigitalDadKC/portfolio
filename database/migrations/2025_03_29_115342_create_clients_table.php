@@ -36,6 +36,14 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained();
             $table->timestamps();
         });
+        Schema::create('client_invoice_items', function (Blueprint $table) {
+            $table->id();
+            $table->string('description');
+            $table->decimal('price', 6, 2);
+            $table->decimal('quantity');
+            $table->foreignId('client_invoice_id')->constrained();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -43,6 +51,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('client_invoice_items');
         Schema::dropIfExists('client_invoices');
         Schema::dropIfExists('outreaches');
         Schema::dropIfExists('clients');
