@@ -12,4 +12,7 @@ class Client extends Model
     public function outreaches(): HasMany {
         return $this->hasMany(Outreach::class);
     }
+    public function client_invoices(): HasMany {
+        return $this->hasMany(ClientInvoice::class);
+    }
 }

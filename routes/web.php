@@ -10,13 +10,13 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\FeatureController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\Estimating\JobController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Estimating\AdminController;
 use App\Http\Controllers\Invoicing\InvoiceController;
+use App\Http\Controllers\Invoicing\ProductController;
 use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
@@ -40,10 +40,6 @@ Route::get('/datatable', [DatatableController::class, 'index'])->name('datatable
 Route::get('/datatable/export', [DatatableController::class, 'export'])->name('export');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.index');
-Route::resource('/admin/products', ProductController::class);
-Route::post('/checkout', [ProductController::class, 'checkout'])->name('checkout');
-Route::get('/success', [ProductController::class, 'success'])->name('checkout.success');
-Route::post('/cancel', [ProductController::class, 'cancel'])->name('checkout.cancel');
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
@@ -52,10 +48,17 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/projects', ProjectController::class);
     Route::resource('/features', FeatureController::class);
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
+    Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
 });
+
+// CHECKOUT
+Route::post('/checkout', [AdminInvoiceController::class, 'checkout'])->name('checkout');
+Route::get('/success', [AdminInvoiceController::class, 'success'])->name('checkout.success');
+Route::post('/cancel', [AdminInvoiceController::class, 'cancel'])->name('checkout.cancel');
+Route::post('/webhook', [AdminInvoiceController::class, 'webhook'])->name('checkout.webhook');
 
 // jobs
 Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
@@ -98,6 +101,7 @@ Route::resource('/masterformat', DivisionController::class);
 Route::resource('/invoices', InvoiceController::class);
 Route::get('invoices/download-pdf/{invoice}', [InvoiceController::class, 'downloadPDF'])->name('invoices.downloadPDF');
 Route::get('invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
+Route::resource('/products', ProductController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {

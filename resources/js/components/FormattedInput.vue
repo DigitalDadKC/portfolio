@@ -107,7 +107,7 @@ function formatWithCommas(value) {
             :value="displayValue"
             :name="`${props.label}-${id}`"
             type="text"
-            class="file:text-foreground placeholder:text-muted-foreground selection:bg-light-quatrenary selection:text-primary-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-light-primary dark:bg-dark-primary px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            class="file:text-foreground placeholder:text-muted-foreground selection:bg-light-quatrenary selection:text-primary-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-white dark:bg-dark-primary px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
             :class="[{'bg-light-secondary dark:bg-dark-quatrenary text-light-quatrenary dark:text-dark-secondary border-light-tertiary dark:border-dark-tertiary': props.disabled}, widthClass]"
             placeholder=" "
             :disabled="props.disabled"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
-import NavLink from '@/components/NavLink.vue';
+import { Link } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { useStorage } from "@vueuse/core";
 import { useDark, useToggle } from "@vueuse/core";
@@ -9,6 +8,7 @@ import { Lightbulb, Moon, Menu, Notebook, BookMarked, DollarSign } from 'lucide-
 import { initFlowbite } from 'flowbite'
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar.vue";
+import ApplicationLogo from '@/components/ApplicationLogo.vue';
 
 const props = defineProps({
     title: String,
@@ -48,11 +48,7 @@ onMounted(() => {
                     <div class="flex items-center gap-8">
                         <SidebarTrigger class="z-20" />
                         <Link href="/" class="flex">
-
-                            <img src="/img/dad.svg" alt="Hero" class="rounded-lg h-12" :initial="{ x: 0, y: 0 }" :enter="{
-                                x: Math.floor(Math.random() * 1) + 1, y: Math.floor(Math.random() * 1) + 1,
-                                transition: { repeat: Infinity, repeatType: 'loop', repeatDelay: 100 }
-                            }" />
+                            <ApplicationLogo :scrollBackground />
                             <div
                                 class="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white transform duration-500 mt-1 ml-2">
                                 igitalDadKC

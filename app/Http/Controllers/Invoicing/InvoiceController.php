@@ -28,7 +28,6 @@ class InvoiceController extends Controller
         $filters['pages'] = $request->pages ? $request->pages : 10;
         $filters['customers'] = $request->input('customers', Customer::get()->map(fn($item) => $item->id)) ?? [];
 
-        // dd($request->customers, $filters['customers']);
         $invoices = Invoice::query()->with('customer')
             ->when($filters['search'], fn($query, $search) => $query->where('number', 'like', "%{$search}%")->orWhere('reference', 'like', "%{$search}%"))
             ->when($filters['unpaid'], fn($query) => $query->where('paid', 0))
@@ -39,20 +38,12 @@ class InvoiceController extends Controller
             ? InvoiceResource::collection($invoices->with('invoice_items.material.material_unit_size', 'invoice_items.material.material_category')->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString())
             : InvoiceResource::collection($invoices->with('invoice_items.material.material_unit_size', 'invoice_items.material.material_category')->paginate($filters['pages'])->withQueryString());
 
-        return inertia('invoicing/Index', [
+        return inertia('invoicing/invoicing/Index', [
             'invoices' => fn() => $invoices,
             'customers' => CustomerResource::collection(Customer::with('state')->orderBy('name')->get()),
             'materials' => MaterialResource::collection(Material::orderBy('name')->get()),
             'filters' => fn() => $filters,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**

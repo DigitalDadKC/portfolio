@@ -4,6 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Head } from '@inertiajs/vue3';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+const props = defineProps({
+    customer: Object,
+    session: Object,
+    order: Object,
+})
+
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
-import GuestLayout from '@/layouts/GuestLayout.vue';
+import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
+import InvoicingLayout from '@/layouts/InvoicingLayout.vue';
 import Search from './partials/Search.vue';
 import Paginator from './partials//Paginator.vue';
 import FilterCustomer from './partials/FIlterCustomer.vue';
@@ -65,9 +65,7 @@ const update_customers = (data) => {
 </script>
 
 <template>
-    <Head title="Invoices"></Head>
-
-    <GuestLayout title="Invoicing Software">
+    <InvoicingLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Invoicing</h2>
         </template>
@@ -130,5 +128,5 @@ const update_customers = (data) => {
             </div>
         </div>
 
-    </GuestLayout>
+    </InvoicingLayout>
 </template>

@@ -36,7 +36,10 @@
     <div id="outro" style="font-style: italic; color: #77685D">
         <p style="padding: 0; margin: 0;">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
+                <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
+                <img src="{{ asset('/img/dad.svg') }}" alt="logo" id="image" width="30" />
                 <img src="{{ asset('img/dad.png') }}" alt="logo" id="image" width="30" />
+                <img src="{{ asset('img/dad.svg') }}" alt="logo" id="image" width="30" />
             </a>
         </p>
         <p style="padding: 0; margin: 0;">RALEIGH GROESBECK</p>

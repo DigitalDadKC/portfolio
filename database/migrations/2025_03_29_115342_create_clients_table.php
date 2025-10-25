@@ -24,6 +24,18 @@ return new class extends Migration
             $table->date('date_emailed');
             $table->timestamps();
         });
+        Schema::create('client_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->string('number')->unique();
+            $table->date('date_created');
+            $table->date('due_date');
+            $table->decimal('total_price', 6, 2);
+            $table->text('terms_and_conditions');
+            $table->string('paid');
+            $table->string('session_id')->nullable()->default(NULL);
+            $table->foreignId('client_id')->constrained();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -31,6 +43,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('client_invoices');
         Schema::dropIfExists('outreaches');
         Schema::dropIfExists('clients');
     }

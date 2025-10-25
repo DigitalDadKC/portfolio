@@ -27,10 +27,10 @@ class SqlSeeder extends Seeder
             'CsiSubsections'
         ];
         foreach ($models as $model) {
-            $path = 'database/seeders/sql/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
+            $path = 'database/seeders/local/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
             DB::unprepared(file_get_contents($path));
             $this->command->info($model . ' Model Seeded!');
         }
-        DB::unprepared(file_get_contents('database/seeders/sql/' . Str::of('project_skill') . '.sql'));
+        DB::unprepared(file_get_contents('database/seeders/local/' . Str::of('project_skill') . '.sql'));
     }
 }

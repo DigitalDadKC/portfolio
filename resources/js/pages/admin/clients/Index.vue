@@ -11,11 +11,6 @@ import Outreach from './modals/Outreach.vue';
         clients: Object,
     })
 
-    const form = useForm({
-        name: '',
-        email: '',
-    })
-
     const newClient = {
         id: null,
         name: ''

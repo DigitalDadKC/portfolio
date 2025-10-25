@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
-use App\Models\Counter;
+use App\Models\Client;
+use App\Models\Company;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
 use App\Models\InvoiceItem;
+use Illuminate\Http\Request;
+use App\Models\ClientInvoice;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InvoiceController extends Controller
 {
@@ -16,15 +22,10 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/invoices/Index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('admin/invoices/Create');
+        return Inertia::render('admin/invoices/Index', [
+            'invoices' => ClientInvoice::with('client')->get(),
+            'clients' => Client::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -32,119 +33,132 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'number' => 'required',
+            'date_created' => 'required',
+            'due_date' => 'required',
+            'total_price' => 'required',
+            'terms_and_conditions' => 'required',
+            'client_id' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $invoice = ClientInvoice::create([
+            'total_price' => $request->total_price,
+            'number' => $request->number,
+            'date_created' => $request->date_created,
+            'due_date' => $request->due_date,
+            'terms_and_conditions' => $request->terms_and_conditions,
+            'paid' => 'unpaid',
+            'client_id' => $request->client_id,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return back()->with('success', 'Invoice created successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ClientInvoice $invoice)
     {
-        //
+        $request->validate([
+            'number' => 'required',
+            'date_created' => 'required',
+            'due_date' => 'required',
+            'total_price' => 'required',
+            'terms_and_conditions' => 'required',
+            'client_id' => 'required',
+        ]);
+
+        $invoice->update([
+            'total_price' => $request->total_price,
+            'number' => $request->number,
+            'date_created' => $request->date_created,
+            'due_date' => $request->due_date,
+            'terms_and_conditions' => $request->terms_and_conditions,
+            'paid' => 'unpaid',
+            'client_id' => $request->client_id,
+        ]);
+
+        return back()->with('success', 'Invoice created successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ClientInvoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return back()->with('success', 'Invoice deleted successfully.');
     }
 
-    public function get_all_invoices() {
-        $invoices = Invoice::with('client')->orderBy('id', 'desc')->get();
+    public function sendInvoice(ClientInvoice $clientInvoice)
+    {
+        $clientInvoice->load('client');
+        $lineItems = [];
 
-        return response()->json([
-            'invoices' => $invoices
-        ], 200);
-    }
-
-    public function search_invoice(Request $request) {
-        $search = $request->get('s');
-        if($search != NULL) {
-            $invoices = Invoice::with('client')->where('id','LIKE',"%$search%")->get();
-
-            return response()->json([
-                'invoices' => $invoices
-            ], 200);
-        } else {
-            return $this->get_all_invoices();
-        }
-    }
-
-    public function create_invoice(Request $request) {
-        $counter = Counter::where('key', 'invoice')->first();
-        $random = Counter::where('key', 'invoice')->first();
-
-        $invoice = Invoice::orderBy('id', 'desc')->first();
-        if($invoice) {
-            $invoice = $invoice->id+1;
-            $counters = $counter->value+$invoice;
-        } else {
-            $counters = $counter->value;
-        }
-
-        $formData = [
-            'number' => $counter->prefix.$counters,
-            'client_id' => NULL,
-            'client' => NULL,
-            'date' => date('Y-m-d'),
-            'due_date' => NULL,
-            'reference' => NULL,
-            'discount' => 0,
-            'terms_and_conditions' => 'Default Terms & Conditions',
-            'items' => [
-                [
-                    'product_id' => NULL,
-                    'product' => NULL,
-                    'unit_price' => 0,
-                    'quantity' => 1
-                ]
-            ]
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
+        $lineItems[] = [
+            'price_data' => [
+                'currency' => 'usd',
+                'product_data' => [
+                    'name' => 'name',
+                    'images' => null
+                ],
+                'unit_amount' => 250*100
+            ],
+            'quantity' => 1,
         ];
 
-        return response()->json($formData);
+        $invoice = $clientInvoice;
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('checkout.cancel', [], true),
+        ]);
+
+        $clientInvoice->update([
+            'session_id' => $checkout_session->id
+        ]);
+
+        $company = Company::first();
+
+        $pdf = Pdf::loadView('pdf.invoice-pdf', compact('clientInvoice', 'checkout_session', 'company'))->output();
+
+        Mail::to($clientInvoice->client->email)->send(new InvoiceMail($clientInvoice->toArray(), $pdf, $checkout_session, $company->toArray()));
+        return back()->with('success', 'Invoice sent successfully.');
     }
 
-    public function add_invoice(Request $request) {
-        dd($request);
-        $invoiceitem = $request->input("invoice_item");
+    public function success(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
 
-        $invoicedata['subtotal'] = $request->input("subtotal");
-        $invoicedata['total'] = $request->input("total");
-        $invoicedata['client_id'] = $request->input("client_id");
-        $invoicedata['number'] = $request->input("number");
-        $invoicedata['date'] = $request->input("date");
-        $invoicedata['due_date'] = $request->input("due_date");
-        $invoicedata['discount'] = $request->input("discount");
-        $invoicedata['reference'] = $request->input("reference");
-        $invoicedata['terms_and_conditions'] = $request->input("terms_and_conditions");
+        $sessionId = $request->get('session_id');
+        $client = null;
 
-        $invoice = Invoice::create($invoicedata);
+        try{
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+            if(!$session) {
+                throw new NotFoundHttpException;
+            }
+            $client = $session->customer_details;
+            $invoice = ClientInvoice::where('session_id', $session->id)->first();
+            if(!$invoice) {
+                throw new NotFoundHttpException;
+            }
+            if($invoice->status === 'unpaid') {
+                $invoice->status = 'paid';
+                $invoice->save();
+            }
 
-        foreach(json_decode($invoiceitem) as $item) {
-            $itemdata['product_id'] = $item->id;
-            $itemdata['invoice_id'] = $invoice->id;
-            $itemdata['quantity'] = $item->quantity;
-            $itemdata['unit_price'] = $item->unit_price;
-
-            InvoiceItem::create($itemdata);
+            return Inertia::render('Success', [
+                // 'customer' => $client,
+                // 'session' => $session,
+                // 'order' => $invoice,
+            ]);
+        } catch(\Exception $e) {
+            throw new NotFoundHttpException();
         }
     }
 }
