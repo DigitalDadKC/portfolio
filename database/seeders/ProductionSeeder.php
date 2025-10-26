@@ -43,7 +43,7 @@ class ProductionSeeder extends Seeder
         //     DB::unprepared(file_get_contents($path));
         //     $this->command->info($model . ' Model Seeded!');
         // }
-        DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+        // DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
 
         // $this->call(PermissionSeeder::class);
         // $this->call(RoleSeeder::class);
