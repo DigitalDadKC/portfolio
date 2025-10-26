@@ -5,23 +5,27 @@ import Input from '@/components/FormattedInput.vue';
 import { Label } from 'reka-ui';
 import { Button } from '@/components/ui/button';
 import Clients from '../partials/Clients.vue';
+import Line from '../partials/Line.vue';
 import InvoiceDate from '../partials/InvoiceDate.vue';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Send } from 'lucide-vue-next';
 import ApplicationLogo from '@/components/ApplicationLogo.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 
 const props = defineProps({
     new: Boolean,
     invoice: Object,
 })
 
+const { formatWithCommas } = useFormatCurrency();
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.invoice.id,
     number: props.invoice.number,
     date_created: props.invoice.date_created ?? new Date(),
     due_date: props.invoice.due_date,
+    line_items: props.invoice.client_invoice_items ?? [],
     total_price: props.invoice.total_price ?? 0,
     terms_and_conditions: props.invoice.terms_and_conditions,
     client_id: props.invoice.client_id,
@@ -54,28 +58,40 @@ watchEffect(() => {
                     </div>
                 </DialogDescription>
 
-                <div class="grid grid-cols-6 gap-4">
-                    <div class="col-span-1">
-                        <Label for="number">Number</Label>
-                        <Input id="number" width="full" class="bg-white" v-model="form.number" :disabled="true" />
+                <div class="flex flex-col gap-20">
+                    <div class="grid grid-cols-6 gap-4">
+                        <div class="col-span-1">
+                            <Label for="number">Number</Label>
+                            <Input id="number" width="full" class="bg-white" v-model="form.number" :disabled="true" />
+                        </div>
+                        <div class="col-span-2">
+                        </div>
+                        <div class="col-span-1 col-start-5">
+                            <Label for="date_created">Created</Label>
+                            <InvoiceDate v-model="form.date_created" :disabled="true" />
+                        </div>
+                        <div class="col-span-1">
+                            <Label for="due_date">Due Date</Label>
+                            <InvoiceDate v-model="form.due_date" :disabled="true" />
+                        </div>
                     </div>
-                    <div class="col-span-2">
+                    <div>
+                        <div v-for="(item, index) in form.line_items" :key="index" class="col-span-6">
+                            <Line :item :index :disabled="true" />
+                        </div>
                     </div>
-                    <div class="col-span-1 col-start-5">
-                        <Label for="date_created">Created</Label>
-                        <InvoiceDate v-model="form.date_created" :disabled="true" />
+                    <div>
+                        <div class="flex justify-end">
+                            {{ form.line_items.length
+                                ? `Total: ` + formatWithCommas(form.line_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency')
+                                : 'No line items added yet.' }}
+                        </div>
                     </div>
-                    <div class="col-span-1">
-                        <Label for="due_date">Due Date</Label>
-                        <InvoiceDate v-model="form.due_date" :disabled="true" />
-                    </div>
-                    <div class="col-span-1 col-start-6">
-                        <Label for="price">Price</Label>
-                        <Input id="price" class="bg-white" width="full" type="currency" v-model="form.total_price" :disabled="true" />
-                    </div>
-                    <div class="col-span-6">
-                        <Label for="terms_and_conditions">Terms & Conditions</Label>
-                        <Textarea id="terms_and_conditions" class="bg-white" v-model="form.terms_and_conditions" :disabled="true" />
+                    <div>
+                        <div class="col-span-6">
+                            <Label for="terms_and_conditions">Terms & Conditions</Label>
+                            <Textarea id="terms_and_conditions" class="bg-white" v-model="form.terms_and_conditions" :disabled="true" />
+                        </div>
                     </div>
                 </div>
 

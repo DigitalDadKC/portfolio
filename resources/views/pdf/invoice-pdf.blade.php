@@ -35,13 +35,3 @@
 <div>
     {{ $clientInvoice->client->email }}
 </div>
-
-<div>
-    <form action="{{ route('checkout') }}" method="POST">
-        @csrf
-        pay over here!
-        <button type="submit">
-            Checkout with Stripe
-        </button>
-    </form>
-</div>

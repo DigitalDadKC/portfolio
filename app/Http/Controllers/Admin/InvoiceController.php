@@ -24,7 +24,7 @@ class InvoiceController extends Controller
     public function index()
     {
         return Inertia::render('admin/invoices/Index', [
-            'invoices' => ClientInvoice::with('client', 'client_invoice_items')->get(),
+            'invoices' => ClientInvoice::with('client', 'client_invoice_items')->latest()->get(),
             'clients' => Client::orderBy('name')->get(),
         ]);
     }
@@ -119,21 +119,24 @@ class InvoiceController extends Controller
 
     public function sendInvoice(ClientInvoice $clientInvoice)
     {
-        $clientInvoice->load('client');
-        $lineItems = [];
-
         \Stripe\Stripe::setApiKey(config('services.stripe.key'));
-        $lineItems[] = [
-            'price_data' => [
-                'currency' => 'usd',
-                'product_data' => [
-                    'name' => 'name',
-                    'images' => null
+        $clientInvoice->load('client', 'client_invoice_items');
+        $lineItems = [];
+        $totalPrice = 0;
+
+        foreach($clientInvoice->client_invoice_items as $item) {
+            $totalPrice += $item->price;
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $item->description,
+                    ],
+                    'unit_amount' => $item->price*100
                 ],
-                'unit_amount' => 250*100
-            ],
-            'quantity' => 1,
-        ];
+                'quantity' => 1,
+            ];
+        }
 
         $invoice = $clientInvoice;
         $checkout_session = \Stripe\Checkout\Session::create([
@@ -144,7 +147,8 @@ class InvoiceController extends Controller
         ]);
 
         $clientInvoice->update([
-            'session_id' => $checkout_session->id
+            'session_id' => $checkout_session->id,
+            'total_price' => $totalPrice,
         ]);
 
         $company = Company::first();

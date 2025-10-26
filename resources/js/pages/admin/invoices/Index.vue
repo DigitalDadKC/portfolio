@@ -14,8 +14,6 @@ const props = defineProps({
     clients: Object,
 })
 
-console.log(props.invoices)
-
 const { formatWithCommas } = useFormatCurrency();
 const newInvoice = {
     id: null,

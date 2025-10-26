@@ -8,7 +8,8 @@ import { Minus } from 'lucide-vue-next';
 
 const props = defineProps({
     item: Object,
-    index: Number
+    index: Number,
+    disabled: Boolean,
 })
 
 const emit = defineEmits(['update-item', 'remove-item']);
@@ -41,21 +42,21 @@ watchEffect(() => {
     <div class="grid grid-cols-12 gap-2 justify-end items-end">
         <div class="col-span-6">
             <Label for="line" v-if="!index">Line Item</Label>
-            <Input id="line" class="bg-white" width="full" v-model="form.description" @update:model-value="update()" />
+            <Input id="line" class="bg-white" width="full" v-model="form.description" @update:model-value="update()" :disabled="props.disabled" />
         </div>
         <div class="col-span-2">
             <Label for="price" v-if="!index">Price</Label>
-            <Input id="price" class="bg-white" width="full" type="currency" v-model="form.price" @update:model-value="update()" />
+            <Input id="price" class="bg-white" width="full" type="currency" v-model="form.price" @update:model-value="update()" :disabled="props.disabled" />
         </div>
         <div class="col-span-1">
             <Label for="quantity" v-if="!index">Quantity</Label>
-            <Input id="quantity" class="bg-white" width="full" v-model="form.quantity" @update:model-value="update()" />
+            <Input id="quantity" class="bg-white" width="full" v-model="form.quantity" @update:model-value="update()" :disabled="props.disabled" />
         </div>
         <div class="col-span-2">
             <Label for="price" v-if="!index">Total</Label>
             <Input id="price" class="bg-white" width="full" type="currency" v-model="total" :disabled="true" />
         </div>
-        <div class="col-span-1">
+        <div class="col-span-1" v-if="!props.disabled">
             <Button @click="remove()">
                 <Minus />
             </Button>

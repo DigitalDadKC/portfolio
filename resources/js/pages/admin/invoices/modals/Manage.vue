@@ -127,7 +127,8 @@ const removeItem = (e) => {
                     </div>
                     <div class="flex justify-end">
                         {{ form.line_items.length
-                            ? `Total: ` + formatWithCommas(form.line_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency') : 'No line items added yet.' }}
+                            ? `Total: ` + formatWithCommas(form.line_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency')
+                            : 'No line items added yet.' }}
                     </div>
                     <div>
                         <div class="col-span-6">
