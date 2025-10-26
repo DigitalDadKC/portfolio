@@ -21,11 +21,6 @@
 
 
 <div>
-    {{ $clientInvoice->total_price }}
-</div>
-
-
-<div>
     {{ $clientInvoice->terms_and_conditions }}
 </div>
 
