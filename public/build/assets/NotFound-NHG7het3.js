@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as e,o as n}from"./app-B36-XCD0.js";const t={};function c(r,a){return n(),e("h1",null,"Page not found")}const f=o(t,[["render",c]]);export{f as default};

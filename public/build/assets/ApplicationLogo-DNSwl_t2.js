@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as t,o as c}from"./app-B36-XCD0.js";const s="/build/assets/dad-Bf1H2SGk.png",e={},r={src:s,width:80,"aspect-ratio":"16/9",cover:""};function n(_,a){return c(),t("img",r)}const m=o(e,[["render",n]]);export{m as A};

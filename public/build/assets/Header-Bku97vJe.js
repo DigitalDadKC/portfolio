@@ -1,1 +1,0 @@
-import{c as e,o as r,t as s}from"./app-B36-XCD0.js";const a={class:"text-4xl text-light-primary flex justify-center my-3"},n={__name:"Header",props:{title:String},setup(t){return(c,i)=>(r(),e("div",a,s(t.title),1))}};export{n as _};
