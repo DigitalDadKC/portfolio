@@ -4,7 +4,7 @@
         <div style="padding: 0 2rem; display: flex;">
             <div style="width: 50%;">
                 <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="150" />
+                    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="100" />
                 </a>
                 <div>
                     <div>
@@ -33,9 +33,6 @@
                 </div>
             </div>
         </div>
-
-        {{ asset($image) }}<br />
-        {{ public_path($image) }}
 
         @php
             $total = 0;
