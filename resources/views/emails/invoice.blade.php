@@ -4,10 +4,6 @@
         Hello There {{ $invoice['client']['company'] }}!
     </h1>
 
-    <h6>
-        {{ $invoice['total_price'] }}
-    </h6>
-
     <div>
         {{ $invoice['client']['email'] }}
     </div>
