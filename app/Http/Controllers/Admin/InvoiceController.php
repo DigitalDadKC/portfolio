@@ -227,10 +227,10 @@ class InvoiceController extends Controller
 
         // Handle the event
         switch ($event->type) {
-            case 'payment_intent.succeeded':
-                $session = $event->data->object;
+            case 'checkout.session.completed':
+                $paymentIntent = $event->data->object;
 
-                $invoice = ClientInvoice::where('session_id', $session->id)->first();
+                $invoice = ClientInvoice::where('session_id', $paymentIntent->id)->first();
                 if ($invoice && $invoice->status === 'unpaid') {
                     $invoice->status = 'paid';
                     $invoice->save();
