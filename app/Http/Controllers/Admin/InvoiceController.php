@@ -42,12 +42,13 @@ class InvoiceController extends Controller
             'line_items.*.quantity' => 'required|integer',
         ]);
 
+        $totalPrice = 0;
         $invoice = ClientInvoice::create([
             'number' => $request->number,
             'date_created' => $request->date_created,
             'due_date' => $request->due_date,
             'terms_and_conditions' => $request->terms_and_conditions,
-            'paid' => 'unpaid',
+            'status' => 'unpaid',
             'client_id' => $request->client_id,
         ]);
 
@@ -59,7 +60,10 @@ class InvoiceController extends Controller
                     'client_invoice_id' => $invoice['id'],
                 ]
             );
+            $totalPrice += $item->price*$item->quantity;
         }
+
+        $invoice->update(['total_price' => $totalPrice]);
 
         return back()->with('success', 'Invoice created successfully.');
     }
@@ -77,12 +81,13 @@ class InvoiceController extends Controller
             'client_id' => 'required',
         ]);
 
+        $totalPrice = 0;
         $invoice->update([
             'number' => $request->number,
             'date_created' => $request->date_created,
             'due_date' => $request->due_date,
             'terms_and_conditions' => $request->terms_and_conditions,
-            'paid' => 'unpaid',
+            'status' => 'unpaid',
             'client_id' => $request->client_id,
         ]);
 
@@ -99,7 +104,10 @@ class InvoiceController extends Controller
                     'client_invoice_id' => $invoice['id'],
                 ]
             );
+            $totalPrice += $item['price']*$item['quantity'];
         }
+
+        $invoice->update(['total_price' => $totalPrice]);
 
         return back()->with('success', 'Invoice created successfully.');
     }
@@ -122,7 +130,6 @@ class InvoiceController extends Controller
         $totalPrice = 0;
 
         foreach($clientInvoice->client_invoice_items as $item) {
-            $totalPrice += $item->price;
             $lineItems[] = [
                 'price_data' => [
                     'currency' => 'usd',
@@ -133,6 +140,7 @@ class InvoiceController extends Controller
                 ],
                 'quantity' => $item->quantity,
             ];
+            $totalPrice += $item->price*$item->quantity;
         }
 
         $invoice = $clientInvoice;
@@ -171,8 +179,8 @@ class InvoiceController extends Controller
             if(!$invoice) {
                 throw new NotFoundHttpException;
             }
-            if($invoice->paid === 'unpaid') {
-                $invoice->paid = 'paid';
+            if($invoice->status === 'unpaid') {
+                $invoice->status = 'paid';
                 $invoice->save();
             }
 
@@ -213,8 +221,8 @@ class InvoiceController extends Controller
                 $session = $event->data->object;
 
                 $invoice = ClientInvoice::where('session_id', $session->id)->first();
-                if ($invoice && $invoice->paid === 'unpaid') {
-                    $invoice->paid = 'paid';
+                if ($invoice && $invoice->status === 'unpaid') {
+                    $invoice->status = 'paid';
                     $invoice->save();
                     // Send email to customer
                 }

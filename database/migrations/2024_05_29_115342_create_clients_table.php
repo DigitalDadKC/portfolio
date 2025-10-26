@@ -31,7 +31,7 @@ return new class extends Migration
             $table->date('due_date');
             $table->decimal('total_price', 8, 2)->nullable()->default(NULL);
             $table->text('terms_and_conditions');
-            $table->string('paid');
+            $table->string('status');
             $table->string('session_id')->nullable()->default(NULL);
             $table->foreignId('client_id')->constrained();
             $table->timestamps();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('price', 6, 2);
             $table->integer('quantity');
-            $table->foreignId('client_invoice_id')->constrained();
+            $table->foreignId('client_invoice_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
