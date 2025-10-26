@@ -26,29 +26,29 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
-        // $models = [
-        //     'MaterialUnitSize',
-        //     'Skills',
-        //     'Projects',
-        //     'Features',
-        //     'UnitOfMeasurements',
-        //     'States',
-        //     'Companies',
-        //     'CsiDivisions',
-        //     'CsiSections',
-        //     'CsiSubsections'
-        // ];
-        // foreach ($models as $model) {
-        //     $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
-        //     DB::unprepared(file_get_contents($path));
-        //     $this->command->info($model . ' Model Seeded!');
-        // }
-        // DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+        $models = [
+            'MaterialUnitSize',
+            'Skills',
+            'Projects',
+            'Features',
+            'UnitOfMeasurements',
+            'States',
+            'Companies',
+            'CsiDivisions',
+            'CsiSections',
+            'CsiSubsections'
+        ];
+        foreach ($models as $model) {
+            $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
+            DB::unprepared(file_get_contents($path));
+            $this->command->info($model . ' Model Seeded!');
+        }
+        DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
 
-        // $this->call(PermissionSeeder::class);
-        // $this->call(RoleSeeder::class);
-        // $this->call(AdminSeeder::class);
-        // MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(AdminSeeder::class);
+        MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
         Material::factory(50)->create();
 
         Customer::factory(50)->create();

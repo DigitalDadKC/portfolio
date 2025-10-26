@@ -12,12 +12,12 @@ return new class extends Migration {
     {
         Schema::create('material_unit_sizes', function (Blueprint $table) {
             $table->id();
-            $table->string('Unit_Size');
+            $table->string('unit_size');
         });
 
         Schema::create('material_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
+            $table->string('name');
         });
 
         Schema::create('materials', function (Blueprint $table) {
