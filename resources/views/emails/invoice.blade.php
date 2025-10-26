@@ -38,28 +38,12 @@
             $total = 0;
         @endphp
 
-        {{-- <div style="margin-bottom: 20px; background-color: #EBE3D5; padding: 2rem"> --}}
-            @foreach($invoice['client_invoice_items'] as $item)
-                {{-- <div style="display: flex">
-                    <div style="width: 25%">
-                        {{ $item['description'] }}
-                    </div>
-                    <div style="width: 25%">
-                        {{ $item['price'] }}
-                    </div>
-                    <div style="width: 25%">
-                        {{ $item['quantity'] }}
-                    </div>
-                    <div style="width: 25%; text-align: end">
-                        ${{ $item['price'] * $item['quantity'] }}
-                    </div>
-                </div> --}}
-                @php
-                    $item_total = $item['price']*$item['quantity'];
-                    $total += $item_total;
-                @endphp
-            @endforeach
-        {{-- </div> --}}
+        @foreach($invoice['client_invoice_items'] as $item)
+            @php
+                $item_total = $item['price']*$item['quantity'];
+                $total += $item_total;
+            @endphp
+        @endforeach
 
         <div style="text-align: center; background-color: #EBE3D5; padding: 2rem 0">
             <h3>

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ClientInvoiceItem extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'price' => 'float',
+    ];
+
     public function client_invoice() {
         return $this->belongsTo(ClientInvoice::class);
     }
