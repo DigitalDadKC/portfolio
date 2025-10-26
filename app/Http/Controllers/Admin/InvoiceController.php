@@ -197,19 +197,32 @@ class InvoiceController extends Controller
         $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
 
         $payload = @file_get_contents('php://input');
-        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $event = null;
 
         try {
             $event = \Stripe\Event::constructFrom(
-            json_decode($payload, true)
-        );
-        } catch (\UnexpectedValueException $e) {
+                json_decode($payload, true)
+            );
+        } catch(\UnexpectedValueException $e) {
             // Invalid payload
-            return response('', 401);
-        } catch (\Stripe\Exception\SignatureVerificationException $e) {
-            // Invalid signature
-            return response('', 402);
+            http_response_code(400);
+            exit();
+        }
+
+        if ($endpoint_secret) {
+        // Only verify the event if you've defined an endpoint secret
+        // Otherwise, use the basic decoded event
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+            $payload, $sig_header, $endpoint_secret
+                );
+            } catch(\Stripe\Exception\SignatureVerificationException $e) {
+                // Invalid signature
+                echo '⚠️  Webhook error while validating signature.';
+                http_response_code(400);
+                exit();
+            }
         }
 
         // Handle the event
@@ -223,11 +236,11 @@ class InvoiceController extends Controller
                     $invoice->save();
                     // Send email to customer
                 }
-
+                break;
             default:
                 echo 'Received unknown event type ' . $event->type;
         }
 
-        return response('');
+        http_response_code(200);
     }
 }
