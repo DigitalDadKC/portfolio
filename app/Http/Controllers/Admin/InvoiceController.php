@@ -60,7 +60,7 @@ class InvoiceController extends Controller
                     'client_invoice_id' => $invoice['id'],
                 ]
             );
-            $totalPrice += $item->price*$item->quantity;
+            $totalPrice += $item['price']*$item['quantity'];
         }
 
         $invoice->update(['total_price' => $totalPrice]);
@@ -127,7 +127,7 @@ class InvoiceController extends Controller
         \Stripe\Stripe::setApiKey(config('services.stripe.key'));
         $clientInvoice->load('client', 'client_invoice_items');
         $lineItems = [];
-        $totalPrice = 0;
+        // $totalPrice = 0;
 
         foreach($clientInvoice->client_invoice_items as $item) {
             $lineItems[] = [
@@ -140,7 +140,7 @@ class InvoiceController extends Controller
                 ],
                 'quantity' => $item->quantity,
             ];
-            $totalPrice += $item->price*$item->quantity;
+            // $totalPrice += $item->price*$item->quantity;
         }
 
         $invoice = $clientInvoice;
@@ -153,7 +153,7 @@ class InvoiceController extends Controller
 
         $clientInvoice->update([
             'session_id' => $checkout_session->id,
-            'total_price' => $totalPrice,
+            // 'total_price' => $totalPrice,
         ]);
 
         $pdf = Pdf::loadView('pdf.invoice-pdf', compact('clientInvoice', 'checkout_session'))->output();
