@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Client;
-use App\Models\Company;
-use App\Models\Invoice;
 use App\Mail\InvoiceMail;
-use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Models\ClientInvoice;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -134,7 +131,7 @@ class InvoiceController extends Controller
                     ],
                     'unit_amount' => $item->price*100
                 ],
-                'quantity' => 1,
+                'quantity' => $item->quantity,
             ];
         }
 
@@ -151,11 +148,9 @@ class InvoiceController extends Controller
             'total_price' => $totalPrice,
         ]);
 
-        $company = Company::first();
+        $pdf = Pdf::loadView('pdf.invoice-pdf', compact('clientInvoice', 'checkout_session'))->output();
 
-        $pdf = Pdf::loadView('pdf.invoice-pdf', compact('clientInvoice', 'checkout_session', 'company'))->output();
-
-        Mail::to($clientInvoice->client->email)->send(new InvoiceMail($clientInvoice->toArray(), $pdf, $checkout_session, $company->toArray()));
+        Mail::to($clientInvoice->client->email)->send(new InvoiceMail($clientInvoice->toArray(), $pdf, $checkout_session));
         return back()->with('success', 'Invoice sent successfully.');
     }
 

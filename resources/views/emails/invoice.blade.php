@@ -1,44 +1,105 @@
 
-<body style="padding: 20px 0; font-size: 16px; font-family: Perpetua, 'Times New Roman', Times, serif">
-    <h1 style="font-family: Brush">
-        Hello There {{ $invoice['client']['company'] }}!
-    </h1>
+<body style="font-size: 16px; font-family: Perpetua, 'Times New Roman', Times, serif; background-color: #F3EEEA; width: 100%; padding: 2rem 0;">
+    <div style="width: 100%;">
+        <div style="padding: 0 2rem; display: flex;">
+            <div style="width: 50%;">
+                <a href="https://digitaldadkc.com" aria-label="Visit my site">
+                    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="150" />
+                </a>
+                <div>
+                    <div>
+                        DigitalDad, LLC
+                    </div>
+                    <div>
+                        <a href="mailto:info@digitaldadkc.com" aria-label="Email Me">info@digitaldadkc.com</a>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 2rem; text-align: right; margin-left: auto; width: 50%;">
+                <h2>
+                    Invoice # {{ $invoice['number'] }}
+                </h2>
+                <div>
+                    Date Created: {{ $invoice['date_created'] }}
+                </div>
+                <div>
+                    Due Date: {{ $invoice['due_date'] }}
+                </div>
+                <div>
+                    Bill to: {{ $invoice['client']['company'] }}
+                </div>
+                <div>
+                    {{ $invoice['client']['email'] }}
+                </div>
+            </div>
+        </div>
 
-    <div>
-        {{ $invoice['client']['email'] }}
-    </div>
+        {{ asset($image) }}<br />
+        {{ public_path($image) }}
 
-    <div>
-        <a method="post" href="{{ $checkout_session->url }}" >Pay your invoice now</a>
-    </div>
+        @php
+            $total = 0;
+        @endphp
 
-    <div>
-        {{ $company['name'] }}
+        {{-- <div style="margin-bottom: 20px; background-color: #EBE3D5; padding: 2rem"> --}}
+            @foreach($invoice['client_invoice_items'] as $item)
+                {{-- <div style="display: flex">
+                    <div style="width: 25%">
+                        {{ $item['description'] }}
+                    </div>
+                    <div style="width: 25%">
+                        {{ $item['price'] }}
+                    </div>
+                    <div style="width: 25%">
+                        {{ $item['quantity'] }}
+                    </div>
+                    <div style="width: 25%; text-align: end">
+                        ${{ $item['price'] * $item['quantity'] }}
+                    </div>
+                </div> --}}
+                @php
+                    $item_total = $item['price']*$item['quantity'];
+                    $total += $item_total;
+                @endphp
+            @endforeach
+        {{-- </div> --}}
 
-        <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
-    </div>
+        <div style="text-align: center; background-color: #EBE3D5; padding: 2rem 0">
+            <h3>
+                Total: {{"$ " . number_format($total, 0, ",", ",")  }}
+            </h3>
+            <button style="background-color: #776B5D; border-radius: 0.5rem; text-shadow: 1px">
+                <a style="padding: 1rem; color: #F3EEEA;" method="post" href="{{ $checkout_session->url }}" aria-label="Pay Now">
+                    PAY NOW
+                </a>
+            </button>
+        </div>
 
-    <div style="font-style: italic; color: #77685D">
-        <p style="padding: 0; margin: 0;">
+        <div style="font-style: italic; color: #77685D; padding: 2rem">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
                 <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
             </a>
-        </p>
-        <img src="{{ asset('/img/dad.svg') }}" alt="logo" id="image" width="30" />
-        <img src="{{ asset('img/dad.png') }}" alt="logo" id="image" width="30" />
-        <img src="{{ asset('img/dad.svg') }}" alt="logo" id="image" width="30" />
-        <p style="padding: 0; margin: 0;">RALEIGH GROESBECK</p>
-        <p style="padding: 0; margin: 0">Owner</p>
-        <p style="padding: 0; margin: 0">Digital Dad, LLC</p>
-        <p id="line-break" style="font-weight: bold; color: #ac6b34; padding: 0; margin: 0;">____________________________</p>
-        <p style="padding: 0; margin: 0;">Portfolio:
-            <a href="https://digitaldadkc.com" aria-label="Visit my site">digitaldadkc.com</a>
-        </p>
-        <p style="padding: 0; margin: 0;">Email:
-            <a href="mailto:raleighgroesbeck@gmail.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a>
-        </p>
-        <p style="padding: 0; margin: 0;">Schedule a meeting:
-            <a href="https://calendly.com/digitaldadkc" aria-label="Email Me">Calendly</a>
-        </p>
+            <div>
+                RALEIGH GROESBECK
+            </div>
+            <div>
+                Owner & Developer
+            </div>
+            <div>
+                DigitalDad, LLC
+            </div>
+            <div>
+                ____________________________
+            </div>
+            <div>
+                Portfolio:<a href="https://digitaldadkc.com" aria-label="Visit my site">digitaldadkc.com</a>
+            </div>
+            <div>
+                Email:<a href="mailto:info@digitaldadkc.com" aria-label="Email Me">mailto:info@digitaldadkc.com</a>
+            </div>
+            <div>
+                Schedule a meeting:<a href="https://calendly.com/digitaldadkc" aria-label="Email Me">Calendly</a>
+            </div>
+        </div>
     </div>
 </body>

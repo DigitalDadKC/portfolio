@@ -17,12 +17,11 @@ class InvoiceMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public array $clientInvoice, public $pdf, public $checkout_session, public array $company)
+    public function __construct(public array $clientInvoice, public $pdf, public $checkout_session)
     {
         $this->clientInvoice = $clientInvoice;
         $this->pdf = $pdf;
         $this->checkout_session = $checkout_session;
-        $this->company = $company;
     }
 
     /**
@@ -45,6 +44,7 @@ class InvoiceMail extends Mailable
             with: [
                 'invoice' => $this->clientInvoice,
                 'checkout_session' => $this->checkout_session,
+                'image' => asset('/img/dad.png'),
             ]
         );
     }

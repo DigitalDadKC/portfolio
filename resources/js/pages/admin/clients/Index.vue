@@ -45,11 +45,11 @@ import Outreach from './modals/Outreach.vue';
                         <TableCell>{{ client.email }}</TableCell>
                         <TableCell>
                             <div v-for="outreach in client.outreaches" :key="outreach.id">
-                                {{ useDateFormat(outreach.date_emailed, 'MMM d, YYYY') }}
+                                {{ useDateFormat(outreach.date_emailed, 'MMM D, YYYY') }}
                             </div>
                         </TableCell>
-                        <TableCell>{{ useDateFormat(client.created_at, 'MMM d, YYYY') }}</TableCell>
-                        <TableCell>{{ useDateFormat(client.updated_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
                                 <Manage :new="false" :client></Manage>
                                 <Destroy :client></Destroy>

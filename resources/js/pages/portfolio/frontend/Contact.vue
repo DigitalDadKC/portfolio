@@ -47,7 +47,7 @@ const submit = () => {
                         <div>
                             <h4 class="font-body text-xl mb-1">Have a question?</h4>
                             <p class="mb-1 text-paragraph">I'm here to help!</p>
-                            <p class="text-accent font-normal">Email me at <a class="font-bold" href="mailto:raleighgroesbeck@gmail.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a></p>
+                            <p class="text-accent font-normal">Email me at <a class="font-bold" href="mailto:info@digitaldadkc.com" aria-label="Email Me">info@digitaldadkc.com</a></p>
                         </div>
                     </div>
                     <div class="flex flex-col lg:flex-row gap-x-4">

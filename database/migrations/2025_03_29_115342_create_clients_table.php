@@ -40,7 +40,7 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->decimal('price', 6, 2);
-            $table->decimal('quantity');
+            $table->integer('quantity');
             $table->foreignId('client_invoice_id')->constrained();
             $table->timestamps();
         });
