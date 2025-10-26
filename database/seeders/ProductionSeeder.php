@@ -27,23 +27,23 @@ class ProductionSeeder extends Seeder
     public function run(): void
     {
         $models = [
-            'MaterialUnitSize',
-            'Skills',
-            'Projects',
-            'Features',
-            'UnitOfMeasurements',
-            'States',
-            'Companies',
-            'CsiDivisions',
-            'CsiSections',
-            'CsiSubsections'
+            // 'MaterialUnitSize',
+            // 'Skills',
+            // 'Projects',
+            // 'Features',
+            // 'UnitOfMeasurements',
+            // 'States',
+            // 'Companies',
+            // 'CsiDivisions',
+            // 'CsiSections',
+            // 'CsiSubsections'
         ];
-        foreach ($models as $model) {
-            $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
-            DB::unprepared(file_get_contents($path));
-            $this->command->info($model . ' Model Seeded!');
-        }
-        DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+        // foreach ($models as $model) {
+        //     $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
+        //     DB::unprepared(file_get_contents($path));
+        //     $this->command->info($model . ' Model Seeded!');
+        // }
+        // DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
 
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
