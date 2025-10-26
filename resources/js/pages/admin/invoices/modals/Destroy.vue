@@ -23,19 +23,6 @@ const submit = () => {
     })
 }
 
-
-
-    // } else {
-    //     form.patch(route('admin.invoices.update', form.id), {
-    //         onSuccess: () => {
-    //             isDialogOpen.value = false
-    //         }
-    //     })
-    // }
-
-
-
-
 watch(() => props.invoice,
 (item) => {
     form.id = item.id;
@@ -60,8 +47,6 @@ watch(() => props.invoice,
                     Are you sure?
                 </DialogDescription>
             </DialogHeader>
-
-            {{ form }}
 
             <DialogFooter class="p-6 pt-0">
                 <div class="flex gap-2">

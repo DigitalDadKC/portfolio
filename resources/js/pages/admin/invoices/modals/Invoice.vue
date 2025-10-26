@@ -38,6 +38,7 @@ const submit = () => {
 watchEffect(() => {
     Object.assign(form, props.invoice)
     form.client_id = props.invoice.client.id
+    form.line_items = props.invoice.client_invoice_items
 })
 </script>
 

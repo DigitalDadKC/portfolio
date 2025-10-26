@@ -46,6 +46,7 @@ const newInvoice = {
                         <TableHead class="p-6 text-black">Company</TableHead>
                         <TableHead class="p-6 text-black">Email</TableHead>
                         <TableHead class="p-6 text-black">Price</TableHead>
+                        <TableHead class="p-6 text-black">Paid</TableHead>
                         <TableHead class="p-6 text-black">Date Created</TableHead>
                         <TableHead class="p-6 text-black">Due Date</TableHead>
                         <TableHead class="text-black text-end"><Manage :new="true" :invoice="newInvoice" :clients></Manage></TableHead>
@@ -57,6 +58,7 @@ const newInvoice = {
                         <TableCell class="p-3">{{ invoice.client.company }}</TableCell>
                         <TableCell class="p-3">{{ invoice.client.email }}</TableCell>
                         <TableCell class="p-3">{{ formatWithCommas(invoice.client_invoice_items.reduce((a, b) => a + (b.price*b.quantity), 0), 'currency') }}</TableCell>
+                        <TableCell class="p-3">{{ invoice.status }}</TableCell>
                         <TableCell class="p-3">{{ useDateFormat(invoice.date_created, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="p-3">{{ useDateFormat(invoice.due_date, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
