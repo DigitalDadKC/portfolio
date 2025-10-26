@@ -171,8 +171,8 @@ class InvoiceController extends Controller
             if(!$invoice) {
                 throw new NotFoundHttpException;
             }
-            if($invoice->status === 'unpaid') {
-                $invoice->status = 'paid';
+            if($invoice->paid === 'unpaid') {
+                $invoice->paid = 'paid';
                 $invoice->save();
             }
 
