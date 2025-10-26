@@ -201,20 +201,20 @@ class InvoiceController extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
-                $payload, $sig_header, $endpoint_secret
-            );
+            $event = \Stripe\Event::constructFrom(
+            json_decode($payload, true)
+        );
         } catch (\UnexpectedValueException $e) {
             // Invalid payload
-            return response('', 400);
+            return response('', 401);
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
             // Invalid signature
-            return response('', 400);
+            return response('', 402);
         }
 
         // Handle the event
         switch ($event->type) {
-            case 'checkout.session.completed':
+            case 'payment_intent.succeeded':
                 $session = $event->data->object;
 
                 $invoice = ClientInvoice::where('session_id', $session->id)->first();
