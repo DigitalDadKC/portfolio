@@ -48,7 +48,7 @@ class ProductionSeeder extends Seeder
         // $this->call(PermissionSeeder::class);
         // $this->call(RoleSeeder::class);
         // $this->call(AdminSeeder::class);
-        MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
+        // MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
         Material::factory(50)->create();
 
         Customer::factory(50)->create();
