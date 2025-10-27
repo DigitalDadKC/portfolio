@@ -1,5 +1,6 @@
 <script setup>
-import ManageUser from '../modals/ManageUser.vue';
+// import ManageUser from '../modals/ManageUser.vue';
+import UserDrawer from '../drawers/UserDrawer.vue';
 
 const props = defineProps({
     users: Object,
@@ -22,8 +23,8 @@ const props = defineProps({
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(user, index) in props.users" :key="index" class="">
-                    <td class="px-2">{{ user.name }}</td>
+                <tr v-for="(user, index) in props.users" :key="index">
+                    <td class="p-2">{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>
                         <div v-for="(role, i) in user.roles" :key="i">
@@ -31,7 +32,8 @@ const props = defineProps({
                         </div>
                     </td>
                     <td>
-                        <ManageUser :user :roles></ManageUser>
+                        <!-- <ManageUser :user :roles></ManageUser> -->
+                        <UserDrawer :user :roles></UserDrawer>
                     </td>
                 </tr>
             </tbody>

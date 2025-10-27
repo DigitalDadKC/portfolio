@@ -30,16 +30,16 @@ const props = defineProps({
 
         <main class="p-4 h-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
-                <div class="block p-2 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
+                <div class="block p-4 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
                     <LargestProposal :jobs></LargestProposal>
                 </div>
-                <div class="block p-2 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
+                <div class="block p-4 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
                     <RecentProposal :proposals></RecentProposal>
                 </div>
-                <div class="block p-2 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
+                <div class="block p-4 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
                     <CurrentMonthlyRevenue :jobs></CurrentMonthlyRevenue>
                 </div>
-                <div class="block p-2 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
+                <div class="block p-4 border-2 rounded-lg h-60 shadow-lg bg-light-primary dark:bg-light-primary border-gray-300 dark:border-gray-600 hover:bg-light-tertiary dark:hover:bg-dark-secondary">
                     <Company :company :states></Company>
                 </div>
             </div>

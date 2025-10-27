@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import ManageCompany from '../modals/ManageCompany.vue'
 import { Building } from 'lucide-vue-next'
-import CompanyDrawer from './CompanyDrawer.vue';
+import CompanyDrawer from '../drawers/CompanyDrawer.vue';
 
 const props = defineProps({
     company: Object,
@@ -15,8 +14,7 @@ const props = defineProps({
             <Building></Building>
         </div>
 
-        <div class="flex justify-end">
-            <!-- <ManageCompany :company :states></ManageCompany> -->
+        <div class="absolute right-2 top-1 flex justify-end">
             <CompanyDrawer :company :states></CompanyDrawer>
         </div>
 

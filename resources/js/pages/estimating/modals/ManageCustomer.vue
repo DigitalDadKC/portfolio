@@ -70,7 +70,7 @@ watchEffect(() => {
                         <div class="col-span-4">
                             <h2 class="text-lg text-end">Jobs</h2>
                             <div v-for="job in props.customer.jobs" :key="job.id" class="flex justify-end">
-                                <Link :href="route('estimating.edit', job.id)" class="hover:bg-light-tertiary hover:text-light-primary px-2 rounded-xs py-1">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>
+                                <Link :href="('/estimating?customer=&pages=25&search=' + job.number)" class="hover:bg-light-tertiary hover:text-light-primary px-2 rounded-xs py-1">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>
                             </div>
                         </div>
                     </div>

@@ -26,7 +26,7 @@ const newInvoice = {
         price: 0,
         quantity: 1,
     }],
-    terms_and_conditions: '',
+    terms_and_conditions: 'Payment is due within 30 days of invoice date. Late payments may incur additional charges. Please retain this invoice for your records',
     client_id: null,
 }
 

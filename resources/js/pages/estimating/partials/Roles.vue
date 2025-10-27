@@ -15,9 +15,9 @@ const props = defineProps({
 <template>
     <div>
         <Label for="role" class="text-right">Role</Label>
-        <Select id="role" onValueChange="{setSelectedValue}" value="{selectedValue}" multiple v-model="model">
+        <Select id="role" onValueChange="{setSelectedValue}" value="{selectedValue}" multiple v-model="model" class="w-36">
             <SelectTrigger
-                class="w-full bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/5 cursor-pointer">
+                class="w-full bg-white cursor-pointer">
                 {{model.map(role => role.name).join(', ')}}
             </SelectTrigger>
             <SelectContent>

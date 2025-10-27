@@ -3,20 +3,12 @@
 namespace App\Http\Controllers\Estimating;
 
 use App\Models\Job;
-use App\Models\Line;
 use Inertia\Inertia;
-use App\Models\Scope;
 use App\Models\State;
-use App\Models\Company;
 use App\Models\Customer;
-use App\Models\Proposal;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\UnitOfMeasurement;
 use App\Http\Resources\JobResource;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StateResource;
-use App\Http\Resources\CompanyResource;
 
 class JobController extends Controller
 {
@@ -50,20 +42,6 @@ class JobController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('estimating/Job', [
-            'new' => true,
-            'job' => $this->ref_job,
-            'company' => CompanyResource::collection(Company::all())->first(),
-            'states' => State::get(),
-            'unit_of_measurements' => UnitOfMeasurement::get(),
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -91,18 +69,6 @@ class JobController extends Controller
 
         return to_route('estimating.index');
     }
-
-    public function edit(Job $job)
-    {
-        $job = JobResource::collection(Job::where('id', $job->id)->get())->first();
-
-        return Inertia::render('estimating/Job', [
-            'job' => $job,
-            'states' => State::get(),
-            'new' => false
-        ]);
-    }
-
     public function update(Request $request, Job $job)
     {
         $request->validate([
