@@ -29,26 +29,26 @@ class ProductionSeeder extends Seeder
     {
         $models = [
             'MaterialUnitSize',
-            'Skills',
-            'Projects',
-            'Features',
+            // 'Skills',
+            // 'Projects',
+            // 'Features',
             'UnitOfMeasurements',
-            'States',
-            'Companies',
-            'CsiDivisions',
-            'CsiSections',
-            'CsiSubsections'
+            // 'States',
+            // 'Companies',
+            // 'CsiDivisions',
+            // 'CsiSections',
+            // 'CsiSubsections'
         ];
         foreach ($models as $model) {
             $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
             DB::unprepared(file_get_contents($path));
             $this->command->info($model . ' Model Seeded!');
         }
-        DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+        // DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
 
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(AdminSeeder::class);
+        // $this->call(PermissionSeeder::class);
+        // $this->call(RoleSeeder::class);
+        // $this->call(AdminSeeder::class);
         MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
         MaterialUnitSize::factory(6)->create();
         Material::factory(50)->create();
@@ -58,6 +58,7 @@ class ProductionSeeder extends Seeder
         Proposal::factory(400)->create();
         Scope::factory(600)->create();
         Line::factory(950)->create();
+        
         Invoice::factory(100)->create();
         InvoiceItem::factory(250)->create();
         Product::factory(3)->create();
