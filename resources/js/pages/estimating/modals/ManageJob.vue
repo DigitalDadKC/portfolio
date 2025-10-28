@@ -63,7 +63,7 @@ watchEffect(() => {
             <Button class="cursor-pointer" v-if="props.new">NEW JOB</Button>
             <Button class="cursor-pointer" v-else>EDIT JOB</Button>
         </DialogTrigger>
-        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 fixed top-80 bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6 pb-0">
                 <DialogTitle>{{(props.new) ? 'New Job' : 'Edit Job' }}</DialogTitle>
                 <DialogDescription>
@@ -98,6 +98,7 @@ watchEffect(() => {
                     <Input id="city" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.city" />
                 </div>
                 <div class="col-span-1">
+                    <Label for="state">State</Label>
                     <State v-model="form.state_id" :states></State>
                 </div>
                 <div class="col-span-1">

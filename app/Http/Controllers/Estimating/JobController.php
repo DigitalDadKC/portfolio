@@ -9,6 +9,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Resources\JobResource;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StateResource;
 
 class JobController extends Controller
 {
@@ -29,13 +30,13 @@ class JobController extends Controller
             ->when($request->customer, fn($query, $customer) => $query->where('customer_id', $customer))
             ->orderBy('created_at', 'desc');
 
-        $states = State::whereIn('id', $jobs->get()->pluck('state_id'))->orderBy('state', 'asc')->get();
+        // $states = State::whereIn('id', $jobs->get()->pluck('state_id'))->orderBy('state', 'asc')->get();
         $customers = Customer::whereIn('id', $jobs->get()->pluck('customer_id'))->orderBy('name', 'asc')->get();
         $jobs = ($jobs->paginate($filters['pages'])->isEmpty()) ? JobResource::collection($jobs->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString()) : JobResource::collection($jobs->paginate($filters['pages'])->withQueryString());
 
         return Inertia::render('estimating/Index', [
             'jobs' => fn() => $jobs,
-            'states' => $states,
+            'states' => StateResource::collection(State::orderBy('state')->get()),
             'customers' => $customers,
             'filters' => $filters
         ]);

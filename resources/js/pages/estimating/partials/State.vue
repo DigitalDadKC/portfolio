@@ -1,15 +1,32 @@
 <script setup lang="ts">
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Check, ChevronsUpDown, Search } from "lucide-vue-next"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Combobox, ComboboxAnchor, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxList, ComboboxTrigger } from "@/components/ui/combobox"
+import { computed } from "vue"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const model = defineModel()
 const props = defineProps({
     states: Object,
 })
 
+const state = computed(() => {
+    return props.states.find(state => state.id == model.value)
+})
+
 </script>
 
 <template>
-    <Select id="state" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
+    <Select v-model="model">
         <SelectTrigger class="w-full bg-white">
             <SelectValue placeholder="Select state" />
         </SelectTrigger>

@@ -18,7 +18,6 @@ const props = defineProps({
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectLabel>Customers</SelectLabel>
                     <SelectItem v-for="customer in props.customers" :key="customer.id" :value="customer.id">
                         {{ customer.name }}
                     </SelectItem>

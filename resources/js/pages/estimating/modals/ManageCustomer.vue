@@ -67,7 +67,7 @@ watchEffect(() => {
                             <Label for="state">State</Label>
                             <State id="state" :states v-model="form.state_id"></State>
                         </div>
-                        <div class="col-span-4">
+                        <div class="col-span-4" v-if="!props.new">
                             <h2 class="text-lg text-end">Jobs</h2>
                             <div v-for="job in props.customer.jobs" :key="job.id" class="flex justify-end">
                                 <Link :href="('/estimating?customer=&pages=25&search=' + job.number)" class="hover:bg-light-tertiary hover:text-light-primary px-2 rounded-xs py-1">Job #{{ job.number }} - {{ job.city }}, {{ job.state.abbr }}</Link>

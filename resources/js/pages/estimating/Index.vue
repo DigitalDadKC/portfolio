@@ -5,7 +5,6 @@ import EstimatingLayout from '@/layouts/EstimatingLayout.vue';
 import Paginator from '@/components/Paginator.vue';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import SecondaryButton from '@/components/SecondaryButton.vue';
 import SearchBox from './partials/SearchBox.vue';
 import Pages from './partials/Pages.vue';
 import State from './partials/State.vue';
@@ -77,8 +76,8 @@ const getJobs = () => {
             </ul>
         </template>
 
-        <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-8">
-            <table class="table table-auto bg-light-primary dark:bg-dark-primary border-2 border-black">
+        <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-8 w-full">
+            <table class="table table-auto bg-light-primary dark:bg-dark-primary border-2 border-black w-full">
                 <thead>
                     <tr class="uppercase border-2 border-black">
                         <th colspan="10">
