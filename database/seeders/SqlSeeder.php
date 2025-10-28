@@ -15,7 +15,6 @@ class SqlSeeder extends Seeder
     public function run(): void
     {
         $models = [
-            'MaterialUnitSize',
             'Skills',
             'Projects',
             'Features',

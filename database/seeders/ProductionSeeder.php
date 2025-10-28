@@ -15,6 +15,7 @@ use App\Models\InvoiceItem;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
+use App\Models\MaterialUnitSize;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -49,6 +50,7 @@ class ProductionSeeder extends Seeder
         // $this->call(RoleSeeder::class);
         // $this->call(AdminSeeder::class);
         MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
+        MaterialUnitSize::factory(6)->create();
         Material::factory(50)->create();
 
         Customer::factory(50)->create();

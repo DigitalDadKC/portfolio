@@ -26,7 +26,7 @@ class ClientInvoiceFactory extends Factory
             'date_created' => $date_created,
             'due_date' => $due_date,
             'terms_and_conditions' => 'Payment is due within 30 days of invoice date. Late payments may incur additional charges. Please retain this invoice for your records.',
-            'paid' => $this->faker->randomElement(['paid', 'unpaid']),
+            'status' => $this->faker->randomElement(['paid', 'unpaid']),
             'session_id' => $this->faker->randomNumber(9, true),
             'client_id' => Client::query()->inRandomOrder()->first()->id,
         ];
