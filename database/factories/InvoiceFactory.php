@@ -21,6 +21,7 @@ class InvoiceFactory extends Factory
         $date = $this->faker->dateTimeThisDecade();
         $date_created = $date->format('Y-m-d');
         $due_date = $date->modify('+30 days')->format('Y-m-d');
+        $date_deleted = (mt_rand(0,1)) ? NULL : $date->modify('+90 days')->format('Y-m-d');
 
         return [
             'number' => $this->faker->unique()->numberBetween(10, 1000),
@@ -30,7 +31,8 @@ class InvoiceFactory extends Factory
             'reference' => 'REF-'.rand(10, 500),
             'terms_and_conditions' => 'Payment is due within 30 days of invoice date. Late payments may incur additional charges. Please retain this invoice for your records.',
             'discount' => $this->faker->numberBetween(10, 100),
-            'paid' => $this->faker->numberBetween(0, 1)
+            'paid' => ($date_deleted) ? 1 : $this->faker->numberBetween(0, 1),
+            'deleted_at' => $date_deleted,
         ];
     }
 }

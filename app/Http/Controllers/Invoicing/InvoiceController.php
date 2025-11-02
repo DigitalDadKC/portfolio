@@ -24,13 +24,15 @@ class InvoiceController extends Controller
     {
         $filters = [];
         $filters['search'] = $request->search ?? '';
-        $filters['unpaid'] = json_decode($request->input('unpaid', 0));
+        $filters['unpaid'] = json_decode($request->input('unpaid', false));
+        $filters['trashed'] = json_decode($request->input('trashed', false));
         $filters['pages'] = $request->pages ? $request->pages : 10;
         $filters['customers'] = $request->input('customers', Customer::get()->map(fn($item) => $item->id)) ?? [];
 
         $invoices = Invoice::query()->with('customer')
             ->when($filters['search'], fn($query, $search) => $query->where('number', 'like', "%{$search}%")->orWhere('reference', 'like', "%{$search}%"))
             ->when($filters['unpaid'], fn($query) => $query->where('paid', 0))
+            ->when($filters['trashed'], fn($query) => $query->onlyTrashed(), fn($query) => $query->whereNull('deleted_at'))
             ->whereIn('customer_id', $filters['customers'])
             ->orderBy('created_at', 'desc');
 
@@ -141,9 +143,11 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+
+        return back();
     }
 
     public function downloadPDF(Request $request, Invoice $invoice)
@@ -153,7 +157,7 @@ class InvoiceController extends Controller
             'invoice' => InvoiceResource::make($invoice),
             'company' => CompanyResource::collection(Company::all())->first(),
         ];
-        $pdf = Pdf::loadView('exports.invoice-export', $data);
+        $pdf = Pdf::loadView('pdf.invoice-pdf', $data);
         return $pdf->download('Invoice.pdf');
     }
 
@@ -166,7 +170,7 @@ class InvoiceController extends Controller
             'company' => CompanyResource::collection(Company::all())->first(),
         ];
 
-        $pdf = Pdf::loadView('exports.invoice-export', $data);
+        $pdf = Pdf::loadView('pdf.invoice-pdf', $data);
         return $pdf->stream('invoice-in-browser.pdf');
     }
 }

@@ -1,4 +1,4 @@
-<body>
+<body style="padding: 20px 0; font-size: 16px; font-family: Perpetua, 'Times New Roman', Times, serif">
     <h1>Thanks {{$name}}!</h1>
     <p>Here's a copy of your message</p>
     <div id="body">
@@ -11,12 +11,12 @@
     </div> --}}
 
     <div id="outro">
-        <p><a href="https://www.raleighgroesbeck.com" aria-label="Visit my site"><img src="{{ asset('img/dad.png') }}" alt="logo" id="image" width="10" /></a></p>
+        <p><a href="https://digitaldadkc.com" aria-label="Visit my site"><img src="{{ asset('img/dad.svg') }}" alt="logo" id="image" width="30" /></a></p>
         <p>RALEIGH GROESBECK</p>
         <p>Owner</p>
         <p id="line-break">____________________________</p>
-        <p>Website: <a href="https://www.raleighgroesbeck.com" aria-label="Visit my site">www.raleighgroesbeck.com</a></p>
-        <p>Email: <a href="mailto:raleighgroesbeck.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a></p>
+        <p>Website: <a href="https://digitaldadkc.com" aria-label="Visit my site">digitaldadkc.com</a></p>
+        <p>Email: <a href="mailto:info@digitaldadkc.com" aria-label="Email Me">info@digitaldadkc.com</a></p>
         <p>Schedule a meeting: <a href="https://calendly.com/digitaldadkc" aria-label="Email Me">Calendly</a></p>
     </div>
 </body>

@@ -13,7 +13,7 @@ const props = defineProps({
     <div>
         <Label for="customer">Customer</Label>
         <Select id="customer" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
-            <SelectTrigger class="w-full cursor-pointer bg-white">
+            <SelectTrigger class="w-full bg-white cursor-pointer hover:bg-accent">
                 <SelectValue placeholder="Select customer" />
             </SelectTrigger>
             <SelectContent>

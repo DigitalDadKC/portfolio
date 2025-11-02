@@ -107,8 +107,8 @@ function formatWithCommas(value) {
             :value="displayValue"
             :name="`${props.label}-${id}`"
             type="text"
-            class="file:text-foreground placeholder:text-muted-foreground selection:bg-light-quatrenary selection:text-primary-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-white dark:bg-dark-primary px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-            :class="[{'bg-light-secondary dark:bg-dark-quatrenary text-light-quatrenary dark:text-dark-secondary border-light-tertiary dark:border-dark-tertiary': props.disabled}, widthClass]"
+            class="file:text-foreground placeholder:text-muted-foreground selection:bg-light-quatrenary selection:text-primary-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-white dark:bg-dark-primary px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:cursor-not-allowed disabled:opacity-60 disabled:bg-light-secondary disabled:dark:bg-dark-quatrenary disabled:text-red-500 md:text-sm"
+            :class="[widthClass]"
             placeholder=" "
             :disabled="props.disabled"
             @input="onInput($event.target.value)"
@@ -116,12 +116,5 @@ function formatWithCommas(value) {
             @blur="onBlur()"
             @click="$event.target.select()"
         />
-        <!-- <label
-            class="absolute text-xs text-light-quatrenary dark:text-dark-quatrenary duration-300 transform -translate-y-4 scale-75 top-3.5 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-3.5 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
-            :for="`${props.label}-${id}`"
-            :class="{'cursor-default text-light-quatrenary dark:text-dark-secondary': props.disabled}"
-        >
-        {{ props.label }}
-        </label> -->
     </div>
 </template>

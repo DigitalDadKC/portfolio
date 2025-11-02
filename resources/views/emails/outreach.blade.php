@@ -47,7 +47,7 @@
             <a href="https://digitaldadkc.com" aria-label="Visit my site">digitaldadkc.com</a>
         </p>
         <p style="padding: 0; margin: 0;">Email:
-            <a href="mailto:raleighgroesbeck@gmail.com" aria-label="Email Me">raleighgroesbeck@gmail.com</a>
+            <a href="mailto:info@digitaldadkc.com" aria-label="Email Me">info@digitaldadkc.com</a>
         </p>
         <p style="padding: 0; margin: 0;">Schedule a meeting:
             <a href="https://calendly.com/digitaldadkc" aria-label="Email Me">Calendly</a>

@@ -19,7 +19,7 @@ class InvoiceItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'invoice_id' => Invoice::query()->inRandomOrder()->first()->id,
+            'invoice_id' => Invoice::query()->withTrashed()->inRandomOrder()->first()->id,
             'material_id' => Material::query()->inRandomOrder()->first()->id,
             'unit_price' => $this->faker->numberBetween(100,5000),
             'quantity' => $this->faker->numberBetween(1, 5),

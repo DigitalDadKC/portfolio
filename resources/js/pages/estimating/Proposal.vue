@@ -182,7 +182,7 @@ watch(() => props.proposal, (item) => {
                         </div>
                         <div class="col-span-4">
                             <Label for="notes">Job Notes</Label>
-                            <Textarea id="notes" v-model="form.proposal.job.notes" class="bg-light-secondary dark:bg-dark-quatrenary dark:text-dark-primary border-light-tertiary dark:border-dark-tertiary" rows="10" :disabled="true" />
+                            <Textarea id="notes" v-model="form.proposal.job.notes" class="bg-white dark:bg-dark-quatrenary dark:text-dark-primary border-light-tertiary dark:border-dark-tertiary" rows="10" :disabled="true" />
                         </div>
                     </div>
                 </div>
@@ -202,6 +202,7 @@ watch(() => props.proposal, (item) => {
                     <FormattedInput id="name" width="96" v-model="form.proposal.name" @blur="updateProposal()" />
                 </div>
                 <div>
+                    <Label for="type">Type</Label>
                     <Type :types v-model="form.proposal.type" @update:modelValue="updateProposal()"></Type>
                 </div>
             </div>
@@ -253,7 +254,7 @@ watch(() => props.proposal, (item) => {
                                     </details>
 
                                     <div class="hidden md:flex md:flex-row items-end gap-1">
-                                        <GripVertical class="handle cursor-pointer w-8 h-10 dark:bg-dark-quatrenary dark:text-dark-primary rounded-lg"></GripVertical>
+                                        <GripVertical class="handle cursor-grab w-8 h-10 dark:bg-dark-quatrenary dark:text-dark-primary rounded-lg"></GripVertical>
                                         <div class="grow">
                                             <Label v-if="!index">Description</Label>
                                             <FormattedInput class="w-full" v-model="element.description" label="Description" @blur="updateLine(scopeIndex, index)" />
@@ -272,7 +273,7 @@ watch(() => props.proposal, (item) => {
                                         </div>
                                         <div>
                                             <Label v-if="!index">Total</Label>
-                                            <FormattedInput v-model="element.total" type="currency" label="Total" :disabled="true" />
+                                            <FormattedInput v-model="element.total" type="currency" label="Total" width="36" :disabled="true" />
                                         </div>
                                         <Trash2 class="cursor-pointer text-red-500" @click="removeLine(scopeIndex, index)"></Trash2>
                                     </div>
@@ -288,31 +289,28 @@ watch(() => props.proposal, (item) => {
                     <div class="flex justify-end">
                         <div class="flex flex-col justify-start">
                             <Label>Scope Total</Label>
-                            <FormattedInput v-model="scope.total" type="currency" :disabled="true" />
+                            <FormattedInput v-model="scope.total" width="36" type="currency" :disabled="true" class="font-bold" />
                         </div>
                     </div>
                 </div>
                 <div class="flex justify-end">
                     <div class="flex flex-col">
                         <Label for="total">Total</Label>
-                        <FormattedInput id="total" v-model="form.proposal.total" type="currency" :disabled="true" />
+                        <FormattedInput id="total" v-model="form.proposal.total" type="currency" :disabled="true" width="36" class="bg-light-tertiary rounded-lg font-bold" />
                     </div>
                 </div>
             </form>
 
             <div>
                 <Label for="exclusions">Exclusions</Label>
-                <Textarea id="exclusions" class="bg-light-primary dark:bg-dark-primary dark:text-dark-quatrenary" v-model="form.proposal.exclusions" />
+                <Textarea id="exclusions" class="bg-white dark:bg-dark-primary dark:text-dark-quatrenary" v-model="form.proposal.exclusions" />
             </div>
 
             <div class="flex justify-between mt-2">
                 <Link :href="route('estimating.index')" as="button" prefetch>
                     <Button class="cursor-pointer">Back</Button>
                 </Link>
-                <!-- <v-btn as="submit" type="submit" :disabled="form.processing" @click="form.PDF = false">Save & Return</v-btn> -->
                 <Button class="cursor-pointer" variant="destructive" @click="destroyProposal()">Delete</Button>
-                <!-- <DangerButton color="red-accent-2" @click="destroyProposal()">Delete Proposal</DangerButton> -->
-                <!-- <v-btn as="submit" type="submit" :disabled="form.processing">Generate PDF</v-btn> -->
             </div>
         </div>
 

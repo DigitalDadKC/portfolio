@@ -45,8 +45,8 @@ class DatabaseSeeder extends Seeder
         ClientInvoice::factory(50)->create();
         ClientInvoiceItem::factory(100)->create();
 
-        Product::factory(3)->create();
-        Invoice::factory(100)->create();
-        InvoiceItem::factory(250)->create();
+        Product::factory(25)->create();
+        Invoice::factory(50)->create();
+        InvoiceItem::factory(100)->create();
     }
 }

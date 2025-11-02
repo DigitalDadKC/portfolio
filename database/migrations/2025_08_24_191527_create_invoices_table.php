@@ -20,7 +20,17 @@ return new class extends Migration
             $table->text('terms_and_conditions');
             $table->double('discount')->default(0);
             $table->boolean('paid')->default(0);
-            $table->foreignId('customer_id');
+            $table->foreignId('customer_id')->constrained();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('invoice_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
+            $table->foreignId('material_id')->constrained();
+            $table->double('unit_price');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -30,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('invoice_items');
         Schema::dropIfExists('invoices');
     }
 };

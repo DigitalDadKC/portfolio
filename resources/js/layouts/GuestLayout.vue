@@ -77,7 +77,7 @@ onMounted(() => {
 
             <AppSidebar :navigations />
 
-            <main class="flex mt-20">
+            <main class=" mt-20 w-full">
                 <slot />
             </main>
         </SidebarProvider>

@@ -11,7 +11,7 @@ class ContactController extends Controller
 {
     public function __invoke(ContactRequest $request)
     {
-        Mail::to('raleighgroesbeck@gmail.com')->send(new ContactMail($request->name, $request->email, $request->body));
+        Mail::to(env('USER_EMAIL'))->send(new ContactMail($request->name, $request->email, $request->body));
         Mail::to($request->email)->send(new SenderMail($request->name, $request->email, $request->body));
 
         return redirect()->back();

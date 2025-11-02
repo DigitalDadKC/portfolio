@@ -10,13 +10,12 @@ const props = defineProps({
 </script>
 
 <template>
-    <Label for="type">Type</Label>
     <Select id="type" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
-        <SelectTrigger  class="w-36 bg-light-primary hover:bg-light-secondary dark:bg-dark-primary">
+        <SelectTrigger class="w-36 cursor-pointer bg-white hover:bg-accent dark:bg-dark-primary">
             <SelectValue placeholder="Select Type" />
         </SelectTrigger>
         <SelectContent>
-            <SelectGroup class="bg-light-tertiary dark:bg-dark-quatrenary ">
+            <SelectGroup class=" dark:bg-dark-quatrenary ">
                 <SelectItem v-for="type in props.types" :key="type" :value="type" class="dark:text-dark-tertiary">
                     {{ type }}
                 </SelectItem>

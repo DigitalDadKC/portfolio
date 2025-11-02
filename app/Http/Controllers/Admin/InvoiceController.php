@@ -153,7 +153,7 @@ class InvoiceController extends Controller
             'session_id' => $checkout_session->id,
         ]);
 
-        $pdf = Pdf::loadView('pdf.invoice-pdf', compact('clientInvoice', 'checkout_session'))->output();
+        $pdf = Pdf::loadView('pdf.client-invoice-pdf', compact('clientInvoice', 'checkout_session'))->output();
 
         Mail::to($clientInvoice->client->email)->send(new InvoiceMail($clientInvoice->toArray(), $pdf, $checkout_session));
         return back()->with('success', 'Invoice sent successfully.');

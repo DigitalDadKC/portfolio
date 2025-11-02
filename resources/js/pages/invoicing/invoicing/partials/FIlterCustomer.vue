@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Link } from '@inertiajs/vue3';
 import { ChevronDown } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -31,15 +30,14 @@ onMounted(() => {
 </script>
 
 <template>
-
     <Popover>
         <PopoverTrigger as-child>
-            <Button variant="outline" class="cursor-pointer bg-light-primary">
+            <Button variant="outline">
                 Filter Customer
                 <ChevronDown></ChevronDown>
             </Button>
         </PopoverTrigger>
-        <PopoverContent class="w-80 h-96 overflow-auto" align="start">
+        <PopoverContent class="w-80 h-96 overflow-auto bg-light-secondary border-2 border-light-quatrenary" align="end">
             <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCheckboxButton">
                 <li>
                     <div class="flex items-center">

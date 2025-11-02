@@ -34,21 +34,21 @@
             </div>
         </div>
 
-        @php
+        {{-- @php
             $total = 0;
-        @endphp
+        @endphp --}}
 
-        @foreach($invoice['client_invoice_items'] as $item)
+        {{-- @foreach($invoice['client_invoice_items'] as $item)
             @php
                 $item_total = $item['price']*$item['quantity'];
                 $total += $item_total;
             @endphp
-        @endforeach
+        @endforeach --}}
 
         <div style="text-align: center; background-color: #EBE3D5; padding: 2rem 0">
-            <h3>
+            {{-- <h3>
                 Total: {{"$ " . number_format($total, 0, ",", ",")  }}
-            </h3>
+            </h3> --}}
             <button style="background-color: #776B5D; border-radius: 0.5rem; text-shadow: 1px">
                 <a style="padding: 1rem; color: #F3EEEA;" method="post" href="{{ $checkout_session->url }}" aria-label="Pay Now">
                     PAY NOW
@@ -58,7 +58,7 @@
 
         <div style="font-style: italic; color: #77685D; padding: 2rem">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
+                <img src="{{ asset('/img/dad.svg') }}" alt="logo" id="image" width="30" />
             </a>
             <div>
                 RALEIGH GROESBECK
@@ -67,7 +67,7 @@
                 Owner & Developer
             </div>
             <div>
-                DigitalDad, LLC
+                Digital Dad, LLC
             </div>
             <div>
                 ____________________________

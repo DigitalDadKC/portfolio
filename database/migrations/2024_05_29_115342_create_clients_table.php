@@ -33,7 +33,7 @@ return new class extends Migration
             $table->text('terms_and_conditions');
             $table->string('status');
             $table->string('session_id')->nullable()->default(NULL);
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('client_invoice_items', function (Blueprint $table) {

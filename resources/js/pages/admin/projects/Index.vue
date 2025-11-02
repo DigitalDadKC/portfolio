@@ -80,10 +80,10 @@ watch(() => (props.projects), (projects) => {
                         <TableHead class="text-black text-center"><Manage :new="true" :project="newProject" :skills></Manage></TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
+                <TableBody class="bg-white dark:bg-dark-primary" ref="el">
                     <TableRow v-for="project in list" :key="project.id" class="w-full">
-                        <TableCell class="p-3">
-                            <GripHorizontal class="handle cursor-pointer w-8 h-8"></GripHorizontal>
+                        <TableCell class="handle bg-light-quatrenary dark:bg-dark-quatrenary border-4 border-black m-1 cursor-grab">
+                            <GripHorizontal class="w-full h-full"></GripHorizontal>
                         </TableCell>
                         <TableCell>{{ project.name }}</TableCell>
                         <TableCell>{{ project.description }}</TableCell>

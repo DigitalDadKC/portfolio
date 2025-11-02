@@ -5,7 +5,7 @@ import { Notebook } from 'lucide-vue-next';
 
 const links = [
     { name: "Invoicing", url: '/invoices', icon: Notebook },
-    { name: "Products", url: '/products', icon: Notebook },
+    // { name: "Products", url: '/products', icon: Notebook },
 ]
 
 </script>
