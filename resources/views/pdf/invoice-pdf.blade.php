@@ -76,7 +76,7 @@
                         <td style="padding: 0.5rem; text-align: right;">${{number_format($item->unit_price/100 * $item->quantity, 2)}}</td>
                     </tr>
                     @php
-                        $subtotal +=  number_format($item->price/100 * $item->quantity, 2)
+                        $subtotal += number_format($item->unit_price/100 * $item->quantity, 2)
                     @endphp
                 @endforeach
             </table>

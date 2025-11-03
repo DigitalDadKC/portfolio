@@ -75,7 +75,7 @@ watch(() => (props.features), (features) => {
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
                     <TableRow v-for="feature in list" :key="feature.id" class="w-full">
                         <TableCell class="p-3">
-                            <GripHorizontal class="handle cursor-pointer w-8 h-8"></GripHorizontal>
+                            <GripHorizontal class="handle cursor-grab w-8 h-8"></GripHorizontal>
                         </TableCell>
                         <TableCell>{{ feature.name }}</TableCell>
                         <TableCell>{{ useDateFormat(feature.created_at, 'MMM d, YYYY') }}</TableCell>
