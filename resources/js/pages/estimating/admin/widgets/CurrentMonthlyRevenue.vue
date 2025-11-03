@@ -7,8 +7,12 @@ const props = defineProps({
     jobs: Object,
 })
 
+console.log(props.jobs)
+
 const current_month_jobs = props.jobs.filter(job => new Date(job.created_at).getMonth() == new Date().getMonth() && new Date(job.created_at).getFullYear() == new Date().getFullYear())
+console.log(current_month_jobs)
 const previous_month_jobs = props.jobs.filter(job => new Date(job.created_at).getMonth() == new Date().getMonth()-1 && new Date(job.created_at).getFullYear() == new Date().getFullYear())
+console.log(previous_month_jobs)
 const current_month_revenue = current_month_jobs.flatMap(job => job.proposals.reduce((a, b) => a + b.scopes.reduce((c, d) => c + d.lines.reduce((e, f) => e + (f.price*f.quantity), 0), 0), 0)).reduce((g, h) => h + g, 0)
 const previous_month_revenue = previous_month_jobs.flatMap(job => job.proposals.reduce((a, b) => a + b.scopes.reduce((c, d) => c + d.lines.reduce((e, f) => e + (f.price*f.quantity), 0), 0), 0)).reduce((g, h) => h + g, 0)
 

@@ -30,7 +30,7 @@ const props = defineProps({
                 <div>
                     {{ props.company.city }}
                 </div>
-                    {{ props.company.state.state }}
+                    {{ props.company.state?.state }}
                 <div>
                     {{ props.company.zip }}
                 </div>

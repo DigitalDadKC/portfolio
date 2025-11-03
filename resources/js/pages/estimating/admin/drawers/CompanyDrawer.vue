@@ -21,7 +21,7 @@ const form = useForm({
     name: props.company.name,
     address: props.company.address,
     city: props.company.city,
-    state_id: props.company.state.id,
+    state_id: props.company.state?.id,
     zip: props.company.zip,
     logo: props.company.logo,
     terms: props.company.terms
