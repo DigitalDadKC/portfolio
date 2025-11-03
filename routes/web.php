@@ -90,7 +90,7 @@ Route::resource('/customers', CustomerController::class);
 
 // company
 Route::post('companies/store', [AdminController::class, 'storeCompany'])->name('companies.store');
-Route::post('companies/update/{company}', [AdminController::class, 'updateCompany'])->name('companies.update');
+Route::post('companies/update/{company?}', [AdminController::class, 'updateCompany'])->name('companies.update');
 
 // MASTERFORMAT
 Route::resource('/masterformat', DivisionController::class);

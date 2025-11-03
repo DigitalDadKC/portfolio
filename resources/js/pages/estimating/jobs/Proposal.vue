@@ -95,7 +95,7 @@ const total = computed(() => {
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <img :src="'/img/logo.png'" class="rounded-lg mb-2" aria-label="company logo" />
+                    <img :src="props.company?.logo" class="rounded-lg mb-2" aria-label="company logo" />
                     <div class="flex justify-end flex-col items-end">
                         <p>{{ props.company?.name }}</p>
                         <p>{{ props.company?.address }}</p>

@@ -36,7 +36,7 @@ const handleImage = (e) => {
 }
 
 const submit = () => {
-    form.post(route('companies.update', form.id), {
+    form.post(route('companies.update', props.company.id), {
         _method: 'put',
         onSuccess: () => {
             isOpen.value = false

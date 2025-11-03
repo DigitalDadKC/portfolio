@@ -58,38 +58,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function storeCompany(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string:255',
-            'address' => 'required|string:255',
-            'city' => 'required|string:255',
-            'state_id' => 'required',
-            'zip' => 'required|integer',
-            'terms' => 'required'
-        ]);
-
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo')->store('companies');
-            $company = Company::create([
-                'name' => $request->name,
-                'address' => $request->address,
-                'city' => $request->city,
-                'state_id' => $request->state_id,
-                'zip' => $request->zip,
-                'terms' => $request->terms,
-                'logo' => $logo
-            ]);
-        } else {
-            return abort(403);
-        }
-
-        return back()->with('message', $company);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function updateCompany(Request $request, Company $company)
@@ -105,11 +73,15 @@ class AdminController extends Controller
 
         $logo = $company->logo;
         if ($request->hasFile('logo')) {
-            Storage::delete($company->logo);
+            if($logo) {
+                Storage::delete($company->logo);
+            }
             $logo = $request->file('logo')->store('companies');
         }
 
-        $company -> update([
+        $company -> updateOrCreate([
+            'id' => $request->id
+        ], [
             'name' => $request->name,
             'address' => $request->address,
             'city' => $request->city,
