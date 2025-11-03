@@ -4,7 +4,7 @@ import { useForm, Link } from "@inertiajs/vue3";
 import { Input } from "@/components/ui/input";
 import { Label } from 'reka-ui';
 import { Button } from '@/components/ui/button';
-import State from "../partials/State.vue";
+import State from "../../jobs/partials/State.vue";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil } from "lucide-vue-next";
 

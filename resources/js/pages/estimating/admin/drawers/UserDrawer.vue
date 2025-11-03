@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import FormattedInput from "@/components/FormattedInput.vue";
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import State from '../partials/State.vue';
+import State from '../jobs/partials/State.vue';
 import { Cog } from 'lucide-vue-next';
 import Roles from '../partials/Roles.vue';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetFooter, SheetTitle, SheetTrigger } from '@/components/ui/sheet';

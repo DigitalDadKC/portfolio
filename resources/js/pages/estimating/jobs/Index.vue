@@ -106,6 +106,7 @@ const getJobs = () => {
                             <State v-model="state_id" :states @update:model-value="getJobs()"></State>
                         </th>
                         <th class="text-center hidden xl:table-cell">
+                            <Label for="customer">Customer</Label>
                             <Customer v-model="customer_id" :customers @update:model-value="getJobs()"></Customer>
                         </th>
                         <th class="bg-light-tertiary dark:bg-dark-tertiary border-b-black border-b-4 py-2 text-black rounded-t-sm">

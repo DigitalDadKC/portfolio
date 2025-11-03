@@ -4,7 +4,7 @@ import GuestLayout from './GuestLayout.vue';
 import { Notebook } from 'lucide-vue-next';
 
 const links = [
-    { name: "Estimating", url: '/estimating', icon: Notebook },
+    { name: "Estimating", url: '/estimating/jobs', icon: Notebook },
     { name: "Customers", url: '/customers', icon: Notebook },
     { name: "Admin", url: '/admin', icon: Notebook },
 ]

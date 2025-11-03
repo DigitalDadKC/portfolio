@@ -20,7 +20,7 @@ const toggleDark = useToggle(isDark);
 const scrollBackground = ref(false)
 
 const navigations = [
-    { name: "Construction Estimating", url: '/estimating', icon: Notebook },
+    { name: "Construction Estimating", url: '/estimating/jobs/index', icon: Notebook },
     { name: "Invoicing", url: '/invoices', icon: DollarSign },
     { name: "Masterformat", url: '/masterformat', icon: BookMarked },
 ]

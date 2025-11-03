@@ -25,16 +25,15 @@ class JobController extends Controller
         $filters['customer'] = $request->customer ? $request->customer : NULL;
 
         $jobs = Job::query()->with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])
-            ->when($request->search, fn($query, $search) => $query->where('number', 'like', "%{$search}%")->orWhere('address', 'like', "%{$search}%")->orWhere('city', 'like', "%{$search}%"))
+            ->where(fn($query) => $query->where('number', 'like', "%{$filters['search']}%")->orWhere('address', 'like', "%{$filters['search']}%"))
             ->when($request->state, fn($query, $state) => $query->where('state_id', $state))
             ->when($request->customer, fn($query, $customer) => $query->where('customer_id', $customer))
             ->orderBy('created_at', 'desc');
 
-        // $states = State::whereIn('id', $jobs->get()->pluck('state_id'))->orderBy('state', 'asc')->get();
         $customers = Customer::whereIn('id', $jobs->get()->pluck('customer_id'))->orderBy('name', 'asc')->get();
         $jobs = ($jobs->paginate($filters['pages'])->isEmpty()) ? JobResource::collection($jobs->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString()) : JobResource::collection($jobs->paginate($filters['pages'])->withQueryString());
 
-        return Inertia::render('estimating/Index', [
+        return Inertia::render('estimating/jobs/Index', [
             'jobs' => fn() => $jobs,
             'states' => StateResource::collection(State::orderBy('state')->get()),
             'customers' => $customers,
@@ -68,7 +67,7 @@ class JobController extends Controller
             'customer_id' => $request->customer_id,
         ]);
 
-        return to_route('estimating.index');
+        return back();
     }
     public function update(Request $request, Job $job)
     {
@@ -90,20 +89,23 @@ class JobController extends Controller
             'notes' => $request->notes,
         ]);
 
-        return to_route('estimating.index');
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Job $job)
     {
-        //
+        $job->delete();
+
+        return back();
     }
 
     public function report(Request $request)
     {
         $jobs = JobResource::collection(Job::with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])->orderBy('created_at', 'desc')->get());
+
         return Inertia::render('estimating/Report', [
             'jobs' => $jobs
         ]);

@@ -6,8 +6,8 @@ import EstimatingLayout from "@/layouts/EstimatingLayout.vue";
 import { Label } from "@/components/ui/label";
 import Manage from "./modals/ManageCustomer.vue";
 import Delete from "./modals/DeleteCustomer.vue";
-import SearchBox from "./partials/SearchBox.vue";
-import State from './partials/State.vue';
+import SearchBox from "../jobs/partials/SearchBox.vue";
+import State from "../jobs/partials/State.vue";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ArrowDown, ArrowUp } from "lucide-vue-next";
 
@@ -64,7 +64,7 @@ const icon = computed(() => {
     <EstimatingLayout>
 
         <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-8 w-full">
-            <Table class="bg-light-primary dark:bg-dark-primary w-300">
+            <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="p-4">
                     <TableRow class="uppercase bg-light-tertiary dark:bg-dark-tertiary">
                         <TableHead class="py-4">

@@ -33,6 +33,7 @@ export function useProjectMath(form) {
     }
 
     const totals = () => {
+        console.log(form)
         form.proposal.scopes.map(scope => scope.lines.map(line => line.total = ((line.price * line.quantity*100)/100)))
         form.proposal.scopes.map(scope => scope.total = scope.lines.map(line => ((line.price * line.quantity*100)/100)).reduce((a, b) => a + b, 0))
         form.proposal.total = form.proposal.scopes.map(scope => scope.lines.map(line => ((line.price * line.quantity*100)/100)).reduce((a, b) => a + b, 0)).reduce((a, b) => a + b, 0)

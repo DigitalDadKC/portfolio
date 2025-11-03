@@ -33,7 +33,7 @@ const form = useForm({
 
 const submit = () => {
     if (props.new) {
-        form.post(route('estimating.store'), {
+        form.post(route('estimating.jobs.store'), {
             onSuccess: () => {
                 form.reset()
                 isDialogOpen.value = false
@@ -41,12 +41,21 @@ const submit = () => {
         })
     }
     else {
-        form.patch(route('estimating.update', { job: form.id }), {
+        form.patch(route('estimating.jobs.update', props.job.id), {
             onSuccess: () => {
                 isDialogOpen.value = false
             }
         })
     }
+}
+
+const destroy = () => {
+    form.delete(route('estimating.jobs.destroy', props.job.id), {
+        preserveScroll: true,
+        onSuccess: () => {
+            isDialogOpen.value = false
+        }
+    })
 }
 
 watchEffect(() => {
@@ -76,9 +85,11 @@ watchEffect(() => {
                     <Input id="number" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model.number="form.number" />
                 </div>
                 <div class="col-span-2">
+                    <Label for="customer">Customer</Label>
                     <Customer :customers v-model="form.customer_id"></Customer>
                 </div>
                 <div class="col-span-1">
+                    <Label for="customer">Start Date</Label>
                     <StartDate v-model="form.start_date" :job></StartDate>
                 </div>
                 <div class="col-span-4">
@@ -115,10 +126,13 @@ watchEffect(() => {
                     <Textarea id="notes" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.notes" />
                 </div>
             </div>
-            <DialogFooter class="flex gap-2 p-6">
-                <Button class="cursor-pointer" variant="outline" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
-                <Button class="cursor-pointer" type="submit" :disabled="form.processing" @click="submit()">Save</Button>
-            </DialogFooter>
+            <div class="flex justify-between p-6">
+                <Button variant="destructive" @click="destroy()">Delete</Button>
+                <div class="flex gap-4">
+                    <Button variant="outline" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
+                    <Button type="submit" :disabled="form.processing" @click="submit()">Save</Button>
+                </div>
+            </div>
         </DialogContent>
     </Dialog>
 </template>

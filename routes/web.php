@@ -61,11 +61,9 @@ Route::post('/cancel', [AdminInvoiceController::class, 'cancel'])->name('checkou
 Route::post('/webhook', [AdminInvoiceController::class, 'webhook'])->name('checkout.webhook');
 
 // jobs
-Route::get('/estimating', [JobController::class, 'index'])->name('estimating.index');
-Route::get('estimating/create', [JobController::class, 'create'])->name('estimating.create');
-Route::post('estimating/store', [JobController::class, 'store'])->name('estimating.store');
-Route::get('estimating/edit/{job}', [JobController::class, 'edit'])->name('estimating.edit');
-Route::patch('estimating/update/{job}', [JobController::class, 'update'])->name('estimating.update');
+Route::middleware(['auth', 'verified'])->prefix('estimating')->name('estimating.')->group(function () {
+    Route::resource('/jobs', JobController::class);
+});
 
 // proposal
 Route::post('proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');

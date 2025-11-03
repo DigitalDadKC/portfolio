@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { computed } from "vue"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const model = defineModel()
 const props = defineProps({
     unit_of_measurements: Object,
+})
+
+const uoms = computed(() => {
+    return [{id: null, UOM: 'Select'}, ...props.unit_of_measurements]
 })
 
 </script>
@@ -15,7 +20,7 @@ const props = defineProps({
         </SelectTrigger>
         <SelectContent>
             <SelectGroup class="bg-light-tertiary dark:bg-dark-quatrenary ">
-                <SelectItem v-for="uom in props.unit_of_measurements" :key="uom.id" :value="uom.id" class="dark:text-dark-tertiary">
+                <SelectItem v-for="uom in uoms" :key="uom.id" :value="uom.id" class="dark:text-dark-tertiary">
                     {{ uom.UOM }}
                 </SelectItem>
             </SelectGroup>

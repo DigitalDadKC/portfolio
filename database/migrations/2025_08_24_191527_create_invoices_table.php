@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('terms_and_conditions');
             $table->double('discount')->default(0);
             $table->boolean('paid')->default(0);
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
