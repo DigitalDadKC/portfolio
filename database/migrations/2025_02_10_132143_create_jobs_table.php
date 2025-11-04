@@ -10,17 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('companies', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('logo');
-            $table->string('address');
-            $table->string('city');
-            $table->foreignId('state_id')->constrained();
-            $table->integer('zip');
-            $table->text('terms')->nullable()->default(NULL);
-            $table->timestamps();
-        });
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->integer('number')->unique();
@@ -79,6 +68,5 @@ return new class extends Migration {
         Schema::dropIfExists('scopes');
         Schema::dropIfExists('proposals');
         Schema::dropIfExists('jobs');
-        Schema::dropIfExists('companies');
     }
 };
