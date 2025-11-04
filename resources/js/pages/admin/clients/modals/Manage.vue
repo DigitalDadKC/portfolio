@@ -15,7 +15,6 @@ const props = defineProps({
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.client.id,
-    name: props.client.name,
     company: props.client.company,
     email: props.client.email
 })
@@ -58,10 +57,6 @@ const submit = () => {
 
                 <div class="flex flex-col gap-4">
                     <div>
-                        <Label for="name">Name</Label>
-                        <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.name" />
-                    </div>
-                    <div>
                         <Label for="company">Company</Label>
                         <Input id="company" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.company" />
                     </div>
@@ -71,6 +66,9 @@ const submit = () => {
                     </div>
                 </div>
 
+                <div v-for="error in form.errors" :key="error.id" class="text-red-500">
+                    {{ error }}
+                </div>
 
             </DialogHeader>
             <DialogFooter>

@@ -33,7 +33,6 @@ class ClientController extends Controller
         ]);
 
         Client::create([
-            'name' => $request->name,
             'company' => $request->company,
             'email' => $request->email,
         ]);
@@ -52,7 +51,6 @@ class ClientController extends Controller
         ]);
 
         $client->update([
-            'name' => $request->name,
             'company' => $request->company,
             'email' => $request->email,
         ]);
