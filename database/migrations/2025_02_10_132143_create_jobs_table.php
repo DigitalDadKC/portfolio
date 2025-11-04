@@ -68,6 +68,5 @@ return new class extends Migration {
         Schema::dropIfExists('scopes');
         Schema::dropIfExists('proposals');
         Schema::dropIfExists('jobs');
-        Schema::dropIfExists('companies');
     }
 };

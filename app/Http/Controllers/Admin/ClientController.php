@@ -29,7 +29,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'company' => 'required',
-            'email' => 'required|email',
+            'email' => 'email',
         ]);
 
         Client::create([
@@ -48,7 +48,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'company' => 'required',
-            'email' => 'required|email',
+            'email' => 'email',
         ]);
 
         $client->update([
