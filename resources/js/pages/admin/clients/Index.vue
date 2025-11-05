@@ -29,7 +29,6 @@ import Outreach from './modals/Outreach.vue';
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
-                        <TableHead class="p-6 text-black">Name</TableHead>
                         <TableHead class="text-black">Company</TableHead>
                         <TableHead class="text-black">Email</TableHead>
                         <TableHead class="text-black">Outreach(es)</TableHead>
@@ -40,7 +39,6 @@ import Outreach from './modals/Outreach.vue';
                 </TableHeader>
                 <TableBody>
                     <TableRow v-for="client in props.clients" :key="client.id">
-                        <TableCell class="p-3">{{ client.name }}</TableCell>
                         <TableCell>{{ client.company }}</TableCell>
                         <TableCell>{{ client.email }}</TableCell>
                         <TableCell>

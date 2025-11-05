@@ -12,7 +12,7 @@ class OutreachController extends Controller
 {
     public function __invoke(Request $request)
     {
-        Mail::to($request->email)->send(new OutreachMail($request->name, $request->company, $request->email));
+        Mail::to($request->email)->send(new OutreachMail($request->company, $request->email));
         Outreach::create([
             'client_id' => $request->id,
             'date_emailed' => date('Y-m-d')
