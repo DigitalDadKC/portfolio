@@ -4,31 +4,47 @@
         Hello There {{ $company }}!
     </h1>
     <div>
-        <p style="margin: 0;">How does {{$company}}'s current software stack up?</p>
-        <p style="margin: 0;">Are you stuck in spreadsheet chaos?</p>
-        <p>I am a local web app developer in the construction industry specializing in transforming spreadsheets into <span style="font-weight: bold;">beautiful, sophisticated custom web apps</span> from the ground up for businesses just like yours, tailored to fit their needs.</p>
+        <p style="margin: 0;">Tired of constantly wrestling with messy spreadsheets?</p>
+        <p>I am a local web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs.</p>
+    </div>
+
+    <div>
+        <p>Whether it's tracking inventory, managing clients, calculating budgets, or automating reports, I take your existing Excel or Google Sheets workflows and turn them into a custom web platform that's</p>
     </div>
 
     <div style="margin-bottom: 16px;">
         <p>A few examples of what I specialize in...</p>
         <ul>
             <li>
-                Full-cycle construction software including bid scheduling, intelligent estimate-building module, email notifications, and custom exports (PDF/Excel).
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                Full-cycle construction software including custom estimate-building tools, email notifications, and custom exports (PDF/Excel).
             </li>
             <li>
-                Secure portals for staff, including roles and permissions, custom dashboards, and administrative panels.
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                Accessible anywhere - no more emailing files back and forth.
             </li>
             <li>
-                Convert spreadsheets into BREAD-style datatables (Browse, Read, Edit, Update, Delete) with filters and custom sorting.
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                Error-proof - built-in data validation and user permissions.
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                Visually clear - dashboards, charts, and insights at a glance.
             </li>
         </ul>
 
         <div>
+            <p>I specialize in working locally with small businesses and teams who want to modernize without losing the logic and workflows they've already built.</p>
             <p>
-                If you’ve ever found yourself wishing your current operations or tools could “just do more,” that’s where I come in.
-            </p>
-            <p>
-                I’d love to learn more about {{ $company }} and share a couple of ideas on how a web app could save time and create new opportunities for growth. Would you be open to slot in a 15-minute phone call to your schedule?
+                I'd love to learn more about {{ $company }} and share a couple of ideas on how a web app could save time and create new opportunities for growth. Would you be open to slot in a 15-minute phone call to your schedule?
             </p>
         </div>
     </div>

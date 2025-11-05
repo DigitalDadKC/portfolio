@@ -16,7 +16,7 @@ class OutreachMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public string $name, public string $company, public string $email)
+    public function __construct(public string $company, public string $email)
     {
         //
     }
@@ -27,7 +27,7 @@ class OutreachMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Transform Spreadsheets into Software!',
+            subject: 'From Spreadsheet Chaos to Seamless Web App!',
         );
     }
 
