@@ -22,7 +22,7 @@ class InvoiceController extends Controller
     {
         return Inertia::render('admin/invoices/Index', [
             'invoices' => ClientInvoice::with('client', 'client_invoice_items')->latest()->get(),
-            'clients' => Client::orderBy('name')->get(),
+            'clients' => Client::orderBy('company')->get(),
         ]);
     }
 
