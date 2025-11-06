@@ -7,18 +7,38 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
+use Avcodewizard\GooglePlaceApi\GooglePlacesApi;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $clients = ClientResource::collection(Client::with('outreaches')->latest()->get());
 
+
+
+        $query = $request->input('search');
+        $googlePlaces = new GooglePlacesApi();
+        $results = [];
+        if($query) {
+            $results = $googlePlaces->searchPlace($query);
+        }
+
+
+        // $query = $request->input('search');
+        // $googlePlaces = new GooglePlacesApi();
+        // if($query) {
+        //     $results = $googlePlaces->searchPlace($query);
+        //     dd($results);
+        // }
+
+
         return Inertia::render('admin/clients/Index', [
-            'clients' => $clients
+            'clients' => $clients,
+            'data' => fn() => $results
         ]);
     }
 
@@ -73,5 +93,17 @@ class ClientController extends Controller
         return response()->json([
             'clients' => $clients
         ], 200);
+    }
+
+    public function searchPlace(Request $request)
+    {
+        // dd($request->input('search'));
+        $query = $request->input('search');
+        $googlePlaces = new GooglePlacesApi();
+        $results = $googlePlaces->searchPlace($query);
+
+        dd($results);
+        // return response()->json($results);
+        return back();
     }
 }

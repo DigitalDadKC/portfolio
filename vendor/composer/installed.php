@@ -3,13 +3,22 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8fa8e22a630dccdcafacb4bd2a7e38e437e82451',
+        'reference' => '165eec67a81efcddc3f7d0179749aa9b8a09b6b2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'avcodewizard/google-place-api' => array(
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => 'f95fc74904cfb54b5d6468bea8e8f4bc79b894dc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../avcodewizard/google-place-api',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'barryvdh/laravel-debugbar' => array(
             'pretty_version' => 'v3.16.0',
             'version' => '3.16.0.0',
@@ -484,7 +493,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8fa8e22a630dccdcafacb4bd2a7e38e437e82451',
+            'reference' => '165eec67a81efcddc3f7d0179749aa9b8a09b6b2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,5 +1,6 @@
-<script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+<script setup lang="ts">
+import { handleError, ref } from 'vue';
+import { Head, router, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
@@ -9,12 +10,37 @@ import Outreach from './modals/Outreach.vue';
 
     const props = defineProps({
         clients: Object,
+        data: Object,
     })
 
     const newClient = {
         id: null,
         name: ''
     }
+
+    const search = ref('')
+
+const searchPlaces = () => {
+    router.reload({
+        data: {
+            search: search.value,
+        },
+        only: ['data'],
+        replace: true,
+        preserveState: true,
+        onSuccess: () => {
+            console.log(props.data)
+        }
+    })
+}
+
+const handle = (e) => {
+    console.log(e)
+    search.value = ''
+    searchPlaces()
+}
+
+
 </script>
 
 <template>
@@ -24,6 +50,14 @@ import Outreach from './modals/Outreach.vue';
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Clients</h2>
         </template>
+
+        <input v-model="search" @input="searchPlaces()" />
+
+        <div v-for="result in props.data.predictions" :key="result.id">
+            <span @click="handle(result)" class="hover:bg-blue-200">
+                {{ result.description }}
+            </span>
+        </div>
 
         <div class="container mx-auto w-full mt-20">
             <Table class="bg-light-primary dark:bg-dark-primary w-full">

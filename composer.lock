@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acff1263cd175dde243256c1c517f5fe",
+    "content-hash": "df6d871d0421ac0c1d750411b137e80a",
     "packages": [
+        {
+            "name": "avcodewizard/google-place-api",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avcodewizard/google-place-api.git",
+                "reference": "f95fc74904cfb54b5d6468bea8e8f4bc79b894dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avcodewizard/google-place-api/zipball/f95fc74904cfb54b5d6468bea8e8f4bc79b894dc",
+                "reference": "f95fc74904cfb54b5d6468bea8e8f4bc79b894dc",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Avcodewizard\\GooglePlaceApi\\GooglePlaceApiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Avcodewizard\\GooglePlaceApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ankit Verma",
+                    "email": "ankitv4087@gmail.com"
+                }
+            ],
+            "description": "A Laravel package for Google Places API integration",
+            "keywords": [
+                "api",
+                "google",
+                "laravel",
+                "location",
+                "places"
+            ],
+            "support": {
+                "issues": "https://github.com/avcodewizard/google-place-api/issues",
+                "source": "https://github.com/avcodewizard/google-place-api/tree/1.0.2"
+            },
+            "time": "2025-01-20T07:19:59+00:00"
+        },
         {
             "name": "barryvdh/laravel-dompdf",
             "version": "v3.1.1",
