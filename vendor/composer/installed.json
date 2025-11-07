@@ -1,64 +1,6 @@
 {
     "packages": [
         {
-            "name": "avcodewizard/google-place-api",
-            "version": "1.0.2",
-            "version_normalized": "1.0.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/avcodewizard/google-place-api.git",
-                "reference": "f95fc74904cfb54b5d6468bea8e8f4bc79b894dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/avcodewizard/google-place-api/zipball/f95fc74904cfb54b5d6468bea8e8f4bc79b894dc",
-                "reference": "f95fc74904cfb54b5d6468bea8e8f4bc79b894dc",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.0",
-                "php": "^7.3|^8.0"
-            },
-            "time": "2025-01-20T07:19:59+00:00",
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Avcodewizard\\GooglePlaceApi\\GooglePlaceApiServiceProvider"
-                    ]
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Avcodewizard\\GooglePlaceApi\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ankit Verma",
-                    "email": "ankitv4087@gmail.com"
-                }
-            ],
-            "description": "A Laravel package for Google Places API integration",
-            "keywords": [
-                "api",
-                "google",
-                "laravel",
-                "location",
-                "places"
-            ],
-            "support": {
-                "issues": "https://github.com/avcodewizard/google-place-api/issues",
-                "source": "https://github.com/avcodewizard/google-place-api/tree/1.0.2"
-            },
-            "install-path": "../avcodewizard/google-place-api"
-        },
-        {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.16.0",
             "version_normalized": "3.16.0.0",
@@ -5988,6 +5930,90 @@
             "install-path": "../sabberworm/php-css-parser"
         },
         {
+            "name": "saloonphp/saloon",
+            "version": "v3.14.0",
+            "version_normalized": "3.14.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/saloonphp/saloon.git",
+                "reference": "b1868db2d7c2eea57592b78797f24e8cddfb86cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/b1868db2d7c2eea57592b78797f24e8cddfb86cc",
+                "reference": "b1868db2d7c2eea57592b78797f24e8cddfb86cc",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.6",
+                "guzzlehttp/promises": "^1.5 || ^2.0",
+                "guzzlehttp/psr7": "^2.0",
+                "php": "^8.1",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "conflict": {
+                "sammyjo20/saloon": "*"
+            },
+            "require-dev": {
+                "ext-simplexml": "*",
+                "friendsofphp/php-cs-fixer": "^3.5",
+                "illuminate/collections": "^9.39 || ^10.0",
+                "league/flysystem": "^3.0",
+                "pestphp/pest": "^2.36.0 || ^3.8.2",
+                "phpstan/phpstan": "^2.1.13",
+                "saloonphp/xml-wrangler": "^1.1",
+                "spatie/ray": "^1.33",
+                "symfony/dom-crawler": "^6.0 || ^7.0",
+                "symfony/var-dumper": "^6.3 || ^7.0"
+            },
+            "suggest": {
+                "illuminate/collections": "Required for the response collect() method.",
+                "saloonphp/xml-wrangler": "Required for the response xmlReader() method.",
+                "symfony/dom-crawler": "Required for the response dom() method.",
+                "symfony/var-dumper": "Required for default debugging drivers."
+            },
+            "time": "2025-06-21T11:18:37+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Saloon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sam Carré",
+                    "email": "29132017+Sammyjo20@users.noreply.github.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Build beautiful API integrations and SDKs with Saloon",
+            "homepage": "https://github.com/saloonphp/saloon",
+            "keywords": [
+                "api",
+                "api-integrations",
+                "saloon",
+                "sammyjo20",
+                "sdk"
+            ],
+            "support": {
+                "issues": "https://github.com/saloonphp/saloon/issues",
+                "source": "https://github.com/saloonphp/saloon/tree/v3.14.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sammyjo20",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../saloonphp/saloon"
+        },
+        {
             "name": "sebastian/cli-parser",
             "version": "3.0.2",
             "version_normalized": "3.0.2.0",
@@ -7017,6 +7043,87 @@
                 }
             ],
             "install-path": "../sebastian/version"
+        },
+        {
+            "name": "skagarwal/google-places-api",
+            "version": "3.1.2",
+            "version_normalized": "3.1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SachinAgarwal1337/google-places-api.git",
+                "reference": "ec18bfd6e124242b88d0ad0ba1910a064e443d3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SachinAgarwal1337/google-places-api/zipball/ec18bfd6e124242b88d0ad0ba1910a064e443d3c",
+                "reference": "ec18bfd6e124242b88d0ad0ba1910a064e443d3c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.5",
+                "illuminate/container": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "php": "^8.1",
+                "saloonphp/saloon": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.8|^10.5",
+                "skagarwal/reflection": "~1.0"
+            },
+            "time": "2016-02-05T00:00:00+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "GooglePlaces": "SKAgarwal\\GoogleApi\\Facade"
+                    },
+                    "providers": [
+                        "SKAgarwal\\GoogleApi\\ServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "SKAgarwal\\GoogleApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sachin Agarwal",
+                    "email": "sachinkumaragarwal05@gmail.com"
+                }
+            ],
+            "description": "Google Places Api",
+            "keywords": [
+                "Google Places Api",
+                "google",
+                "google api",
+                "google places",
+                "places"
+            ],
+            "support": {
+                "issues": "https://github.com/SachinAgarwal1337/google-places-api/issues",
+                "source": "https://github.com/SachinAgarwal1337/google-places-api/tree/3.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://www.buymeacoffee.com/sachin1337",
+                    "type": "buy_me_a_coffee"
+                },
+                {
+                    "url": "https://github.com/SachinAgarwal1337",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../skagarwal/google-places-api"
         },
         {
             "name": "spatie/backtrace",

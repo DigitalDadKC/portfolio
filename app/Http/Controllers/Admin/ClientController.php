@@ -7,7 +7,7 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
-use Avcodewizard\GooglePlaceApi\GooglePlacesApi;
+use SKAgarwal\GoogleApi\PlacesNew\GooglePlaces;
 
 class ClientController extends Controller
 {
@@ -21,24 +21,18 @@ class ClientController extends Controller
 
 
         $query = $request->input('search');
-        $googlePlaces = new GooglePlacesApi();
-        $results = [];
-        if($query) {
-            $results = $googlePlaces->searchPlace($query);
-        }
-
-
-        // $query = $request->input('search');
         // $googlePlaces = new GooglePlacesApi();
-        // if($query) {
-        //     $results = $googlePlaces->searchPlace($query);
-        //     dd($results);
-        // }
-
+        $results = [];
+        $data = [];
+        if($query) {
+            $results = GooglePlaces::make()->autocomplete($query);
+            $data = $results->collect();
+            // dd($data);
+        }
 
         return Inertia::render('admin/clients/Index', [
             'clients' => $clients,
-            'data' => fn() => $results
+            'data' => fn() => $data
         ]);
     }
 
@@ -93,17 +87,5 @@ class ClientController extends Controller
         return response()->json([
             'clients' => $clients
         ], 200);
-    }
-
-    public function searchPlace(Request $request)
-    {
-        // dd($request->input('search'));
-        $query = $request->input('search');
-        $googlePlaces = new GooglePlacesApi();
-        $results = $googlePlaces->searchPlace($query);
-
-        dd($results);
-        // return response()->json($results);
-        return back();
     }
 }

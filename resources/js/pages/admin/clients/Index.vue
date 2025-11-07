@@ -29,13 +29,12 @@ const searchPlaces = () => {
         replace: true,
         preserveState: true,
         onSuccess: () => {
-            console.log(props.data)
+            console.log(props.data.suggestions.map(item => item.placePrediction).map(item => item.text).map(item => item.text))
         }
     })
 }
 
 const handle = (e) => {
-    console.log(e)
     search.value = ''
     searchPlaces()
 }
@@ -53,9 +52,9 @@ const handle = (e) => {
 
         <input v-model="search" @input="searchPlaces()" />
 
-        <div v-for="result in props.data.predictions" :key="result.id">
+        <div v-for="result in props.data.suggestions.map(item => item.placePrediction).map(item => item.text).map(item => item.text)" :key="result.id">
             <span @click="handle(result)" class="hover:bg-blue-200">
-                {{ result.description }}
+                {{ result }}
             </span>
         </div>
 

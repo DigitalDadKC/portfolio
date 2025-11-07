@@ -9,12 +9,14 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string|null $email
      * @property string $company
+     * @property string|null $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Outreach> $outreaches
      * @property-read int|null $outreaches_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClientInvoice> $client_invoices
      * @property-read int|null $client_invoices_count
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCreatedAt($value)
