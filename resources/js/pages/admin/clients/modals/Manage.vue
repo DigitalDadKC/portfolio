@@ -114,13 +114,13 @@ const place = reactive({
                 </div>
 
                 <div>
-                    <Input v-model="form.address" />
+                    <Input v-model="form.address" :disabled="true" />
                 </div>
                 <div>
-                    <Input v-model="form.city" />
+                    <Input v-model="form.city" :disabled="true" />
                 </div>
                 <div>
-                    <State :states v-model="form.state_id" />
+                    <State :states v-model="form.state_id" :disabled="true" />
                 </div>
 
                 <div v-for="error in form.errors" :key="error.id" class="text-red-500">
