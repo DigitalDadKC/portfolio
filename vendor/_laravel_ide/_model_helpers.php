@@ -7,6 +7,8 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string|null $city
+     * @property string|null $address
      * @property string|null $email
      * @property string $company
      * @property string|null $name
@@ -19,6 +21,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereAddress($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newModelQuery()

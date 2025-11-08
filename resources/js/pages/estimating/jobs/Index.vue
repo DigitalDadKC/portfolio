@@ -109,7 +109,8 @@ const getJobs = () => {
                             <Label for="customer">Customer</Label>
                             <Customer v-model="customer_id" :customers @update:model-value="getJobs()"></Customer>
                         </th>
-                        <th class="bg-light-tertiary dark:bg-dark-tertiary border-b-black border-b-4 py-2 text-black rounded-t-sm">
+                        <th
+                            class="bg-light-tertiary dark:bg-dark-tertiary border-b-black border-b-4 py-2 text-black rounded-t-sm">
                             <div class="text-center text-lg">
                                 Proposals
                             </div>
@@ -128,7 +129,7 @@ const getJobs = () => {
                             </table>
                         </th>
                     </tr>
-            </thead>
+                </thead>
                 <tbody>
                     <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs border-2 border-black">
                         <td class="p-2">
@@ -140,36 +141,42 @@ const getJobs = () => {
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
                         <td class="hidden xl:table-cell max-w-96">{{ job.customer.name }}</td>
                         <td class="bg-light-secondary dark:bg-dark-secondary border-2 border-black px-2 py-1">
-                            <tr>
-                                <Link :href="route('proposals.store', { job: job.id })" method="post">
-                                    <Button>NEW PROPOSAL</Button>
-                                </Link>
-                            </tr>
-                            <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
-                                <td class="min-w-52">{{ proposal.name }}</td>
-                                <td class="min-w-24">{{ proposal.type }}</td>
-                                <td class="min-w-24">{{ useDateFormat(proposal.created_at, 'M/D/YYYY') }}</td>
-                                <td CLASS="min-w-28">{{ proposal.estimator.name }}</td>
-                                <td class="min-w-24">
-                                    {{formatWithCommas(proposal.scopes.reduce((a, b) => a + b.lines.reduce((c, d) => c +
-                                        ((d.price * d.quantity * 100) / 100), 0), 0), 'currency')}}
-                                </td>
-                                <td class="min-w-24">
-                                    <Link :href="route('proposals.edit', { proposal: proposal.id })">
-                                        <Button variant="outline" >EDIT PROPOSAL</Button>
-                                    </Link>
-                                </td>
-                                <td class="w-full">
-                                    <div class="flex py-1">
-                                        <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
-                                            <Download class="text-accent"></Download>
-                                        </a>
-                                        <a target="_blank" :href="route('proposals.browserPDF', { proposal: proposal.id })">
-                                            <FileText class="text-accent"></FileText>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <Link :href="route('proposals.store', { job: job.id })" method="post">
+                                        <Button>NEW PROPOSAL</Button>
+                                        </Link>
+                                    </tr>
+                                    <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
+                                        <td class="min-w-52">{{ proposal.name }}</td>
+                                        <td class="min-w-24">{{ proposal.type }}</td>
+                                        <td class="min-w-24">{{ useDateFormat(proposal.created_at, 'M/D/YYYY') }}</td>
+                                        <td CLASS="min-w-28">{{ proposal.estimator.name }}</td>
+                                        <td class="min-w-24">
+                                            {{formatWithCommas(proposal.scopes.reduce((a, b) => a + b.lines.reduce((c,
+                                                d) => c +
+                                                ((d.price * d.quantity * 100) / 100), 0), 0), 'currency')}}
+                                        </td>
+                                        <td class="min-w-24">
+                                            <Link :href="route('proposals.edit', { proposal: proposal.id })">
+                                            <Button variant="outline">EDIT PROPOSAL</Button>
+                                            </Link>
+                                        </td>
+                                        <td class="w-full">
+                                            <div class="flex py-1">
+                                                <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
+                                                    <Download class="text-accent"></Download>
+                                                </a>
+                                                <a target="_blank"
+                                                    :href="route('proposals.browserPDF', { proposal: proposal.id })">
+                                                    <FileText class="text-accent"></FileText>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 </tbody>

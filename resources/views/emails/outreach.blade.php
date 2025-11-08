@@ -4,7 +4,7 @@
         Hello There {{ $company }}!
     </h1>
     <div>
-        <p style="margin: 0;">Tired of constantly wrestling with messy spreadsheets?</p>
+        <p style="margin: 0;">Let's be honest, nobody likes working with spreadsheets</p>
         <p>I am a local web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs.</p>
     </div>
 
@@ -13,7 +13,6 @@
     </div>
 
     <div style="margin-bottom: 16px;">
-        <p>A few examples of what I specialize in...</p>
         <ul>
             <li>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -31,6 +30,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 6L9 17l-5-5"/>
                 </svg>
+                <img src="{{ asset('/img/green-checkmark.svg') }}" alt="checkmark" />
                 Error-proof - built-in data validation and user permissions.
             </li>
             <li>
@@ -52,7 +52,7 @@
     <div id="outro" style="font-style: italic; color: #77685D">
         <p style="padding: 0; margin: 0;">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
+                <img src="{{ asset('/img/dad.svg') }}" alt="logo" id="image" width="30" />
             </a>
         </p>
         <p style="padding: 0; margin: 0;">RALEIGH GROESBECK</p>

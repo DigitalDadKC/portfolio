@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
+use App\Models\State;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StateResource;
 use App\Http\Resources\ClientResource;
 use SKAgarwal\GoogleApi\PlacesNew\GooglePlaces;
 
@@ -18,20 +20,17 @@ class ClientController extends Controller
     {
         $clients = ClientResource::collection(Client::with('outreaches')->latest()->get());
 
-
-
         $query = $request->input('search');
-        // $googlePlaces = new GooglePlacesApi();
         $results = [];
         $data = [];
         if($query) {
             $results = GooglePlaces::make()->autocomplete($query);
             $data = $results->collect();
-            // dd($data);
         }
 
         return Inertia::render('admin/clients/Index', [
             'clients' => $clients,
+            'states' => StateResource::collection(State::orderBy('state')->get()),
             'data' => fn() => $data
         ]);
     }
@@ -49,6 +48,9 @@ class ClientController extends Controller
         Client::create([
             'company' => $request->company,
             'email' => $request->email,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state_id' => $request->state_id,
         ]);
 
         return back();
@@ -67,6 +69,9 @@ class ClientController extends Controller
         $client->update([
             'company' => $request->company,
             'email' => $request->email,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state_id' => $request->state_id,
         ]);
 
         return back();
