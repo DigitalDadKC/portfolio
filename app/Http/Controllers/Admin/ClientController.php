@@ -24,7 +24,7 @@ class ClientController extends Controller
             'clients' => $clients,
             'states' => StateResource::collection(State::orderBy('state')->get()),
             'place' => Inertia::optional(fn() => GooglePlaces::make()->placeDetails($request->placeId)->collect()),
-            'places' => Inertia::optional(fn() => GooglePlaces::make()->autocomplete($request->search)->collect())
+            'places' => Inertia::optional(fn() => GooglePlaces::make()->autocomplete($request->search ?? '')->collect())
         ]);
     }
 
@@ -79,13 +79,5 @@ class ClientController extends Controller
     {
         $client->delete();
         return back();
-    }
-
-    public function all_clients() {
-        $clients = Client::orderBy('id', 'desc')->get();
-
-        return response()->json([
-            'clients' => $clients
-        ], 200);
     }
 }

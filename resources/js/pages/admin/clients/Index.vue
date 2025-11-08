@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { handleError, ref } from 'vue';
-import { Head, router, useForm } from '@inertiajs/vue3';
+import {  } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
@@ -15,14 +15,10 @@ const props = defineProps({
     places: Object,
 })
 
-console.log(props.clients)
-
 const newClient = {
     id: null,
     name: ''
 }
-
-
 </script>
 
 <template>

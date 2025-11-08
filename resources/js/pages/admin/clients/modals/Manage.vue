@@ -6,7 +6,7 @@ import { Label } from 'reka-ui';
 import { Button } from '@/components/ui/button';
 import State from '@/pages/estimating/jobs/partials/State.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Pencil, Plus } from 'lucide-vue-next';
+import { Pencil, Plus, Search } from 'lucide-vue-next';
 import axios from 'axios';
 
 const props = defineProps({
@@ -29,7 +29,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    if(props.new) {
+    if (props.new) {
         form.post(route('clients.store'), {
             onSuccess: () => {
                 isDialogOpen.value = false
@@ -67,10 +67,11 @@ const handle = (e) => {
         replace: true,
         preserveState: true,
         onSuccess: () => {
+            search.value = ''
             form.address = props.place.displayName.text
             form.city = props.place.shortFormattedAddress.split(',')[1]
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
-            form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code')).shortText
+            form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
         }
     })
 }
@@ -88,7 +89,8 @@ const handle = (e) => {
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>
         </DialogTrigger>
-        <DialogContent class="m:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent
+            class="m:w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit Client #${props.client.name}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
@@ -96,21 +98,30 @@ const handle = (e) => {
                 <div class="flex flex-col gap-4">
                     <div>
                         <Label for="company">Company</Label>
-                        <Input id="company" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.company" />
+                        <Input id="company"
+                            class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
+                            v-model="form.company" />
                     </div>
                     <div>
                         <Label for="email">Email</Label>
-                        <Input id="email" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.email" />
+                        <Input id="email" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
+                            v-model="form.email" />
                     </div>
                 </div>
 
-
-                <input v-model="search" @input="searchPlaces()" />
-
-                <div v-for="result in props.places?.suggestions">
-                    <span @click="handle(result)" class="hover:bg-blue-200 cursor-pointer p-1">
-                        {{ result.placePrediction.text.text }}
+                <div class="relative w-full items-center">
+                    <Input v-model="search" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
+                    <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                        <Search class="size-6 text-muted-foreground" />
                     </span>
+
+                    <div class="bg-white space-y-2 absolute w-full">
+                        <div v-for="result in props.places?.suggestions" class="hover:bg-light-tertiary cursor-pointer" @click="handle(result)">
+                            <span class="p-2 w-full">
+                                {{ result.placePrediction.text.text }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-4">
@@ -134,8 +145,9 @@ const handle = (e) => {
 
             </DialogHeader>
             <DialogFooter>
-                    <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
-                    <Button class="cursor-pointer" @click="loading = !loading; submit()">Save</Button>
+                <Button variant="outline" class="cursor-pointer"
+                    @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
+                <Button class="cursor-pointer" @click="loading = !loading; submit()">Save</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
