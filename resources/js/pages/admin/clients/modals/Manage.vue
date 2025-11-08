@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import { Label } from 'reka-ui';
@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button';
 import State from '@/pages/estimating/jobs/partials/State.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil, Plus } from 'lucide-vue-next';
+import axios from 'axios';
 
 const props = defineProps({
     new: Boolean,
     client: Object,
     states: Object,
-    data: Object,
+    places: Object,
 })
 
 const isDialogOpen = ref(false)
@@ -23,6 +24,7 @@ const form = useForm({
     address: props.client.address,
     city: props.client.city,
     state_id: props.client.state?.id,
+    placeId: props.client.placeId,
 })
 
 const submit = () => {
@@ -49,30 +51,35 @@ const searchPlaces = () => {
         data: {
             search: search.value,
         },
-        only: ['data'],
+        only: ['places'],
         replace: true,
         preserveState: true,
+        onSuccess: () => {
+            console.log(props.places)
+        }
     })
 }
 
+// const handle = (e) => {
+//     console.log(e)
+//     router.post(route('clients.selectPlace', {
+//         data: e.placePrediction.placeId
+//     }, {
+//         onSuccess: () => {
+//             console.log('idiot')
+//             // test()
+//         }
+//     }))
+// }
+
+
 const handle = (e) => {
-    console.log()
-    form.address = e.placePrediction.structuredFormat.mainText.text
-    const exploded = e.placePrediction.structuredFormat.secondaryText.text.split(",")
-    form.city = exploded[0]
-    const state = props.states.find(state => state.abbr == exploded[1].trim())
-    form.state_id = state.id
-    search.value = ''
-    searchPlaces()
+    console.log(e)
+    let response = axios.post(`/api/test`).then(response => {console.log(response.data);}).catch(error => {console.log(error);})
+    console.log('response', response)
+    // invoices.value = response.data.invoices
 }
 
-const place = reactive({
-    address: '',
-    city: '',
-    state: {
-        id: null
-    },
-})
 </script>
 
 <template>
@@ -107,7 +114,7 @@ const place = reactive({
 
                 <input v-model="search" @input="searchPlaces()" />
 
-                <div v-for="result in props.data.suggestions">
+                <div v-for="result in props.places.suggestions">
                     <span @click="handle(result)" class="hover:bg-blue-200 cursor-pointer p-1">
                         {{ result.placePrediction.text.text }}
                     </span>

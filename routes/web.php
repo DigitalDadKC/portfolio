@@ -50,7 +50,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/features', FeatureController::class);
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
+    Route::post('/clients/selectPlace', function() {
+        dd('idiot');
+    });
     Route::resource('/clients', ClientController::class);
+    // Route::post('/clients/selectPlace/{placeId}', [ClientController::class, 'select'])->name('clients.selectPlace');
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
 });

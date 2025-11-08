@@ -20,6 +20,9 @@ use App\Http\Controllers\Admin\ProductController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/test', function(Request $request) {
+    return dd('idiot');
+});
 
 // Route::get('/get_all_invoices', [InvoiceController::class, 'get_all_invoices'])->name('invoices.index');
 // Route::get('/search_invoice', [InvoiceController::class, 'search_invoice'])->name('invoices.search');

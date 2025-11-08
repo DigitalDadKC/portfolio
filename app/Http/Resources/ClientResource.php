@@ -22,7 +22,7 @@ class ClientResource extends JsonResource
             'address' => $this->address,
             'city' => $this->city,
             'state' => StateResource::make($this->state),
-            // 'state_id' => $this->state_id,
+            'placeId' => $this->placeId,
             'outreaches' => OutreachResource::collection($this->whenLoaded('outreaches')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

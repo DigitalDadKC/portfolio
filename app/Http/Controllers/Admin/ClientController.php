@@ -22,16 +22,16 @@ class ClientController extends Controller
 
         $query = $request->input('search');
         $results = [];
-        $data = [];
+        $places = [];
         if($query) {
             $results = GooglePlaces::make()->autocomplete($query);
-            $data = $results->collect();
+            $places = $results->collect();
         }
 
         return Inertia::render('admin/clients/Index', [
             'clients' => $clients,
             'states' => StateResource::collection(State::orderBy('state')->get()),
-            'data' => fn() => $data
+            'places' => fn() => $places
         ]);
     }
 
@@ -48,9 +48,6 @@ class ClientController extends Controller
         Client::create([
             'company' => $request->company,
             'email' => $request->email,
-            'address' => $request->address,
-            'city' => $request->city,
-            'state_id' => $request->state_id,
         ]);
 
         return back();
@@ -69,9 +66,6 @@ class ClientController extends Controller
         $client->update([
             'company' => $request->company,
             'email' => $request->email,
-            'address' => $request->address,
-            'city' => $request->city,
-            'state_id' => $request->state_id,
         ]);
 
         return back();
@@ -91,6 +85,15 @@ class ClientController extends Controller
 
         return response()->json([
             'clients' => $clients
+        ], 200);
+    }
+
+    public function select(Request $request) {
+        dd($request);
+        $place = GooglePlaces::make()->placeDetails($request->data)->collect();
+
+        return response()->json([
+            'place' => $place
         ], 200);
     }
 }

@@ -11,10 +11,8 @@ import Outreach from './modals/Outreach.vue';
 const props = defineProps({
     clients: Object,
     states: Object,
-    data: Object,
+    places: Object,
 })
-
-console.log(props.clients)
 
 const newClient = {
     id: null,
@@ -41,7 +39,7 @@ const newClient = {
                         <TableHead class="text-black">Outreach(es)</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
-                        <TableHead class="text-black text-end"><Manage :new="true" :client="newClient" :states :data></Manage></TableHead>
+                        <TableHead class="text-black text-end"><Manage :new="true" :client="newClient" :states :places></Manage></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -56,7 +54,7 @@ const newClient = {
                         <TableCell>{{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</TableCell>
                         <TableCell>{{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
-                                <Manage :new="false" :client :states :data></Manage>
+                                <Manage :new="false" :client :states :places></Manage>
                                 <Destroy :client></Destroy>
                                 <Outreach :client></Outreach>
 
