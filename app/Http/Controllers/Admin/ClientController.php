@@ -18,20 +18,13 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $clients = ClientResource::collection(Client::with('outreaches')->latest()->get());
-
-        $query = $request->input('search');
-        $results = [];
-        $places = [];
-        if($query) {
-            $results = GooglePlaces::make()->autocomplete($query);
-            $places = $results->collect();
-        }
+        $clients = ClientResource::collection(Client::with('outreaches', 'state')->latest()->get());
 
         return Inertia::render('admin/clients/Index', [
             'clients' => $clients,
             'states' => StateResource::collection(State::orderBy('state')->get()),
-            'places' => fn() => $places
+            'place' => Inertia::optional(fn() => GooglePlaces::make()->placeDetails($request->placeId)->collect()),
+            'places' => Inertia::optional(fn() => GooglePlaces::make()->autocomplete($request->search)->collect())
         ]);
     }
 
@@ -48,6 +41,10 @@ class ClientController extends Controller
         Client::create([
             'company' => $request->company,
             'email' => $request->email,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state_id' => $request->state_id,
+            'zip' => $request->zip,
         ]);
 
         return back();
@@ -66,6 +63,10 @@ class ClientController extends Controller
         $client->update([
             'company' => $request->company,
             'email' => $request->email,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state_id' => $request->state_id,
+            'zip' => $request->zip,
         ]);
 
         return back();
@@ -85,15 +86,6 @@ class ClientController extends Controller
 
         return response()->json([
             'clients' => $clients
-        ], 200);
-    }
-
-    public function select(Request $request) {
-        dd($request);
-        $place = GooglePlaces::make()->placeDetails($request->data)->collect();
-
-        return response()->json([
-            'place' => $place
         ], 200);
     }
 }

@@ -13,6 +13,7 @@ const props = defineProps({
     new: Boolean,
     client: Object,
     states: Object,
+    place: Object,
     places: Object,
 })
 
@@ -24,7 +25,7 @@ const form = useForm({
     address: props.client.address,
     city: props.client.city,
     state_id: props.client.state?.id,
-    placeId: props.client.placeId,
+    zip: props.client.zip,
 })
 
 const submit = () => {
@@ -54,30 +55,24 @@ const searchPlaces = () => {
         only: ['places'],
         replace: true,
         preserveState: true,
-        onSuccess: () => {
-            console.log(props.places)
-        }
     })
 }
 
-// const handle = (e) => {
-//     console.log(e)
-//     router.post(route('clients.selectPlace', {
-//         data: e.placePrediction.placeId
-//     }, {
-//         onSuccess: () => {
-//             console.log('idiot')
-//             // test()
-//         }
-//     }))
-// }
-
-
 const handle = (e) => {
-    console.log(e)
-    let response = axios.post(`/api/test`).then(response => {console.log(response.data);}).catch(error => {console.log(error);})
-    console.log('response', response)
-    // invoices.value = response.data.invoices
+    router.reload({
+        data: {
+            placeId: e.placePrediction.placeId,
+        },
+        only: ['place'],
+        replace: true,
+        preserveState: true,
+        onSuccess: () => {
+            form.address = props.place.displayName.text
+            form.city = props.place.shortFormattedAddress.split(',')[1]
+            form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
+            form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code')).shortText
+        }
+    })
 }
 
 </script>
@@ -98,8 +93,6 @@ const handle = (e) => {
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit Client #${props.client.name}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
 
-
-
                 <div class="flex flex-col gap-4">
                     <div>
                         <Label for="company">Company</Label>
@@ -114,20 +107,25 @@ const handle = (e) => {
 
                 <input v-model="search" @input="searchPlaces()" />
 
-                <div v-for="result in props.places.suggestions">
+                <div v-for="result in props.places?.suggestions">
                     <span @click="handle(result)" class="hover:bg-blue-200 cursor-pointer p-1">
                         {{ result.placePrediction.text.text }}
                     </span>
                 </div>
 
-                <div>
-                    <Input v-model="form.address" :disabled="true" />
-                </div>
-                <div>
-                    <Input v-model="form.city" :disabled="true" />
-                </div>
-                <div>
-                    <State :states v-model="form.state_id" :disabled="true" />
+                <div class="grid grid-cols-4">
+                    <div class="col-span-4">
+                        <Input v-model="form.address" :disabled="true" />
+                    </div>
+                    <div class="col-span-2">
+                        <Input v-model="form.city" :disabled="true" />
+                    </div>
+                    <div class="col-span-1">
+                        <State :states v-model="form.state_id" :disabled="true" />
+                    </div>
+                    <div class="col-span-1">
+                        <Input v-model="form.zip" :disabled="true" />
+                    </div>
                 </div>
 
                 <div v-for="error in form.errors" :key="error.id" class="text-red-500">

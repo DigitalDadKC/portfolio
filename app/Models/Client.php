@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
@@ -14,5 +15,8 @@ class Client extends Model
     }
     public function client_invoices(): HasMany {
         return $this->hasMany(ClientInvoice::class);
+    }
+    public function state(): BelongsTo {
+        return $this->belongsTo(State::class);
     }
 }
