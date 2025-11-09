@@ -33,7 +33,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'company' => 'required',
-            'email' => 'email',
+            'email' => 'nullable|email',
         ]);
 
         Client::create([
@@ -43,6 +43,7 @@ class ClientController extends Controller
             'city' => $request->city,
             'state_id' => $request->state_id,
             'zip' => $request->zip,
+            'url' => $request->url,
         ]);
 
         return back();
@@ -55,7 +56,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'company' => 'required',
-            'email' => 'email',
+            'email' => 'nullable|email',
         ]);
 
         $client->update([
@@ -65,6 +66,7 @@ class ClientController extends Controller
             'city' => $request->city,
             'state_id' => $request->state_id,
             'zip' => $request->zip,
+            'url' => $request->url,
         ]);
 
         return back();

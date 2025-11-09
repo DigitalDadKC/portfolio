@@ -26,6 +26,7 @@ const form = useForm({
     city: props.client.city,
     state_id: props.client.state?.id,
     zip: props.client.zip,
+    url: props.client.url,
 })
 
 const submit = () => {
@@ -73,7 +74,6 @@ const handle = (e) => {
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
             form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
             props.places.suggestions = []
-            console.log(props.place)
         }
     })
 }
@@ -96,20 +96,20 @@ const handle = (e) => {
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit Client #${props.client.name}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
 
-                <div class="flex flex-col gap-4">
-                    <div>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="col-span-2">
                         <Label for="company">Company</Label>
                         <Input id="company"
                             class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
                             v-model="form.company" />
                     </div>
-                    <div>
+                    <div class="col-span-2">
                         <Label for="email">Email</Label>
                         <Input id="email" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
                             v-model="form.email" />
                     </div>
 
-                    <div class="relative w-full items-center">
+                    <div class="relative w-full items-center col-span-4">
                         <Label for="address">Search</Label>
                         <Input v-model="search" id="address" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
                         <span class="absolute start-0 inset-y-0 flex items-end mb-2 justify-center px-2">
@@ -125,23 +125,26 @@ const handle = (e) => {
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-4">
-                        <div class="col-span-4">
-                            <Label for="address">Address</Label>
-                            <FormattedInput v-model="form.address" id="address" width="full" :disabled="true" />
-                        </div>
-                        <div class="col-span-2">
-                            <Label for="city">City</Label>
-                            <FormattedInput v-model="form.city" id="city" width="full" :disabled="true" />
-                        </div>
-                        <div class="col-span-1">
-                            <Label for="state">State</Label>
-                            <State :states v-model="form.state_id" id="state" :disabled="true" />
-                        </div>
-                        <div class="col-span-1">
-                            <Label for="zip">Zip</Label>
-                            <FormattedInput v-model="form.zip" id="zip" width="full" :disabled="true" />
-                        </div>
+                    <div class="col-span-4">
+                        <Label for="address">Address</Label>
+                        <FormattedInput v-model="form.address" id="address" width="full" :disabled="true" />
+                    </div>
+                    <div class="col-span-2">
+                        <Label for="city">City</Label>
+                        <FormattedInput v-model="form.city" id="city" width="full" :disabled="true" />
+                    </div>
+                    <div class="col-span-1">
+                        <Label for="state">State</Label>
+                        <State :states v-model="form.state_id" id="state" :disabled="true" />
+                    </div>
+                    <div class="col-span-1">
+                        <Label for="zip">Zip</Label>
+                        <FormattedInput v-model="form.zip" id="zip" width="full" :disabled="true" />
+                    </div>
+
+                    <div class="col-span-4">
+                        <Label for="url">URL</Label>
+                        <FormattedInput v-model="form.url" id="url" width="full" />
                     </div>
                 </div>
 
