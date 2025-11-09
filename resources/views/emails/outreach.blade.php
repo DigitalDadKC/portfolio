@@ -4,36 +4,35 @@
         Hello There {{ $company }}!
     </h1>
     <div>
-        <p style="margin: 0;">Let's be honest, nobody ENJOYS working with spreadsheets all day</p>
-        <p>I am a local web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs.</p>
+        <p style="margin: 0;">Let's be honest, nobody LIKES working with spreadsheets all day</p>
+        <p>I am a local web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs, without losing the logic and workflows they've already built</p>
     </div>
 
     <div>
-        <p>Whether it's tracking inventory, managing clients, calculating budgets, or automating reports, I take your existing Excel or Google Sheets workflows and turn them into a custom web platform that's</p>
+        <p>Whether it's building construction estimates, tracking inventory, managing clients, or emailing automated reports, I take your existing Excel or Google Sheets workflows and turn them into a custom web platform that's</p>
     </div>
 
-    <div style="margin-bottom: 16px;">
-        <ul>
+    <div style="margin-bottom: 20px;">
+        <ul style="list-style-type: none">
             <li>
-                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
-                Full-cycle construction software including custom estimate-building tools, email notifications, and custom exports (PDF/Excel).
-            </li>
-            <li>
-                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="20" />
                 Accessible anywhere - no more emailing files back and forth.
             </li>
             <li>
-                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="20" />
                 Error-proof - built-in data validation and user permissions.
             </li>
             <li>
-                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="20" />
                 Visually clear - dashboards, charts, and insights at a glance.
+            </li>
+            <li>
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="20" />
+                Integrated — connect your app to tools like Gmail, Google Maps, or CRM systems.
             </li>
         </ul>
 
         <div>
-            <p>I specialize in working locally with small businesses and teams who want to modernize without losing the logic and workflows they've already built.</p>
             <p>
                 I'd love to learn more about {{ $company }} and share a couple of ideas on how a web app could save time and create new opportunities for growth. Would you be open to slot in a 15-minute phone call to your schedule?
             </p>
