@@ -15,19 +15,19 @@
     <div style="margin-bottom: 16px;">
         <ul>
             <li>
-                <img :src="{{ asset('/img/check.png') }}" alt="checkmark" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
                 Full-cycle construction software including custom estimate-building tools, email notifications, and custom exports (PDF/Excel).
             </li>
             <li>
-                <img :src="{{ asset('/img/check.png') }}" alt="checkmark" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
                 Accessible anywhere - no more emailing files back and forth.
             </li>
             <li>
-                <img :src="{{ asset('/img/check.png') }}" alt="checkmark" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
                 Error-proof - built-in data validation and user permissions.
             </li>
             <li>
-                <img :src="{{ asset('/img/check.png') }}" alt="checkmark" />
+                <img src="{{ $message->embed('img/check.png') }}" alt="checkmark" width="30" />
                 Visually clear - dashboards, charts, and insights at a glance.
             </li>
         </ul>
@@ -43,7 +43,7 @@
     <div id="outro" style="font-style: italic; color: #77685D">
         <p style="padding: 0; margin: 0;">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                <img :src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
+                <img src="{{ $message->embed('img/dad.png') }}" alt="logo" id="image" width="30" />
             </a>
         </p>
         <p style="padding: 0; margin: 0;">RALEIGH GROESBECK</p>

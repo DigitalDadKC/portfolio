@@ -4,7 +4,7 @@
         <div style="padding: 0 2rem; display: flex;">
             <div style="width: 50%;">
                 <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="100" />
+                    <img src="{{ $message->embed('img/dad.png') }}" alt="logo" id="image" width="100" />
                 </a>
                 <div>
                     <div>
@@ -34,21 +34,8 @@
             </div>
         </div>
 
-        {{-- @php
-            $total = 0;
-        @endphp --}}
-
-        {{-- @foreach($invoice['client_invoice_items'] as $item)
-            @php
-                $item_total = $item['price']*$item['quantity'];
-                $total += $item_total;
-            @endphp
-        @endforeach --}}
 
         <div style="text-align: center; background-color: #EBE3D5; padding: 2rem 0">
-            {{-- <h3>
-                Total: {{"$ " . number_format($total, 0, ",", ",")  }}
-            </h3> --}}
             <button style="background-color: #776B5D; border-radius: 0.5rem; text-shadow: 1px">
                 <a style="padding: 1rem; color: #F3EEEA;" method="post" href="{{ $checkout_session->url }}" aria-label="Pay Now">
                     PAY NOW
@@ -58,7 +45,7 @@
 
         <div style="font-style: italic; color: #77685D; padding: 2rem">
             <a href="https://digitaldadkc.com" aria-label="Visit my site">
-                <img src="{{ asset('/img/dad.svg') }}" alt="logo" id="image" width="30" />
+                <img src="{{ $message->embed('img/dad.png') }}" alt="logo" id="image" width="30" />
             </a>
             <div>
                 RALEIGH GROESBECK
