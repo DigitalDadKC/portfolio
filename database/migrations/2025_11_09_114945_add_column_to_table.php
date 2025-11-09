@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('placeId');
+            $table->string('url')->nullable()->default(NULL)->after('zip');
         });
     }
 

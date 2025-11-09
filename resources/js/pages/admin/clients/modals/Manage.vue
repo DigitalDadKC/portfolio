@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
+import FormattedInput from '@/components/FormattedInput.vue';
 import { Label } from 'reka-ui';
 import { Button } from '@/components/ui/button';
 import State from '@/pages/estimating/jobs/partials/State.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil, Plus, Search } from 'lucide-vue-next';
-import axios from 'axios';
 
 const props = defineProps({
     new: Boolean,
@@ -59,19 +59,21 @@ const searchPlaces = () => {
 }
 
 const handle = (e) => {
+            search.value = ''
     router.reload({
         data: {
             placeId: e.placePrediction.placeId,
         },
         only: ['place'],
         replace: true,
-        preserveState: true,
         onSuccess: () => {
             search.value = ''
-            form.address = props.place.displayName.text
+            form.address = props.place.shortFormattedAddress ?? props.place.displayName.text
             form.city = props.place.shortFormattedAddress.split(',')[1]
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
             form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
+            props.places.suggestions = []
+            console.log(props.place)
         }
     })
 }
@@ -89,8 +91,7 @@ const handle = (e) => {
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>
         </DialogTrigger>
-        <DialogContent
-            class="m:w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="md:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit Client #${props.client.name}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
@@ -107,35 +108,40 @@ const handle = (e) => {
                         <Input id="email" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
                             v-model="form.email" />
                     </div>
-                </div>
 
-                <div class="relative w-full items-center">
-                    <Input v-model="search" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
-                    <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                        <Search class="size-6 text-muted-foreground" />
-                    </span>
+                    <div class="relative w-full items-center">
+                        <Label for="address">Search</Label>
+                        <Input v-model="search" id="address" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
+                        <span class="absolute start-0 inset-y-0 flex items-end mb-2 justify-center px-2">
+                            <Search class="size-6 text-muted-foreground" />
+                        </span>
 
-                    <div class="bg-white space-y-2 absolute w-full">
-                        <div v-for="result in props.places?.suggestions" class="hover:bg-light-tertiary cursor-pointer" @click="handle(result)">
-                            <span class="p-2 w-full">
-                                {{ result.placePrediction.text.text }}
-                            </span>
+                        <div class="bg-white space-y-2 absolute w-full z-10">
+                            <div v-for="result in props.places?.suggestions" class="hover:bg-light-tertiary cursor-pointer" @click="handle(result)">
+                                <span class="p-2 w-full">
+                                    {{ result.placePrediction.text.text }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-4">
-                    <div class="col-span-4">
-                        <Input v-model="form.address" :disabled="true" />
-                    </div>
-                    <div class="col-span-2">
-                        <Input v-model="form.city" :disabled="true" />
-                    </div>
-                    <div class="col-span-1">
-                        <State :states v-model="form.state_id" :disabled="true" />
-                    </div>
-                    <div class="col-span-1">
-                        <Input v-model="form.zip" :disabled="true" />
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="col-span-4">
+                            <Label for="address">Address</Label>
+                            <FormattedInput v-model="form.address" id="address" width="full" :disabled="true" />
+                        </div>
+                        <div class="col-span-2">
+                            <Label for="city">City</Label>
+                            <FormattedInput v-model="form.city" id="city" width="full" :disabled="true" />
+                        </div>
+                        <div class="col-span-1">
+                            <Label for="state">State</Label>
+                            <State :states v-model="form.state_id" id="state" :disabled="true" />
+                        </div>
+                        <div class="col-span-1">
+                            <Label for="zip">Zip</Label>
+                            <FormattedInput v-model="form.zip" id="zip" width="full" :disabled="true" />
+                        </div>
                     </div>
                 </div>
 

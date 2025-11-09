@@ -18,10 +18,8 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $clients = ClientResource::collection(Client::with('outreaches', 'state')->latest()->get());
-
         return Inertia::render('admin/clients/Index', [
-            'clients' => $clients,
+            'clients' => ClientResource::collection(Client::with('outreaches', 'state')->latest()->get()),
             'states' => StateResource::collection(State::orderBy('state')->get()),
             'place' => Inertia::optional(fn() => GooglePlaces::make()->placeDetails($request->placeId)->collect()),
             'places' => Inertia::optional(fn() => GooglePlaces::make()->autocomplete($request->search ?? '')->collect())
