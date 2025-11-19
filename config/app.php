@@ -189,4 +189,9 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
+    'user' => [
+        'name' => env('USER_NAME', 'Raleigh'),
+        'email' => env('USER_EMAIL'),
+        'passwword' => env('USER_PASSWORD'),
+    ]
 ];
