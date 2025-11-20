@@ -3,7 +3,7 @@ import { ref, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Trash2 } from 'lucide-vue-next';
+import { Archive, Trash2 } from 'lucide-vue-next';
 
 const props = defineProps({
     invoice: Object,
@@ -33,14 +33,14 @@ watchEffect(() => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Trash2 class="cursor-pointer"></Trash2>
+            <Archive class="cursor-pointer" />
         </DialogTrigger>
         <DialogContent class="sm:max-w-[600px] overflow-auto">
             <DialogHeader>
                 <DialogTitle>{{ `Destroy Invoice #${props.invoice.number}` }}
                 </DialogTitle>
                 <DialogDescription>
-                    Are you sure you want to delete this invoice? This action cannot be undone.
+                    Are you sure you want to archive this invoice? This action cannot be undone.
                 </DialogDescription>
             </DialogHeader>
 
@@ -52,7 +52,7 @@ watchEffect(() => {
 
             <DialogFooter>
                 <Button variant="outline" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
-                <Button @click="loading = !loading; submit()">Delete</Button>
+                <Button @click="loading = !loading; submit()">Archive</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>

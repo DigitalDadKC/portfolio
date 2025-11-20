@@ -20,7 +20,7 @@ return new class extends Migration
         });
         Schema::create('outreaches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->date('date_emailed');
             $table->timestamps();
         });

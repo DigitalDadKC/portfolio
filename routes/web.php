@@ -62,9 +62,7 @@ Route::post('/cancel', [AdminInvoiceController::class, 'cancel'])->name('checkou
 Route::post('/webhook', [AdminInvoiceController::class, 'webhook'])->name('checkout.webhook');
 
 // jobs
-Route::middleware(['auth', 'verified'])->prefix('estimating')->name('estimating.')->group(function () {
-    Route::resource('/jobs', JobController::class);
-});
+Route::resource('estimating/jobs', JobController::class);
 
 // proposal
 Route::post('proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');
