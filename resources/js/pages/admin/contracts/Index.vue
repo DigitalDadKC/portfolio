@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, useTemplateRef, nextTick, watch } from 'vue'
+import { shallowRef, useTemplateRef, nextTick, watch, watchEffect } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
@@ -8,18 +8,14 @@ import { GripHorizontal } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useSortable } from '@vueuse/integrations/useSortable'
+import ManageClauses from './modals/ManageClauses.vue';
 
 const props = defineProps({
-    features: Object,
+    contracts: Object,
 })
 
-const newFeature = {
-    id: null,
-    name: ''
-}
-
 const el = useTemplateRef<HTMLElement>('el')
-const list = shallowRef(props.features)
+const list = shallowRef(props.contracts)
 
 const { option } = useSortable(el, list, {
     handle: '.handle',
@@ -29,33 +25,34 @@ const { option } = useSortable(el, list, {
         list.value.forEach((item, index) => {
             item.order = index
         })
-        updateFeatureOrder()
+        updateClauseOrder()
     })
     },
 })
 
-const updateFeatureOrder = () => {
-    router.post(route('features.sort'), {
-        'features': props.features
+const updateClauseOrder = () => {
+    router.post(route('contracts.sort'), {
+        'clauses': props.contracts
     }, {
         preserveScroll: true,
     })
 }
 
-watch(() => (props.features), (features) => {
-    list.value = features
+watch(() => (props.contracts), (contracts) => {
+    list.value = contracts
 }, {
     deep: true,
 })
 
 </script>
 
+
 <template>
-    <Head title="Features" />
+    <Head title="Contract" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Features</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Contract</h2>
         </template>
 
         <div class="container mx-auto w-full mt-20">
@@ -63,25 +60,26 @@ watch(() => (props.features), (features) => {
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
                         <TableHead class="p-6 text-black"></TableHead>
-                        <TableHead class="p-6 text-black">Feature</TableHead>
+                        <TableHead class="p-6 text-black">Contract</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
                         <TableHead class="text-black text-end">
-                            <Manage :new="true" :feature="newFeature"></Manage>
+                            <Manage :new="true"></Manage>
                         </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
-                    <TableRow v-for="feature in list" :key="feature.id" class="w-full">
+                    <TableRow v-for="contract in list" :key="contract.id" class="w-full">
                         <TableCell class="p-3">
                             <GripHorizontal class="handle cursor-grab w-8 h-8"></GripHorizontal>
                         </TableCell>
-                        <TableCell>{{ feature.name }}</TableCell>
-                        <TableCell>{{ useDateFormat(feature.created_at, 'MMM d, YYYY') }}</TableCell>
-                        <TableCell>{{ useDateFormat(feature.updated_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell>{{ contract.name }}</TableCell>
+                        <TableCell>{{ useDateFormat(contract.created_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell>{{ useDateFormat(contract.updated_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
-                                <Manage :new="false" :feature></Manage>
-                                <Destroy :feature></Destroy>
+                                <Manage :new="false" :contract></Manage>
+                                <ManageClauses :new="false" :contract></ManageClauses>
+                                <Destroy :contract></Destroy>
                         </TableCell>
                     </TableRow>
                 </TableBody>

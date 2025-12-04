@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Contract extends Model
 {
     use HasFactory;
-    public $timestamps = false;
-    public function materialEffectiveDate(): HasMany
-    {
-        return $this->hasMany(MaterialEffectiveDate::class)->orderBy('effective_date', 'desc');
+    public function clauses(): HasMany {
+        return $this->hasMany(Clause::class);
     }
+    // public $timestamps = false;
+    // public function materialEffectiveDate(): HasMany
+    // {
+    //     return $this->hasMany(MaterialEffectiveDate::class)->orderBy('effective_date', 'desc');
+    // }
 }
