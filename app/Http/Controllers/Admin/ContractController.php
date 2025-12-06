@@ -15,7 +15,7 @@ class ContractController extends Controller
     public function index()
     {
         return Inertia::render('admin/contracts/Index', [
-            'contracts' => Contract::with('clauses')->get()
+            'contracts' => Contract::orderBy('order')->get()
         ]);
     }
 
@@ -25,12 +25,14 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'title' => 'required|min:3',
+            'description' => 'nullable|string',
         ]);
 
-        $count = Contract::count();
         Contract::create([
-            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
+            'order' => Contract::count() + 1,
         ]);
 
         return back();
@@ -42,11 +44,13 @@ class ContractController extends Controller
     public function update(Request $request, Contract $contract)
     {
         $request->validate([
-            'name' => 'required|min:3'
+            'title' => 'required|min:3',
+            'description' => 'nullable|string',
         ]);
 
         $contract->update([
-            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
         ]);
 
         return back();
@@ -55,9 +59,10 @@ class ContractController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Contract $contract)
     {
-        //
+        $contract->delete();
+        return back()->with('message', 'Contract deleted');
     }
 
     public function sort(Request $request)

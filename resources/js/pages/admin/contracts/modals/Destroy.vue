@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-vue-next';
@@ -12,7 +12,7 @@ const props = defineProps({
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract.id,
-    name: props.contract.name,
+    title: props.contract.title,
 })
 
 const submit = () => {
@@ -23,10 +23,8 @@ const submit = () => {
     })
 }
 
-watch(() => props.contract,
-(item) => {
-    form.id = item.id;
-    form.name = item.name;
+watchEffect(() => {
+    Object.assign(form, props.contract)
 })
 
 </script>
@@ -42,7 +40,7 @@ watch(() => props.contract,
 
         <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6">
-                <DialogTitle>{{ `Delete ${props.contract.name} ?` }}</DialogTitle>
+                <DialogTitle>{{ `Delete ${props.contract.title} ?` }}</DialogTitle>
                 <DialogDescription>
                     Are you sure?
                 </DialogDescription>

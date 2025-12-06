@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, useTemplateRef, nextTick, watch, watchEffect } from 'vue'
+import { shallowRef, useTemplateRef, nextTick, watch } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
@@ -8,7 +8,6 @@ import { GripHorizontal } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useSortable } from '@vueuse/integrations/useSortable'
-import ManageClauses from './modals/ManageClauses.vue';
 
 const props = defineProps({
     contracts: Object,
@@ -25,14 +24,14 @@ const { option } = useSortable(el, list, {
         list.value.forEach((item, index) => {
             item.order = index
         })
-        updateClauseOrder()
+        updateContractOrder()
     })
     },
 })
 
-const updateClauseOrder = () => {
+const updateContractOrder = () => {
     router.post(route('contracts.sort'), {
-        'clauses': props.contracts
+        'contracts': props.contracts
     }, {
         preserveScroll: true,
     })
@@ -60,7 +59,8 @@ watch(() => (props.contracts), (contracts) => {
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
                         <TableHead class="p-6 text-black"></TableHead>
-                        <TableHead class="p-6 text-black">Contract</TableHead>
+                        <TableHead class="p-6 text-black">Title</TableHead>
+                        <TableHead class="p-6 text-black">Description</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
                         <TableHead class="text-black text-end">
@@ -73,12 +73,12 @@ watch(() => (props.contracts), (contracts) => {
                         <TableCell class="p-3">
                             <GripHorizontal class="handle cursor-grab w-8 h-8"></GripHorizontal>
                         </TableCell>
-                        <TableCell>{{ contract.name }}</TableCell>
+                        <TableCell>{{ contract.title }}</TableCell>
+                        <TableCell>{{ contract.description }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
                                 <Manage :new="false" :contract></Manage>
-                                <ManageClauses :new="false" :contract></ManageClauses>
                                 <Destroy :contract></Destroy>
                         </TableCell>
                     </TableRow>

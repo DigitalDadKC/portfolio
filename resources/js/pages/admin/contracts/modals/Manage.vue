@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
@@ -15,7 +16,9 @@ const props = defineProps({
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract?.id,
-    name: props.contract?.name
+    title: props.contract?.title,
+    description: props.contract?.description,
+    order: props.contract?.order,
 })
 
 const submit = () => {
@@ -42,7 +45,7 @@ const submit = () => {
         <DialogTrigger as-child>
             <Button class="cursor-pointer" v-if="props.new">
                 <Plus></Plus>
-                New Contract
+                New Clause
             </Button>
             <Button class="cursor-pointer" v-else>
                 <Pencil class="cursor-pointer"></Pencil>
@@ -51,16 +54,20 @@ const submit = () => {
 
         <DialogContent
             class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
-            <DialogHeader class="p-6">
-                <DialogTitle>{{ (props.new) ? 'New Contract' : 'Edit Contract' }}</DialogTitle>
+            <DialogHeader class="p-2">
+                <DialogTitle>{{ (props.new) ? 'New Clause' : 'Edit Clause' }}</DialogTitle>
                                 <DialogDescription></DialogDescription>
 
             </DialogHeader>
 
             <div class="flex flex-col gap-4">
-                <Label for="name">Name</Label>
-                <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
-                    v-model="form.name" />
+                <Label for="title">Title</Label>
+                <Input id="title" class="bg-white" v-model="form.title" />
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <Label for="description">Description</Label>
+                <Textarea id="description" class="bg-white" v-model="form.description" />
             </div>
 
             <DialogFooter class="p-6 pt-0">

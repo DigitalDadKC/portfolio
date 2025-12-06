@@ -9,6 +9,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\ClauseController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -53,6 +54,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
     Route::resource('/contracts', ContractController::class);
+    Route::patch('/contracts/{contract}/clauses/update', [ClauseController::class, 'update'])->name('contracts.clauses.update');
+    // Route::resource('/clauses', ClauseController::class);
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::post('/contracts/sort', [ContractController::class, 'sort'])->name('contracts.sort');
