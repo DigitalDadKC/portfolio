@@ -59,7 +59,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/sort', [ContractController::class, 'sort'])->name('contracts.sort');
-    Route::get('invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
 });
 
 // CHECKOUT
