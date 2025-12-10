@@ -53,12 +53,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
-    Route::resource('/contracts', ContractController::class);
-    Route::patch('/contracts/{contract}/clauses/update', [ClauseController::class, 'update'])->name('contracts.clauses.update');
-    // Route::resource('/clauses', ClauseController::class);
+    Route::post('/clients/send', [ClientController::class, 'send'])->name('clients.send');
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
+    Route::resource('/contracts', ContractController::class)->except(['show']);
+    Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/sort', [ContractController::class, 'sort'])->name('contracts.sort');
+    Route::get('invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
 });
 
 // CHECKOUT

@@ -19,14 +19,14 @@ const props = defineProps({
 
 const isDialogOpen = ref(false)
 const form = useForm({
-    id: props.client.id,
-    company: props.client.company,
-    email: props.client.email,
-    address: props.client.address,
-    city: props.client.city,
-    state_id: props.client.state?.id,
-    zip: props.client.zip,
-    url: props.client.url,
+    id: props.client?.id,
+    company: props.client?.company,
+    email: props.client?.email,
+    address: props.client?.address,
+    city: props.client?.city,
+    state_id: props.client?.state?.id,
+    zip: props.client?.zip,
+    url: props.client?.url,
 })
 
 const submit = () => {

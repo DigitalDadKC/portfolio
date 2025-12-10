@@ -4,11 +4,11 @@ import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
+import Outreach from './modals/Outreach.vue';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
 import { useDateFormat } from '@vueuse/core';
-import Outreach from './modals/Outreach.vue';
-import { Earth, Link, Map } from 'lucide-vue-next';
+import { Link, Map } from 'lucide-vue-next';
 
 const props = defineProps({
     clients: Object,
@@ -16,11 +16,6 @@ const props = defineProps({
     place: Object,
     places: Object,
 })
-
-const newClient = {
-    id: null,
-    name: ''
-}
 </script>
 
 <template>
@@ -40,7 +35,7 @@ const newClient = {
                         <TableHead class="text-black">Outreach(es)</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
-                        <TableHead class="text-black text-center"><Manage :new="true" :client="newClient" :states :place :places></Manage></TableHead>
+                        <TableHead class="text-black text-center"><Manage :new="true" :states :place :places></Manage></TableHead>
                         <TableHead class="text-black text-center">Location</TableHead>
                         <TableHead class="text-black text-center">URL</TableHead>
                     </TableRow>

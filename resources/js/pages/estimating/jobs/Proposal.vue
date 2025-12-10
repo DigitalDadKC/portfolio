@@ -136,7 +136,7 @@ const total = computed(() => {
             </div>
 
             <div class="flex justify-between mt-2">
-                <Link :href="route('estimating.jobs.index')" as="button" prefetch>
+                <Link :href="route('jobs.index')" as="button" prefetch>
                     <Button class="cursor-pointer">Back</Button>
                 </Link>
                 <Button class="cursor-pointer" variant="destructive" @click="destroyProposal()">Delete</Button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Inertia\Inertia;
 use App\Models\Contract;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 class ContractController extends Controller
@@ -68,9 +69,23 @@ class ContractController extends Controller
     public function sort(Request $request)
     {
         $contracts = Contract::orderBy('order')->get();
-        $contracts->map(function($contract, $key) use ($request) {
+        $contracts->map(function ($contract, $key) use ($request) {
             $target_contract = array_find($request->contracts, fn($item) => $item['id'] == $contract->id);
             $contract->update(['order' => $target_contract['order']]);
         });
+    }
+
+    public function browser(Request $request) {
+        // dd($request);
+
+        // $contract->load('invoice_items.material.material_unit_size', 'invoice_items.material.material_category');
+
+        $data = [
+            // 'contract' => ContractResource::make(COntract::all()),
+            // 'company' => CompanyResource::collection(Company::all())->first(),
+        ];
+
+        $pdf = Pdf::loadView('pdf.contract', $data);
+        return $pdf->stream('invoice-in-browser.pdf');
     }
 }

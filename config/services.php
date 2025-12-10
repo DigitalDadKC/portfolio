@@ -32,6 +32,9 @@ return [
     ],
     'stripe' => [
         'key' => env('STRIPE_KEY'),
+    ],
+    'signwell' => [
+        'key' => env('SIGNWELL_API_KEY')
     ]
 
 ];

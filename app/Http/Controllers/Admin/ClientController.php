@@ -80,4 +80,64 @@ class ClientController extends Controller
         $client->delete();
         return back();
     }
+
+    public function send(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://www.signwell.com/api/v1/documents/', [
+            'body' => '{
+                "test_mode":true,
+                "files":
+                    [
+                        {
+                            "name":"' . $request->file('document')->getClientOriginalName() . '",
+                            "file_base64":"' . base64_encode(file_get_contents($request->file('document')->getRealPath())) . '"
+                        }
+                    ],
+                "recipients":
+                    [
+                        {
+                            "send_email":true,
+                            "send_email_delay":0,
+                            "id":"1",
+                            "email":"raleighgroesbeck@gmail.com",
+                            "name":"Stud Muffin"
+                        }
+                    ],
+                "draft":false,
+                "with_signature_page":false,
+                "reminders":true,
+                "apply_signing_order":false,
+                "embedded_signing":true,
+                "embedded_signing_notifications":false,
+                "text_tags":false,
+                "allow_decline":true,
+                "allow_reassign":true,
+                "fields":
+                    [
+                        [
+                            {
+                                "type":"initials",
+                                "required":true,
+                                "fixed_width":false,
+                                "lock_sign_date":false,
+                                "allow_other":false,
+                                "x":50,
+                                "y":50,
+                                "page":1,
+                                "recipient_id":"1"
+                            }
+                        ]
+                    ],
+                "name":"Web App Contract"}',
+            'headers' => [
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+                'X-Api-Key' => config('services.signwell.key'),
+            ],
+        ]);
+
+        echo $response->getBody();
+    }
 }

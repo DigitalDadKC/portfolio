@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Mail } from 'lucide-vue-next';
+import { ReceiptText } from 'lucide-vue-next';
 
 const props = defineProps({
     client: Object,
@@ -17,12 +17,19 @@ const form = useForm({
     email: props.client.email
 })
 
-const sendMail = () => {
-    form.post(route('outreach'), {
-        onSuccess: () => {
-            isDialogOpen.value = false
-            form.reset()
-        }
+// const sendMail = () => {
+//     form.post(route('outreach'), {
+//         onSuccess: () => {
+//             isDialogOpen.value = false
+//             form.reset()
+//         }
+//     })
+// }
+
+const file = ref(null)
+const send = () => {
+    router.post(route('clients.send'), {
+        document: file.value
     })
 }
 
@@ -36,15 +43,20 @@ watchEffect(() => {
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
             <Button class="cursor-pointer">
-                <Mail class="cursor-pointer"></Mail>
+                <ReceiptText class="cursor-pointer"></ReceiptText>
             </Button>
         </DialogTrigger>
+
         <DialogContent class="m:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
                 <DialogTitle>Send outreach</DialogTitle>
                 <DialogDescription>{{ props.client.company }}</DialogDescription>
 
                 {{ props.client.email }}
+
+
+                <button class="py-2 px-4 bg-light-quatrenary rounded-md text-white cursor-pointer" @click="send()">Send</button>
+                <input type="file" @change="file = $event.target.files[0]" />
 
             </DialogHeader>
             <DialogFooter>
