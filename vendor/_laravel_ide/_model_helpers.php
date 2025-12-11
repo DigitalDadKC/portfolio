@@ -5,11 +5,16 @@ namespace App\Models {
     /**
      * App\Models\Client
      *
+     * @property string|null $placeId
+     * @property string|null $url
+     * @property string|null $zip
+     * @property int|null $state_id
+     * @property string|null $city
+     * @property string|null $address
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string|null $email
      * @property string $company
-     * @property string|null $name
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Outreach> $outreaches
      * @property-read int|null $outreaches_count
@@ -17,11 +22,16 @@ namespace App\Models {
      * @property-read int|null $client_invoices_count
      * @property-read \App\Models\State $state
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereAddress($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCity($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereStateId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereZip($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUrl($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client wherePlaceid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client query()

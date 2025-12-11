@@ -1,94 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>DigitalDad Contract</title>
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+<div style="font-size: 16px; font-family: Perpetua, 'Times New Roman', Times, serif; background-color: #F3EEEA; width: 100%; padding: 2rem 0.5rem;">
+    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="50" />
+    <div style="background-color: #B0A695; text-align: center; padding: 4px 0">
+        <h1>Freelance Contract</h1>
+    </div>
 
-            div {
-                font-family: 'Trebuchet MS', sans-serif;
-            }
-        </style>
-    </head>
+    <p>This Freelance Software Development Contract ("Contract") is made effective as of [Date], by and between {{ $client['company'] }}, located at {{ $client['address'] }}, {{ $client['city'] }}, {{ $client['state'] }}, {{ $client['zip'] }} ("Client"), and DigitalDad, LLC ("Developer").</p>
 
-    <body>
-        <table style="width: 100%">
-            <tr>
-                <td style="width: 50%">
-                    {{-- <img src={{ asset('/storage/' . (optional($company)->logo)) }} alt="company logo" width="200" /> --}}
-                    {{-- <img src="{{ $message->embed('img/dad.png') }}" alt="logo" id="image" width="30" /> --}}
-                    <img src="{{ asset('/img/dad.png') }}" alt="logo" id="image" width="30" />
-                </td>
-                <td style="width: 25%;">
-                    <div><h2 style="margin: 0; color: #3d4dfc;">INVOICE</h2></div>
-                    {{-- <div style="margin-top: 1.25rem;">Date Created: {{$invoice->date_created}}</div>
-                    <div>Invoice #{{$invoice->number}}</div>
-                    <div>Customer ID: {{$invoice->customer->id}}</div>
-                    <div>Due Date: {{$invoice->due_date}}</div> --}}
-                </td>
-            </tr>
-        </table>
-
-        <div style="margin-top: 1.25rem">
-            <table style="width: 100%;">
-                <tr>
-                    <td style="width: 50%">
-                        {{-- <div><h3 style="margin: 0;">FROM:</h3></div>
-                        <div>{{$company->name}}</div>
-                        <div>{{$company->address}}</div>
-                        <div>{{$company->city}} {{$company->state->abbr}}, {{$company->zip}}</div> --}}
-                    </td>
-                    <td>
-                        {{-- <div><h3 style="margin: 0;">TO:</h3></div>
-                        <div>{{ $invoice->customer->name }}</div>
-                        <div>{{ $invoice->customer->address }}</div>
-                        <div>{{ $invoice->customer->city }}, {{ $invoice->customer->state->abbr }} {{ $invoice->customer->zip }}</div> --}}
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        @php
-            $subtotal = 0;
-        @endphp
-
-        <div style="margin-top: 1.25rem;">
-            <table style="width: 100%; border-spacing: 0">
-                <tr style="background-color: #B0A695;">
-                    <th style="color: #F3EEEA; padding: 0.5rem">SKU</th>
-                    <th style="color: #F3EEEA; padding: 0.5rem">Description</th>
-                    <th style="color: #F3EEEA; padding: 0.5rem">Units</th>
-                    <th style="color: #F3EEEA; padding: 0.5rem">Price</th>
-                    <th style="color: #F3EEEA; padding: 0.5rem">Quantity</th>
-                    <th style="color: #F3EEEA; padding: 0.5rem">Total</th>
-                </tr>
-                {{-- @foreach($invoice->invoice_items as $item) --}}
-                    <tr style="background-color: #EBE3D5">
-                        {{-- <td style="padding: 0.5rem">{{$item->material->sku}}</td>
-                        <td style="padding: 0.5rem">{{$item->material->name}}</td>
-                        <td style="padding: 0.5rem">{{$item->material->material_unit_size->Unit_Size}}</td>
-                        <td style="padding: 0.5rem">${{number_format($item->unit_price/100, 2)}}</td>
-                        <td style="padding: 0.5rem">{{$item->quantity}}</td>
-                        <td style="padding: 0.5rem; text-align: right;">${{number_format($item->unit_price/100 * $item->quantity, 2)}}</td> --}}
-                    </tr>
-                    @php
-                        // $subtotal += number_format(num: $item->unit_price/100 * $item->quantity, 2)
-                    @endphp
-                {{-- @endforeach --}}
-            </table>
-        </div>
-
-        <div style="text-align: right; margin-top: 1rem; font-size: 0.875rem">
-            {{-- <p>Subtotal: ${{ $subtotal }} USD</p>
-            <p>Discount {{$invoice->discount}}%</p>
-            <p>Total: ${{ number_format($subtotal * (1 - $invoice->discount/100), 2) }} USD</p> --}}
-        </div>
+    <ol>
+        <li>
+            <h4 style="margin: 0;">Services to be rendered</h4>
+            <ul style="list-style-type: none;">
+                <li>The Developer agrees to provide the following services ("Services"):</li>
+                <li>
+                    @foreach($services as $service)
+                        <p>{{ $service['title'] }}</p>
+                    @endforeach
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h4 style="margin: 0;">Payment</h4>
+            <ul style="list-style-type: none;">
+                <li>2.1 Fees: The Client agrees to pay the Developer a fixed fee of <b style="text-decoration: underline">$1,000.00</b>.</li>
+                <li>2.2 Payment Schedule: Payments shall be made according to the following schedule: Upon project completion</li>
+                <li>2.3 Invoicing: The Developer shall submit invoices to the Client on upon project completion, and payment is due within 30 days of receipt of the invoice.</li>
+            </ul>
+        </li>
+    </ol>
 
         <div style="margin-top: 1.25rem;">
             <table style="width: 100%; border-spacing: 0">
@@ -105,4 +44,4 @@
             {{-- <div style="text-align: right;">&copy; {{$company->name}}</div> --}}
         </div>
     </body>
-</html>
+</div>

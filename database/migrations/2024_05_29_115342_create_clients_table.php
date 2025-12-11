@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable()->default(NULL);
             $table->string('company');
             $table->string('email')->nullable()->default(NULL);
+            $table->string('address')->nullable()->default(NULL);
+            $table->string('city')->nullable()->default(NULL);
+            $table->foreignId('state_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('zip')->nullable()->default(NULL);
+            $table->string('url')->nullable()->default(NULL);
+            $table->json('placeId')->nullable()->default(NULL);
             $table->timestamps();
         });
         Schema::create('outreaches', function (Blueprint $table) {

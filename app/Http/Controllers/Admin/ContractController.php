@@ -7,6 +7,8 @@ use App\Models\Contract;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use App\Http\Resources\ClientResource;
 
 class ContractController extends Controller
 {
@@ -76,16 +78,45 @@ class ContractController extends Controller
     }
 
     public function browser(Request $request) {
-        // dd($request);
-
-        // $contract->load('invoice_items.material.material_unit_size', 'invoice_items.material.material_category');
+        $client = [
+                'company' => 'company',
+                'email' => 'email',
+                'address' => '123 Main Street',
+                'city' => 'City',
+                'state' => 'State',
+                'zip' => '12345',
+                'url' => 'https://example.com',
+                'placeId' => NULL,
+        ];
+        $services = [
+            [
+                'title' => 'Service 1',
+                'description' => 'Description for service 1',
+                'amount' => 50000,
+            ],
+            [
+                'title' => 'Service 2',
+                'description' => 'Description for service 2',
+                'amount' => 75000,
+            ],
+        ];
 
         $data = [
-            // 'contract' => ContractResource::make(COntract::all()),
-            // 'company' => CompanyResource::collection(Company::all())->first(),
+            'client' => $client,
+            'services' => $services,
         ];
 
         $pdf = Pdf::loadView('pdf.contract', $data);
-        return $pdf->stream('invoice-in-browser.pdf');
+
+        $filename = 'contract.pdf';
+        $filePath = public_path('pdfs/' . $filename);
+
+        File::deleteDirectory(public_path('pdfs'));
+        if (!file_exists(public_path('pdfs'))) {
+            mkdir(public_path('pdfs'), 0777, true);
+        }
+
+        $pdf->save($filePath);
+        return $pdf->stream();
     }
 }

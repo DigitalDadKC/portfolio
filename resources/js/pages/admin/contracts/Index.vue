@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
-import { GripHorizontal, ReceiptText } from 'lucide-vue-next';
+import { GripHorizontal, ReceiptText, FilePen } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useSortable } from '@vueuse/integrations/useSortable'
@@ -54,10 +54,13 @@ watch(() => (props.contracts), (contracts) => {
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Contract</h2>
         </template>
 
-        <div class="container mx-auto w-full mt-10">
-            <a target="_blank" :href="route('contracts.browser')" class="text-black float-right">
-                <ReceiptText></ReceiptText>
-            </a>
+        <div class="container mx-auto w-full">
+            <div class="my-10 float-right flex gap-2">
+                View Template
+                <a target="_blank" :href="route('contracts.browser')" class="text-black">
+                    <FilePen></FilePen>
+                </a>
+            </div>
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
