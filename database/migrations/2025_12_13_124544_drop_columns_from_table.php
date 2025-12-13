@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
-            $table->dropColumn('title');
             $table->dropColumn('description');
         });
     }
