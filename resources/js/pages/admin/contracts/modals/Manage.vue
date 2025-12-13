@@ -2,10 +2,12 @@
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
+import FormattedInput from '@/components/FormattedInput.vue';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Client from '../partials/Client.vue';
+import Services from '../partials/Services.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
@@ -19,9 +21,7 @@ const props = defineProps({
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract?.id,
-    title: props.contract?.title,
-    description: props.contract?.description,
-    order: props.contract?.order,
+    price: props.contract?.price,
     client_id: props.contract?.client_id,
 })
 
@@ -64,18 +64,18 @@ const submit = () => {
             </DialogHeader>
 
             <div class="flex flex-col gap-4">
-                <Label for="title">Title</Label>
-                <Input id="title" class="bg-white" v-model="form.title" />
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <Label for="description">Description</Label>
-                <Textarea id="description" class="bg-white" v-model="form.description" />
+                <Label for="title">Price</Label>
+                <FormattedInput type="currency" class="w-full" v-model="form.price" />
             </div>
 
             <div class="flex flex-col gap-4">
                 <Label for="description">Client</Label>
                 <Client :clients v-model="form.client_id" />
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <Label for="description">Services</Label>
+                <Services :clients v-model="form.client_id" />
             </div>
 
             <DialogFooter class="p-6 pt-0">
