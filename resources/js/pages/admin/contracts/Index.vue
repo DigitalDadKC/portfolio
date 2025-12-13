@@ -11,7 +11,13 @@ import { useSortable } from '@vueuse/integrations/useSortable'
 
 const props = defineProps({
     contracts: Object,
+    clients: Object,
+    services: Object,
 })
+
+console.log(props.contracts)
+console.log(props.clients)
+console.log(props.services)
 
 const el = useTemplateRef<HTMLElement>('el')
 const list = shallowRef(props.contracts)
@@ -70,7 +76,7 @@ watch(() => (props.contracts), (contracts) => {
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
                         <TableHead class="text-black text-end">
-                            <Manage :new="true"></Manage>
+                            <Manage :new="true" :clients :services></Manage>
                         </TableHead>
                     </TableRow>
                 </TableHeader>
@@ -84,7 +90,7 @@ watch(() => (props.contracts), (contracts) => {
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell class="flex justify-end gap-4">
-                                <Manage :new="false" :contract></Manage>
+                                <Manage :new="false" :contract :clients :services></Manage>
                                 <Destroy :contract></Destroy>
                         </TableCell>
                     </TableRow>

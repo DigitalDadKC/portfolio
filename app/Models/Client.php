@@ -19,4 +19,7 @@ class Client extends Model
     public function state(): BelongsTo {
         return $this->belongsTo(State::class);
     }
+    public function contract(): HasMany {
+        return $this->hasMany(Contract::class);
+    }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
-            $table->foreignId('client_id')->nullable()->after('order');
+            $table->integer('price')->after('id');
         });
     }
 
@@ -22,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
-            //
+            $table->dropColumn('title');
+            $table->dropColumn('description');
         });
     }
 };

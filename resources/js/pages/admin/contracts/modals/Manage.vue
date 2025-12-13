@@ -5,12 +5,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import Client from '../partials/Client.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
 const props = defineProps({
     new: Boolean,
     contract: Object,
+    clients: Object,
+    services: Object,
 })
 
 const isDialogOpen = ref(false)
@@ -19,6 +22,7 @@ const form = useForm({
     title: props.contract?.title,
     description: props.contract?.description,
     order: props.contract?.order,
+    client_id: props.contract?.client_id,
 })
 
 const submit = () => {
@@ -45,7 +49,7 @@ const submit = () => {
         <DialogTrigger as-child>
             <Button class="cursor-pointer" v-if="props.new">
                 <Plus></Plus>
-                New Clause
+                New Contract
             </Button>
             <Button class="cursor-pointer" v-else>
                 <Pencil class="cursor-pointer"></Pencil>
@@ -55,9 +59,8 @@ const submit = () => {
         <DialogContent
             class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-2">
-                <DialogTitle>{{ (props.new) ? 'New Clause' : 'Edit Clause' }}</DialogTitle>
-                                <DialogDescription></DialogDescription>
-
+                <DialogTitle>{{ (props.new) ? 'New Contract' : 'Edit Contract' }}</DialogTitle>
+                <DialogDescription></DialogDescription>
             </DialogHeader>
 
             <div class="flex flex-col gap-4">
@@ -68,6 +71,11 @@ const submit = () => {
             <div class="flex flex-col gap-4">
                 <Label for="description">Description</Label>
                 <Textarea id="description" class="bg-white" v-model="form.description" />
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <Label for="description">Client</Label>
+                <Client :clients v-model="form.client_id" />
             </div>
 
             <DialogFooter class="p-6 pt-0">

@@ -21,6 +21,8 @@ namespace App\Models {
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClientInvoice> $client_invoices
      * @property-read int|null $client_invoices_count
      * @property-read \App\Models\State $state
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contract
+     * @property-read int|null $contract_count
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
@@ -1308,14 +1310,13 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int|null $client_id
-     * @property int $order
-     * @property string|null $description
-     * @property string $title
+     * @property int $price
      * @property int $id
+     * @property-read \App\Models\Client $client
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
+     * @property-read int|null $services_count
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereDescription($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereOrder($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract wherePrice($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereClientId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdatedAt($value)
@@ -7623,6 +7624,8 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $name
      * @property int $id
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
+     * @property-read int|null $contracts_count
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereCreatedAt($value)

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
+use App\Models\Client;
+use App\Models\Service;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -18,7 +20,9 @@ class ContractController extends Controller
     public function index()
     {
         return Inertia::render('admin/contracts/Index', [
-            'contracts' => Contract::orderBy('order')->get()
+            'contracts' => Contract::with('client', 'services')->get(),
+            'clients' => Client::orderBy('company')->get(),
+            'services' => Service::orderBy('name')->get(),
         ]);
     }
 
