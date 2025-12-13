@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, useTemplateRef, nextTick, watch } from 'vue'
+import {  } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
@@ -7,7 +7,6 @@ import Destroy from './modals/Destroy.vue';
 import { FilePen } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { useSortable } from '@vueuse/integrations/useSortable'
 import Send from './modals/Send.vue';
 
 const props = defineProps({
@@ -15,8 +14,6 @@ const props = defineProps({
     clients: Object,
     services: Object,
 })
-
-console.log(props.contracts)
 
 </script>
 

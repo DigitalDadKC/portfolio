@@ -19,7 +19,7 @@ const form = useForm({
 
 const file = ref(null)
 const send = () => {
-    router.post(route('clients.send'), {
+    router.post(route('contracts.send'), {
         document: file.value
     })
 }
@@ -46,7 +46,7 @@ watchEffect(() => {
             </DialogHeader>
             <DialogFooter>
                     <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
-                    <Button class="cursor-pointer" @click="sendMail()">Send</Button>
+                    <Button class="cursor-pointer" @click="send()">Send</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
