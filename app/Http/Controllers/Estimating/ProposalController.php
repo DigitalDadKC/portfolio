@@ -79,7 +79,7 @@ class ProposalController extends Controller
     public function destroy(Proposal $proposal)
     {
         $proposal->delete();
-        return to_route('estimating.jobs.index');
+        return to_route('jobs.index');
     }
 
     public function createScope(Proposal $proposal) {

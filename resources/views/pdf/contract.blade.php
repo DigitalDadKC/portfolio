@@ -29,19 +29,18 @@
         </li>
     </ol>
 
-        <div style="margin-top: 1.25rem;">
-            <table style="width: 100%; border-spacing: 0">
-                <tr style="background-color: #B0A695;">
-                    <th style="color: #F3EEEA; padding: 0.5rem">Terms & Conditions</th>
-                </tr>
-                <tr>
-                    {{-- <td>{{ $invoice->terms_and_conditions }}</td> --}}
-                </tr>
-            </table>
-        </div>
+    <div style="margin-top: 1.25rem;">
+        <table style="width: 100%; border-spacing: 0">
+            <tr style="background-color: #B0A695;">
+                <th style="color: #F3EEEA; padding: 0.5rem">Terms & Conditions</th>
+            </tr>
+            <tr>
+                {{-- <td>{{ $invoice->terms_and_conditions }}</td> --}}
+            </tr>
+        </table>
+    </div>
 
-        <div style="position: fixed; bottom: 0; width: 100%; padding: 1rem 0.75rem; background-color: #EBE3D5">
-            {{-- <div style="text-align: right;">&copy; {{$company->name}}</div> --}}
-        </div>
-    </body>
+    <div style="position: fixed; bottom: 0; width: 100%; padding: 1rem 0.75rem; background-color: #EBE3D5">
+        {{-- <div style="text-align: right;">&copy; {{$company->name}}</div> --}}
+    </div>
 </div>

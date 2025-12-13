@@ -24,6 +24,7 @@ use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/sort', [ContractController::class, 'sort'])->name('contracts.sort');
+    Route::resource('/services', ServiceController::class);
 });
 
 // CHECKOUT

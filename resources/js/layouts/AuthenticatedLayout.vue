@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import ApplicationLogo from '@/components/ApplicationLogo.vue';
 import Dropdown from '@/components/Dropdown.vue';
@@ -6,13 +6,25 @@ import DropdownLink from '@/components/DropdownLink.vue';
 import NavLink from '@/components/NavLink.vue';
 import ResponsiveNavLink from '@/components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu'
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div>
-        <div v-if="$page.props.flash.message" class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-400 dark:text-blue-800" role="alert">
+        <div v-if="$page.props.flash.message"
+            class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 dark:bg-blue-400 dark:text-blue-800" role="alert">
             <div class="max-w-fit mx-auto">{{ $page.props.flash.message }}</div>
         </div>
         <div class="min-h-screen bg-light-secondary dark:bg-dark-secondary">
@@ -25,34 +37,54 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
                                     <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"
-                                    />
+                                        class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
-                                    Dashboard
-                                </NavLink>
-                                <NavLink :href="route('skills.index')" :active="route().current('skills.index')">
-                                    Skills
-                                </NavLink>
-                                <NavLink :href="route('projects.index')" :active="route().current('projects.index')">
-                                    Projects
-                                </NavLink>
-                                <NavLink :href="route('features.index')" :active="route().current('features.index')">
-                                    Features
-                                </NavLink>
-                                <NavLink :href="route('clients.index')" :active="route().current('clients.index')">
-                                    Clients
-                                </NavLink>
-                                <NavLink :href="route('admin.invoices.index')" :active="route().current('admin.invoices.index')">
-                                    Invoices
-                                </NavLink>
-                                <NavLink :href="route('contracts.index')" :active="route().current('contracts.index')">
-                                    Contracts
-                                </NavLink>
+                                <NavigationMenu :viewport="false">
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuLink as-child :class="navigationMenuTriggerStyle()">
+                                                <NavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">Dashboard</NavLink>
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuLink as-child :class="navigationMenuTriggerStyle()">
+                                                <NavLink :href="route('skills.index')" :active="route().current('skills.index')">Skills</NavLink>
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuLink as-child :class="navigationMenuTriggerStyle()">
+                                                <NavLink :href="route('projects.index')" :active="route().current('projects.index')">Projects</NavLink>
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuLink as-child :class="navigationMenuTriggerStyle()">
+                                                <NavLink :href="route('features.index')" :active="route().current('features.index')">Features</NavLink>
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuTrigger>Business</NavigationMenuTrigger>
+                                            <NavigationMenuContent>
+                                                <ul class="grid w-[100px] gap-4">
+                                                    <li>
+                                                        <NavLink :href="route('services.index')" :active="route().current('services.index')">Services</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink :href="route('clients.index')" :active="route().current('clients.index')">Clients</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink :href="route('contracts.index')" :active="route().current('contracts.index')">Contracts</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink :href="route('admin.invoices.index')" :active="route().current('admin.invoices.index')">Invoices</NavLink>
+                                                    </li>
+                                                </ul>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
                             </div>
                         </div>
 
@@ -62,23 +94,15 @@ const showingNavigationDropdown = ref(false);
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 cursor-pointer"
-                                            >
+                                            <button type="button"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 cursor-pointer">
                                                 {{ $page.props.auth.user.name }}
 
-                                                <svg
-                                                    class="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
+                                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
                                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
+                                                        clip-rule="evenodd" />
                                                 </svg>
                                             </button>
                                         </span>
@@ -96,31 +120,19 @@ const showingNavigationDropdown = ref(false);
 
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out cursor-pointer"
-                            >
+                            <button @click="showingNavigationDropdown = !showingNavigationDropdown"
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out cursor-pointer">
                                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex': !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex': showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
+                                    <path :class="{
+                                        hidden: showingNavigationDropdown,
+                                        'inline-flex': !showingNavigationDropdown,
+                                    }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16" />
+                                    <path :class="{
+                                        hidden: !showingNavigationDropdown,
+                                        'inline-flex': showingNavigationDropdown,
+                                    }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
@@ -128,10 +140,8 @@ const showingNavigationDropdown = ref(false);
                 </div>
 
                 <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
-                >
+                <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
+                    class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
@@ -151,16 +161,20 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('skills.index')" :active="route().current('skills.index')">
                                 Skills
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('projects.index')" :active="route().current('projects.index')">
+                            <ResponsiveNavLink :href="route('projects.index')"
+                                :active="route().current('projects.index')">
                                 Projects
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('features.index')" :active="route().current('features.index')">
+                            <ResponsiveNavLink :href="route('features.index')"
+                                :active="route().current('features.index')">
                                 Features
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('invoices.index')" :active="route().current('invoices.index')">
+                            <ResponsiveNavLink :href="route('invoices.index')"
+                                :active="route().current('invoices.index')">
                                 Invoices
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('clients.index')" :active="route().current('clients.index')">
+                            <ResponsiveNavLink :href="route('clients.index')"
+                                :active="route().current('clients.index')">
                                 Clients
                             </ResponsiveNavLink>
                         </div>

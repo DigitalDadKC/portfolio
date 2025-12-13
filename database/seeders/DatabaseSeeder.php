@@ -18,6 +18,7 @@ use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use App\Models\MaterialUnitSize;
 use App\Models\ClientInvoiceItem;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
@@ -48,5 +49,6 @@ class DatabaseSeeder extends Seeder
         Product::factory(25)->create();
         Invoice::factory(50)->create();
         InvoiceItem::factory(100)->create();
+        Service::factory(15)->create();
     }
 }

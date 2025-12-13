@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,12 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
             'company' => $this->faker->company,
             'email' => $this->faker->email,
+            'address' => $this->faker->streetAddress(),
+            'city' => $this->faker->city(),
+            'state_id' => State::query()->inRandomOrder()->first()->id,
+            'zip' => $this->faker->randomNumber(5, true),
         ];
     }
 }
