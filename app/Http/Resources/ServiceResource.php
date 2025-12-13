@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ClientResource extends JsonResource
+class ServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,14 +16,7 @@ class ClientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'company' => $this->company,
-            'email' => $this->email,
-            'address' => $this->address,
-            'city' => $this->city,
-            'state' => StateResource::make($this->whenLoaded('state')),
-            'zip' => $this->zip,
-            'url' => $this->url,
-            'outreaches' => OutreachResource::collection($this->whenLoaded('outreaches')),
+            'name' => $this->name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

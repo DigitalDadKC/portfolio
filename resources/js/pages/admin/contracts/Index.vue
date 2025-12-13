@@ -4,10 +4,11 @@ import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
-import { GripHorizontal, ReceiptText, FilePen } from 'lucide-vue-next';
+import { FilePen } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useSortable } from '@vueuse/integrations/useSortable'
+import Send from './modals/Send.vue';
 
 const props = defineProps({
     contracts: Object,
@@ -16,38 +17,6 @@ const props = defineProps({
 })
 
 console.log(props.contracts)
-console.log(props.clients)
-console.log(props.services)
-
-const el = useTemplateRef<HTMLElement>('el')
-const list = shallowRef(props.contracts)
-
-const { option } = useSortable(el, list, {
-    handle: '.handle',
-    animation: 200,
-    onSort: (e) => {
-    nextTick(() => {
-        list.value.forEach((item, index) => {
-            item.order = index
-        })
-        updateContractOrder()
-    })
-    },
-})
-
-const updateContractOrder = () => {
-    router.post(route('contracts.sort'), {
-        'contracts': props.contracts
-    }, {
-        preserveScroll: true,
-    })
-}
-
-watch(() => (props.contracts), (contracts) => {
-    list.value = contracts
-}, {
-    deep: true,
-})
 
 </script>
 
@@ -70,26 +39,26 @@ watch(() => (props.contracts), (contracts) => {
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
-                        <TableHead class="p-6 text-black"></TableHead>
-                        <TableHead class="p-6 text-black">Title</TableHead>
-                        <TableHead class="p-6 text-black">Description</TableHead>
+                        <TableHead class="p-6 text-black">Client</TableHead>
+                        <TableHead class="text-black">Price</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
-                        <TableHead class="text-black text-end">
+                        <TableHead></TableHead>
+                        <TableHead class="text-black text-center">
                             <Manage :new="true" :clients :services></Manage>
                         </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
-                    <TableRow v-for="contract in list" :key="contract.id" class="w-full">
-                        <TableCell class="p-3">
-                            <GripHorizontal class="handle cursor-grab w-8 h-8"></GripHorizontal>
-                        </TableCell>
-                        <TableCell>{{ contract.title }}</TableCell>
-                        <TableCell>{{ contract.description }}</TableCell>
+                    <TableRow v-for="contract in props.contracts" :key="contract.id" class="w-full">
+                        <TableCell>{{ contract.client.company }}</TableCell>
+                        <TableCell>{{ contract.price }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM d, YYYY') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM d, YYYY') }}</TableCell>
-                        <TableCell class="flex justify-end gap-4">
+                        <TableCell>
+                            <Send :contract />
+                        </TableCell>
+                        <TableCell class="space-x-4 text-center">
                                 <Manage :new="false" :contract :clients :services></Manage>
                                 <Destroy :contract></Destroy>
                         </TableCell>

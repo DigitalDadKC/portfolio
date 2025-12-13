@@ -19,12 +19,12 @@ class ContractResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->Name,
-            'contract' => $this->Contract_No,
-            'admin_fee' => $this->Admin_Fee,
+            'price' => $this->price,
+            'client' => ClientResource::make($this->client),
+            'services' => ServiceResource::collection($this->services)->pluck('id')->toArray(),
             'discount' => $this->Discount,
-            'freight_free' => $this->Freight_Free,
-            'effective_dates' => MaterialEffectiveDateResource::collection($this->materialEffectiveDate)->sortByDesc('date')->values()
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

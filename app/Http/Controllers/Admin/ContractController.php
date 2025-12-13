@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\ContractResource;
 
 class ContractController extends Controller
 {
@@ -20,7 +21,7 @@ class ContractController extends Controller
     public function index()
     {
         return Inertia::render('admin/contracts/Index', [
-            'contracts' => Contract::with('client', 'services')->get(),
+            'contracts' => ContractResource::collection(Contract::with('client', 'services')->get()),
             'clients' => Client::orderBy('company')->get(),
             'services' => Service::orderBy('name')->get(),
         ]);
@@ -32,15 +33,16 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:3',
-            'description' => 'nullable|string',
+            'price' => 'required',
+            'client_id' => 'nullable|required',
         ]);
 
-        Contract::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'order' => Contract::count() + 1,
+        // dd($request);
+        $contract = Contract::create([
+            'price' => $request->price,
+            'client_id' => $request->client_id,
         ]);
+        $contract->services()->sync($request->services);
 
         return back();
     }
@@ -51,14 +53,15 @@ class ContractController extends Controller
     public function update(Request $request, Contract $contract)
     {
         $request->validate([
-            'title' => 'required|min:3',
-            'description' => 'nullable|string',
+            'price' => 'required',
+            'client_id' => 'nullable|required',
         ]);
 
         $contract->update([
-            'title' => $request->title,
-            'description' => $request->description,
+            'price' => $request->price,
+            'client_id' => $request->client_id,
         ]);
+        $contract->services()->sync($request->services);
 
         return back();
     }
@@ -70,15 +73,6 @@ class ContractController extends Controller
     {
         $contract->delete();
         return back()->with('message', 'Contract deleted');
-    }
-
-    public function sort(Request $request)
-    {
-        $contracts = Contract::orderBy('order')->get();
-        $contracts->map(function ($contract, $key) use ($request) {
-            $target_contract = array_find($request->contracts, fn($item) => $item['id'] == $contract->id);
-            $contract->update(['order' => $target_contract['order']]);
-        });
     }
 
     public function browser(Request $request) {

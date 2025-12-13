@@ -6,25 +6,16 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { ReceiptText } from 'lucide-vue-next';
 
 const props = defineProps({
-    client: Object,
+    contract: Object,
 })
 
 const isDialogOpen = ref(false)
 const form = useForm({
-    id: props.client.id,
-    name: props.client.name,
-    company: props.client.company,
-    email: props.client.email
+    id: props.contract?.id,
+    client: props.contract?.client.company,
+    price: props.contract?.price,
+    services: props.contract?.services,
 })
-
-// const sendMail = () => {
-//     form.post(route('outreach'), {
-//         onSuccess: () => {
-//             isDialogOpen.value = false
-//             form.reset()
-//         }
-//     })
-// }
 
 const file = ref(null)
 const send = () => {
@@ -34,7 +25,7 @@ const send = () => {
 }
 
 watchEffect(() => {
-    Object.assign(form, props.client)
+    Object.assign(form, props.contract)
 })
 
 </script>
@@ -49,14 +40,8 @@ watchEffect(() => {
 
         <DialogContent class="m:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
-                <DialogTitle>Send outreach</DialogTitle>
-                <DialogDescription>{{ props.client.company }}</DialogDescription>
-
-                {{ props.client.email }}
-
-
-                <button class="py-2 px-4 bg-light-quatrenary rounded-md text-white cursor-pointer" @click="send()">Send</button>
-                <input type="file" @change="file = $event.target.files[0]" />
+                <DialogTitle>Send Contract</DialogTitle>
+                <DialogDescription>{{ form }}</DialogDescription>
 
             </DialogHeader>
             <DialogFooter>

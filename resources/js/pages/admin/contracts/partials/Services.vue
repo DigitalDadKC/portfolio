@@ -3,21 +3,21 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 
 const model = defineModel()
 const props = defineProps({
-    clients: Object,
+    services: Object,
 })
 
 </script>
 
 <template>
-    <Select id="client" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model">
+    <Select id="client" onValueChange="{setSelectedValue}" value="{selectedValue}" v-model="model" multiple>
         <SelectTrigger class="w-full cursor-pointer bg-white">
-            <SelectValue placeholder="Select Client" />
+            <SelectValue placeholder="Select Services" />
         </SelectTrigger>
         <SelectContent>
             <SelectGroup>
-                <SelectLabel>Clients</SelectLabel>
-                <SelectItem v-for="client in props.clients" :key="client.id" :value="client.id">
-                    {{ client.company }}
+                <SelectLabel>Services</SelectLabel>
+                <SelectItem v-for="service in props.services" :key="service.id" :value="service.id">
+                    {{ service.name }}
                 </SelectItem>
             </SelectGroup>
         </SelectContent>

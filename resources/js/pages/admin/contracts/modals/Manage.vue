@@ -22,7 +22,8 @@ const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract?.id,
     price: props.contract?.price,
-    client_id: props.contract?.client_id,
+    client_id: props.contract?.client.id,
+    services: props.contract?.services
 })
 
 const submit = () => {
@@ -56,26 +57,26 @@ const submit = () => {
             </Button>
         </DialogTrigger>
 
-        <DialogContent
-            class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-2">
                 <DialogTitle>{{ (props.new) ? 'New Contract' : 'Edit Contract' }}</DialogTitle>
                 <DialogDescription></DialogDescription>
             </DialogHeader>
 
-            <div class="flex flex-col gap-4">
-                <Label for="title">Price</Label>
-                <FormattedInput type="currency" class="w-full" v-model="form.price" />
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <Label for="description">Client</Label>
-                <Client :clients v-model="form.client_id" />
+            <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-2">
+                    <Label for="title">Price</Label>
+                    <FormattedInput type="currency" class="w-full" v-model="form.price" />
+                </div>
+                <div class="col-span-2">
+                    <Label for="description">Client</Label>
+                    <Client :clients v-model="form.client_id" />
+                </div>
             </div>
 
             <div class="flex flex-col gap-4">
                 <Label for="description">Services</Label>
-                <Services :clients v-model="form.client_id" />
+                <Services :services v-model="form.services" />
             </div>
 
             <DialogFooter class="p-6 pt-0">
