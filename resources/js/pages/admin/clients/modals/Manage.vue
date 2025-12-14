@@ -88,12 +88,13 @@ const handle = (e) => {
                 New Client
             </Button>
             <Button class="cursor-pointer" v-else>
+                Edit
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>
         </DialogTrigger>
         <DialogContent class="md:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
-                <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit Client #${props.client.name}`}` }}</DialogTitle>
+                <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit ${props.client.company}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
 
                 <div class="grid grid-cols-4 gap-4">

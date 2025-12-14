@@ -31,10 +31,8 @@ const props = defineProps({
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
                         <TableHead class="text-black p-4">Company</TableHead>
-                        <TableHead class="text-black">Email</TableHead>
+                        <TableHead class="text-black">Employees</TableHead>
                         <TableHead class="text-black">Outreach(es)</TableHead>
-                        <TableHead class="text-black">Created</TableHead>
-                        <TableHead class="text-black">Updated</TableHead>
                         <TableHead class="text-black text-center"><Manage :new="true" :states :place :places></Manage></TableHead>
                         <TableHead class="text-black text-center">Location</TableHead>
                         <TableHead class="text-black text-center">URL</TableHead>
@@ -42,19 +40,21 @@ const props = defineProps({
                 </TableHeader>
                 <TableBody>
                     <TableRow v-for="client in props.clients" :key="client.id">
-                        <TableCell>{{ client.company }}</TableCell>
+                        <TableCell>
+                            {{ client.company }}
+                            <p class="italic text-xs">Created: {{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</p>
+                            <p class="italic text-xs">Updated: {{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</p>
+                        </TableCell>
                         <TableCell>{{ client.email }}</TableCell>
                         <TableCell>
                             <div v-for="outreach in client.outreaches" :key="outreach.id">
                                 {{ useDateFormat(outreach.date_emailed, 'MMM D, YYYY') }}
                             </div>
+                            <Outreach :client></Outreach>
                         </TableCell>
-                        <TableCell>{{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</TableCell>
-                        <TableCell>{{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</TableCell>
                         <TableCell class="flex justify-around">
                             <Manage :new="false" :client :states :place :places></Manage>
                             <Destroy :client></Destroy>
-                            <Outreach :client></Outreach>
                         </TableCell>
                         <TableCell class="text-center">
                             <a target="_blank" :href="`http://maps.google.com/?q=${client.address}, ${client.city}, ${client.state?.state} ${client.zip}`" v-if="client.address">

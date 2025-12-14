@@ -27,7 +27,7 @@ const state = computed(() => {
 
 <template>
     <Select v-model="model">
-        <SelectTrigger class="w-full bg-white cursor-pointer hover:bg-accent dark:bg-dark-primary">
+        <SelectTrigger class="w-full bg-white cursor-pointer">
             <SelectValue placeholder="Select state" />
         </SelectTrigger>
         <SelectContent>

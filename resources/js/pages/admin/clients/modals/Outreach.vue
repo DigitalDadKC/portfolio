@@ -36,6 +36,7 @@ watchEffect(() => {
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
             <Button class="cursor-pointer">
+                Outreach
                 <Mail class="cursor-pointer"></Mail>
             </Button>
         </DialogTrigger>
