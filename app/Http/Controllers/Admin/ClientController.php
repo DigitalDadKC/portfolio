@@ -19,7 +19,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('admin/clients/Index', [
-            'clients' => ClientResource::collection(Client::with('outreaches', 'state')->latest()->get()),
+            'clients' => ClientResource::collection(Client::with('outreaches', 'state', 'employees')->latest()->get()),
             'states' => StateResource::collection(State::orderBy('state')->get()),
             'place' => Inertia::optional(fn() => GooglePlaces::make()->placeDetails($request->placeId)->collect()),
             'places' => Inertia::optional(fn() => GooglePlaces::make()->autocomplete($request->search ?? '')->collect())
@@ -79,5 +79,9 @@ class ClientController extends Controller
     {
         $client->delete();
         return back();
+    }
+
+    public function employees(Request $request) {
+        dd($request);
     }
 }

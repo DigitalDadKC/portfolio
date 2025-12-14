@@ -2,6 +2,7 @@
 import {  } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
+import Employees from './drawers/Employees.vue';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
 import Outreach from './modals/Outreach.vue';
@@ -16,6 +17,8 @@ const props = defineProps({
     place: Object,
     places: Object,
 })
+
+console.log(props.clients)
 </script>
 
 <template>
@@ -45,7 +48,9 @@ const props = defineProps({
                             <p class="italic text-xs">Created: {{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</p>
                             <p class="italic text-xs">Updated: {{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</p>
                         </TableCell>
-                        <TableCell>{{ client.email }}</TableCell>
+                        <TableCell>
+                            <Employees :client />
+                        </TableCell>
                         <TableCell>
                             <div v-for="outreach in client.outreaches" :key="outreach.id">
                                 {{ useDateFormat(outreach.date_emailed, 'MMM D, YYYY') }}

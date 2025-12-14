@@ -24,6 +24,7 @@ class ClientResource extends JsonResource
             'zip' => $this->zip,
             'url' => $this->url,
             'outreaches' => OutreachResource::collection($this->whenLoaded('outreaches')),
+            'employees' => $this->employees,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

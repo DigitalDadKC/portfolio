@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
+    Route::post('/employees', [ClientController::class, 'employees'])->name('employees.update');
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::resource('/contracts', ContractController::class)->except(['show']);

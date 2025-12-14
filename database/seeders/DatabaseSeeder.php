@@ -9,7 +9,9 @@ use App\Models\Scope;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Product;
+use App\Models\Service;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Material;
 use App\Models\Proposal;
 use App\Models\InvoiceItem;
@@ -18,7 +20,6 @@ use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use App\Models\MaterialUnitSize;
 use App\Models\ClientInvoiceItem;
-use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 class DatabaseSeeder extends Seeder
@@ -50,5 +51,6 @@ class DatabaseSeeder extends Seeder
         Invoice::factory(50)->create();
         InvoiceItem::factory(100)->create();
         Service::factory(15)->create();
+        Employee::factory(35)->create();
     }
 }

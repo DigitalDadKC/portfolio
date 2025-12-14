@@ -23,6 +23,8 @@ namespace App\Models {
      * @property-read \App\Models\State $state
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contract
      * @property-read int|null $contract_count
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Employee> $employees
+     * @property-read int|null $employees_count
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
@@ -2566,6 +2568,21 @@ namespace App\Models {
     /**
      * App\Models\Employee
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property int $client_id
+     * @property int|null $phone
+     * @property string|null $email
+     * @property string|null $name
+     * @property int $id
+     * @property-read \App\Models\Client $client
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee wherePhone($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereClientId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee query()
