@@ -54,7 +54,7 @@ class ContractController extends Controller
 
         $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
 
-        Storage::disk('local')->put($fileName, $content);
+        Storage::disk('local')->put('contracts/' . $fileName, $content);
 
         $contract->file_path = $fileName;
         $contract->save();
@@ -78,8 +78,8 @@ class ContractController extends Controller
         ]);
         $contract->services()->sync($request->services);
 
-        if(Storage::disk('local')->exists($contract->file_path)) {
-            Storage::disk('local')->delete($contract->file_path);
+        if(Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
+            Storage::disk('local')->delete('contracts/' . $contract->file_path);
         }
 
         $pdf = Pdf::loadView('pdf.contract', compact('contract'));
@@ -87,7 +87,7 @@ class ContractController extends Controller
 
         $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
 
-        Storage::disk('local')->put($fileName, $content);
+        Storage::disk('local')->put('contracts/' . $fileName, $content);
 
         $contract->file_path = $fileName;
         $contract->save();
@@ -105,35 +105,33 @@ class ContractController extends Controller
     }
 
     public function browser(Request $request) {
-        $client = [
+        $contract = [
+            'price' => 1000,
+            'client' => [
                 'company' => 'company',
                 'email' => 'email',
                 'address' => '123 Main Street',
                 'city' => 'City',
-                'state' => 'State',
+                'state' => [
+                    'abbr' => 'ST',
+                ],
                 'zip' => '12345',
                 'url' => 'https://example.com',
                 'placeId' => NULL,
-        ];
-        $services = [
-            [
-                'title' => 'Service 1',
-                'description' => 'Description for service 1',
-                'amount' => 50000,
             ],
-            [
-                'title' => 'Service 2',
-                'description' => 'Description for service 2',
-                'amount' => 75000,
-            ],
-        ];
+            'services' => [
+                [
+                    'name' => 'Service 1',
+                    'price' => 50000,
+                ],
+                [
+                    'name' => 'Service 2',
+                    'price' => 75000,
+                ],
+            ]
+            ];
 
-        $data = [
-            'client' => $client,
-            'services' => $services,
-        ];
-
-        $pdf = Pdf::loadView('pdf.contract', $data);
+        $pdf = Pdf::loadView('pdf.contract', compact('contract'));
 
         $filename = 'contract.pdf';
         $filePath = public_path('contracts/' . $filename);
