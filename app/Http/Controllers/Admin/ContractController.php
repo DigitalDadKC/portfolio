@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\ContractResource;
+use Illuminate\Support\Facades\Storage;
 
 class ContractController extends Controller
 {
@@ -36,12 +37,27 @@ class ContractController extends Controller
             'client_id' => 'nullable|required',
         ]);
 
-        // dd($request);
         $contract = Contract::create([
             'price' => $request->price,
             'client_id' => $request->client_id,
         ]);
         $contract->services()->sync($request->services);
+
+        $data = [
+            'contract' => $contract,
+            'client' => $contract->client,
+            'services' => $contract->services,
+        ];
+
+        $pdf = Pdf::loadView('pdf.contract', $data);
+        $content = $pdf->output();
+
+        $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
+
+        Storage::disk('local')->put($fileName, $content);
+
+        $contract->file_path = $fileName;
+        $contract->save();
 
         return back();
     }
@@ -61,6 +77,20 @@ class ContractController extends Controller
             'client_id' => $request->client_id,
         ]);
         $contract->services()->sync($request->services);
+
+        if(Storage::disk('local')->exists($contract->file_path)) {
+            Storage::disk('local')->delete($contract->file_path);
+        }
+
+        $pdf = Pdf::loadView('pdf.contract', compact('contract'));
+        $content = $pdf->output();
+
+        $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
+
+        Storage::disk('local')->put($fileName, $content);
+
+        $contract->file_path = $fileName;
+        $contract->save();
 
         return back();
     }
@@ -106,7 +136,7 @@ class ContractController extends Controller
         $pdf = Pdf::loadView('pdf.contract', $data);
 
         $filename = 'contract.pdf';
-        $filePath = public_path('pdfs/' . $filename);
+        $filePath = public_path('contracts/' . $filename);
 
         File::deleteDirectory(public_path('pdfs'));
         if (!file_exists(public_path('pdfs'))) {

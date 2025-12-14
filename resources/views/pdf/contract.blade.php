@@ -5,7 +5,7 @@
         <h1>Freelance Contract</h1>
     </div>
 
-    <p>This Freelance Software Development Contract ("Contract") is made effective as of [Date], by and between {{ $client['company'] }}, located at {{ $client['address'] }}, {{ $client['city'] }}, {{ $client['state'] }}, {{ $client['zip'] }} ("Client"), and DigitalDad, LLC ("Developer").</p>
+    <p>This Freelance Software Development Contract ("Contract") is made effective as of [Date], by and between {{ $contract->client['company'] }}, located at {{ $contract->client['address'] }}, {{ $contract->client['city'] }}, {{ $contract->client['state']['abbr'] }}, {{ $contract->client['zip'] }} ("Client"), and DigitalDad, LLC ("Developer").</p>
 
     <ol>
         <li>
@@ -13,8 +13,8 @@
             <ul style="list-style-type: none;">
                 <li>The Developer agrees to provide the following services ("Services"):</li>
                 <li>
-                    @foreach($services as $service)
-                        <p>{{ $service['title'] }}</p>
+                    @foreach($contract->services as $service)
+                        <p>{{ $service['name'] }}</p>
                     @endforeach
                 </li>
             </ul>
@@ -22,7 +22,7 @@
         <li>
             <h4 style="margin: 0;">Payment</h4>
             <ul style="list-style-type: none;">
-                <li>2.1 Fees: The Client agrees to pay the Developer a fixed fee of <b style="text-decoration: underline">$1,000.00</b>.</li>
+                <li>2.1 Fees: The Client agrees to pay the Developer a fixed fee of <b style="text-decoration: underline">${{ $contract->price }}</b>.</li>
                 <li>2.2 Payment Schedule: Payments shall be made according to the following schedule: Upon project completion</li>
                 <li>2.3 Invoicing: The Developer shall submit invoices to the Client on upon project completion, and payment is due within 30 days of receipt of the invoice.</li>
             </ul>
