@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import { Input } from '@/components/ui/input';
 import FormattedInput from '@/components/FormattedInput.vue';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import Client from '../partials/Client.vue';
 import Services from '../partials/Services.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
@@ -23,7 +21,7 @@ const form = useForm({
     id: props.contract?.id,
     price: props.contract?.price,
     client_id: props.contract?.client.id,
-    services: props.contract?.services
+    services: props.contract?.service_ids
 })
 
 const submit = () => {
@@ -48,12 +46,13 @@ const submit = () => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer" v-if="props.new">
+            <Button v-if="props.new">
                 <Plus></Plus>
                 New Contract
             </Button>
-            <Button class="cursor-pointer" v-else>
-                <Pencil class="cursor-pointer"></Pencil>
+            <Button v-else>
+                Edit
+                <Pencil></Pencil>
             </Button>
         </DialogTrigger>
 

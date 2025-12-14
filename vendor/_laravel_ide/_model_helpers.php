@@ -1310,6 +1310,9 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int|null $client_id
+     * @property string|null $signwell_id
+     * @property bool $sent
+     * @property string|null $file_path
      * @property int $price
      * @property int $id
      * @property-read \App\Models\Client $client
@@ -1317,6 +1320,9 @@ namespace App\Models {
      * @property-read int|null $services_count
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract wherePrice($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereFilePath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSignwellId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereClientId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdatedAt($value)

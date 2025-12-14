@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import { useForm, router } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { ReceiptText } from 'lucide-vue-next';
+import { ReceiptText, Send } from 'lucide-vue-next';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 
 const props = defineProps({
     contract: Object,
 })
 
+const { formatWithCommas } = useFormatCurrency();
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract?.id,
-    client: props.contract?.client.company,
-    price: props.contract?.price,
-    services: props.contract?.services,
 })
 
-const file = ref(null)
 const send = () => {
-    router.post(route('contracts.send'), {
-        document: file.value
+    form.post(route('contracts.send', props.contract.id), {
+        onSuccess: () => {
+            isDialogOpen.value = false
+        }
     })
 }
 
@@ -33,17 +33,27 @@ watchEffect(() => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer">
-                <ReceiptText class="cursor-pointer"></ReceiptText>
+            <Button>Send
+                <Send></Send>
             </Button>
         </DialogTrigger>
 
         <DialogContent class="m:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
                 <DialogTitle>Send Contract</DialogTitle>
-                <DialogDescription>{{ form }}</DialogDescription>
-
+                <DialogDescription>Client: {{ props.contract.client.company }}</DialogDescription>
             </DialogHeader>
+
+            <h2 class="text-lg">Send a contract for {{ formatWithCommas(props.contract.price, 'currency') }}?</h2>
+
+            <div>
+                <p class="text-lg">Services Included</p>
+                <div v-for="service in props.contract.services" :key="service.id">
+                    <p>{{ service.name }}</p>
+                </div>
+            </div>
+
+
             <DialogFooter>
                     <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>
                     <Button class="cursor-pointer" @click="send()">Send</Button>

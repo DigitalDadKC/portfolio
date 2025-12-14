@@ -58,7 +58,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
-    Route::post('/contracts/send', [ClientController::class, 'send'])->name('contracts.send');
+    Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
+    Route::post('/contracts/update/{contract}', [ContractController::class, 'update'])->name('contracts.update');
     Route::resource('/services', ServiceController::class);
 });
 

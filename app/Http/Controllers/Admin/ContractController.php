@@ -78,7 +78,7 @@ class ContractController extends Controller
         ]);
         $contract->services()->sync($request->services);
 
-        if(Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
+        if (Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
             Storage::disk('local')->delete('contracts/' . $contract->file_path);
         }
 
@@ -86,11 +86,12 @@ class ContractController extends Controller
         $content = $pdf->output();
 
         $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
-
         Storage::disk('local')->put('contracts/' . $fileName, $content);
 
         $contract->file_path = $fileName;
         $contract->save();
+
+        $this->send($contract);
 
         return back();
     }
@@ -100,11 +101,16 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
+        if (Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
+            Storage::disk('local')->delete('contracts/' . $contract->file_path);
+        }
         $contract->delete();
+
         return back()->with('message', 'Contract deleted');
     }
 
-    public function browser(Request $request) {
+    public function browser(Request $request)
+    {
         $contract = [
             'price' => 1000,
             'client' => [
@@ -113,7 +119,7 @@ class ContractController extends Controller
                 'address' => '123 Main Street',
                 'city' => 'City',
                 'state' => [
-                    'abbr' => 'ST',
+                    'abbr' => 'STATE',
                 ],
                 'zip' => '12345',
                 'url' => 'https://example.com',
@@ -122,32 +128,39 @@ class ContractController extends Controller
             'services' => [
                 [
                     'name' => 'Service 1',
-                    'price' => 50000,
+                    'price' => 500,
                 ],
                 [
                     'name' => 'Service 2',
-                    'price' => 75000,
+                    'price' => 1500,
+                ],
+                [
+                    'name' => 'Service 3',
+                    'price' => 2500,
                 ],
             ]
-            ];
+        ];
 
         $pdf = Pdf::loadView('pdf.contract', compact('contract'));
+        $content = $pdf->output();
 
-        $filename = 'contract.pdf';
-        $filePath = public_path('contracts/' . $filename);
-
-        File::deleteDirectory(public_path('pdfs'));
-        if (!file_exists(public_path('pdfs'))) {
-            mkdir(public_path('pdfs'), 0777, true);
+        if (Storage::disk('local')->exists('/contract.pdf')) {
+            Storage::disk('local')->delete('/contract.pdf');
         }
+
+        $fileName = 'contract.pdf';
+        $filePath = Storage::disk('local')->put('/' . $fileName, $content);
 
         $pdf->save($filePath);
         return $pdf->stream();
     }
 
-    public function send(Request $request)
+    public function send(Contract $contract)
     {
         $client = new \GuzzleHttp\Client();
+        $contract->load('client');
+
+        $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
         $response = $client->request('POST', 'https://www.signwell.com/api/v1/documents/', [
             'body' => '{
@@ -155,8 +168,8 @@ class ContractController extends Controller
                 "files":
                     [
                         {
-                            "name":"' . $request->file('document')->getClientOriginalName() . '",
-                            "file_base64":"' . base64_encode(file_get_contents($request->file('document')->getRealPath())) . '"
+                            "name":"' . $contract->file_path . '",
+                            "file_base64":"' . base64_encode($document) . '"
                         }
                     ],
                 "recipients":
@@ -165,8 +178,8 @@ class ContractController extends Controller
                             "send_email":true,
                             "send_email_delay":0,
                             "id":"1",
-                            "email":"raleighgroesbeck@gmail.com",
-                            "name":"Stud Muffin"
+                            "email":"' . $contract->client->email . '",
+                            "name":"' . $contract->client->company . '"
                         }
                     ],
                 "draft":false,
@@ -187,8 +200,8 @@ class ContractController extends Controller
                                 "fixed_width":false,
                                 "lock_sign_date":false,
                                 "allow_other":false,
-                                "x":50,
-                                "y":50,
+                                "x":700,
+                                "y":900,
                                 "page":1,
                                 "recipient_id":"1"
                             }
@@ -202,6 +215,11 @@ class ContractController extends Controller
             ],
         ]);
 
-        echo $response->getBody();
+        $contract->update([
+            'sent' => 1,
+            'signwell_id' => json_decode($response->getBody())->id,
+        ]);
+
+        return back();
     }
 }

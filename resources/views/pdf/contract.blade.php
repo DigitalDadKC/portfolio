@@ -22,7 +22,7 @@
         <li>
             <h4 style="margin: 0;">Payment</h4>
             <ul style="list-style-type: none;">
-                <li>2.1 Fees: The Client agrees to pay the Developer a fixed fee of <b style="text-decoration: underline">${{ $contract['price'] }}</b>.</li>
+                <li>2.1 Fees: The Client agrees to pay the Developer a fixed fee of <b style="text-decoration: underline">${{ number_format($contract['price'], 2) }}</b>.</li>
                 <li>2.2 Payment Schedule: Payments shall be made according to the following schedule: Upon project completion</li>
                 <li>2.3 Invoicing: The Developer shall submit invoices to the Client on upon project completion, and payment is due within 30 days of receipt of the invoice.</li>
             </ul>

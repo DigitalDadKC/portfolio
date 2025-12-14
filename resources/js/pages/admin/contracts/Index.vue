@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import {  } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
-import { FilePen } from 'lucide-vue-next';
+import { Button } from '@/components/ui/button';
+import { FilePen, Eye } from 'lucide-vue-next';
 import { useDateFormat } from '@vueuse/core';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Send from './modals/Send.vue';
+import { useFormatCurrency } from '@/composables/useFormatCurrency';
 
 const props = defineProps({
     contracts: Object,
@@ -15,6 +17,9 @@ const props = defineProps({
     services: Object,
 })
 
+console.log(props.contracts)
+
+const { formatWithCommas } = useFormatCurrency();
 </script>
 
 
@@ -40,8 +45,7 @@ const props = defineProps({
                         <TableHead class="text-black">Price</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
-                        <TableHead></TableHead>
-                        <TableHead class="text-black text-center">
+                        <TableHead class="text-black text-end">
                             <Manage :new="true" :clients :services></Manage>
                         </TableHead>
                     </TableRow>
@@ -49,15 +53,23 @@ const props = defineProps({
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
                     <TableRow v-for="contract in props.contracts" :key="contract.id" class="w-full">
                         <TableCell>{{ contract.client.company }}</TableCell>
-                        <TableCell>{{ contract.price }}</TableCell>
-                        <TableCell>{{ useDateFormat(contract.created_at, 'MMM d, YYYY') }}</TableCell>
-                        <TableCell>{{ useDateFormat(contract.updated_at, 'MMM d, YYYY') }}</TableCell>
+                        <TableCell>{{ formatWithCommas(contract.price, 'currency') }}</TableCell>
+                        <TableCell>{{ useDateFormat(contract.created_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
+                        <TableCell>{{ useDateFormat(contract.updated_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>
-                            <Send :contract />
-                        </TableCell>
-                        <TableCell class="space-x-4 text-center">
-                                <Manage :new="false" :contract :clients :services></Manage>
+                            <div class="flex justify-end items-center gap-2" v-if="!contract.sent">
+                                <Send :contract />
                                 <Destroy :contract></Destroy>
+                            </div>
+                            <div class="flex justify-end items-center gap-2" v-else>
+                                <Manage :new="false" :contract :clients :services></Manage>
+                                <a target="_blank" :href="'https://www.signwell.com/app/builder/' + contract.signwell_id">
+                                    <Button>
+                                        View
+                                        <Eye></Eye>
+                                    </Button>
+                                </a>
+                            </div>
                         </TableCell>
                     </TableRow>
                 </TableBody>

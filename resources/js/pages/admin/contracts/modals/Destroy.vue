@@ -12,7 +12,6 @@ const props = defineProps({
 const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract.id,
-    title: props.contract.title,
 })
 
 const submit = () => {
@@ -33,14 +32,14 @@ watchEffect(() => {
 
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer">
+            <Button>
                 <Trash2></Trash2>
             </Button>
         </DialogTrigger>
 
         <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6">
-                <DialogTitle>{{ `Delete ${props.contract.title} ?` }}</DialogTitle>
+                <DialogTitle>{{ `Delete Contract for ${props.contract.client.company} ?` }}</DialogTitle>
                 <DialogDescription>
                     Are you sure?
                 </DialogDescription>
