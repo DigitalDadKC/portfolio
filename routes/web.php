@@ -9,14 +9,15 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\SkillController;
-use App\Http\Controllers\Admin\ClauseController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\OutreachController;
-use App\Http\Controllers\Estimating\JobController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Estimating\JobController;
 use App\Http\Controllers\Estimating\AdminController;
 use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Invoicing\ProductController;
@@ -24,7 +25,6 @@ use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
-use App\Http\Controllers\Admin\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +54,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
-    Route::post('/employees', [ClientController::class, 'employees'])->name('employees.update');
+    // Route::post('/employees/store', [EmployeeController::class, 'store'])->name('employees.store');
+    Route::resource('/employees', EmployeeController::class)->except(['index', 'show', 'create', 'edit']);
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::resource('/contracts', ContractController::class)->except(['show']);

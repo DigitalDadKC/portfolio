@@ -197,7 +197,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="mt-8">
                 <slot />
             </main>
         </div>

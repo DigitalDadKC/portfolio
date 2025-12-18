@@ -35,14 +35,15 @@ watch(() => props.client,
 
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer">
+            <Button>
+                Delete
                 <Trash2></Trash2>
             </Button>
         </DialogTrigger>
 
         <DialogContent class="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6">
-                <DialogTitle>{{ `Delete ${props.client.name} ?` }}</DialogTitle>
+                <DialogTitle>{{ `Delete ${props.client.company} ?` }}</DialogTitle>
                 <DialogDescription>
                     Are you sure?
                 </DialogDescription>

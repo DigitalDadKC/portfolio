@@ -35,9 +35,9 @@ watchEffect(() => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer">
-                Outreach
-                <Mail class="cursor-pointer"></Mail>
+            <Button>
+                Send Outreach
+                <Mail></Mail>
             </Button>
         </DialogTrigger>
         <DialogContent class="m:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">

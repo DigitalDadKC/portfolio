@@ -83,11 +83,11 @@ const handle = (e) => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer" v-if="props.new">
+            <Button v-if="props.new">
                 <Plus></Plus>
                 New Client
             </Button>
-            <Button class="cursor-pointer" v-else>
+            <Button v-else>
                 Edit
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>

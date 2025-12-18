@@ -24,6 +24,7 @@ class ClientFactory extends Factory
             'city' => $this->faker->city(),
             'state_id' => State::query()->inRandomOrder()->first()->id,
             'zip' => $this->faker->randomNumber(5, true),
+            'url' => $this->faker->url(),
         ];
     }
 }

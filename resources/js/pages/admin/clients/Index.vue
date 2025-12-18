@@ -9,7 +9,7 @@ import Outreach from './modals/Outreach.vue';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
 import { useDateFormat } from '@vueuse/core';
-import { Link, Map } from 'lucide-vue-next';
+import { Link, MapPin } from 'lucide-vue-next';
 
 const props = defineProps({
     clients: Object,
@@ -18,62 +18,63 @@ const props = defineProps({
     places: Object,
 })
 
-console.log(props.clients)
 </script>
 
 <template>
-    <Head title="Projects Index" />
+    <Head title="Clients" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Clients</h2>
         </template>
 
-        <div class="container mx-auto w-full mt-20">
+        <div class="container mx-auto w-full">
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
                         <TableHead class="text-black p-4">Company</TableHead>
-                        <TableHead class="text-black">Employees</TableHead>
+                        <TableHead></TableHead>
                         <TableHead class="text-black">Outreach(es)</TableHead>
+                        <TableHead></TableHead>
                         <TableHead class="text-black text-center"><Manage :new="true" :states :place :places></Manage></TableHead>
-                        <TableHead class="text-black text-center">Location</TableHead>
-                        <TableHead class="text-black text-center">URL</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     <TableRow v-for="client in props.clients" :key="client.id">
                         <TableCell>
-                            {{ client.company }}
+                            <p class="font-bold">{{ client.company }}</p>
+                            <p class="italic text-xs">{{ client.email }}</p>
                             <p class="italic text-xs">Created: {{ useDateFormat(client.created_at, 'MMM D, YYYY') }}</p>
                             <p class="italic text-xs">Updated: {{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</p>
                         </TableCell>
                         <TableCell>
-                            <Employees :client />
+                            <div class="text-center space-x-4">
+                                <Manage :new="false" :client :states :place :places></Manage>
+                                <Destroy :client></Destroy>
+                                <a target="_blank" :href="`http://maps.google.com/?q=${client.address}, ${client.city}, ${client.state?.state} ${client.zip}`" v-if="client.address">
+                                    <Button class="bg-blue-500">
+                                        Location
+                                        <MapPin />
+                                    </Button>
+                                </a>
+                                <a target="_blank" :href="client.url" v-if="client.url">
+                                    <Button class="bg-red-500">
+                                        Site
+                                        <Link />
+                                    </Button>
+                                </a>
+                            </div>
                         </TableCell>
                         <TableCell>
                             <div v-for="outreach in client.outreaches" :key="outreach.id">
                                 {{ useDateFormat(outreach.date_emailed, 'MMM D, YYYY') }}
                             </div>
+                        </TableCell>
+                        <TableCell>
                             <Outreach :client></Outreach>
                         </TableCell>
-                        <TableCell class="flex justify-around">
-                            <Manage :new="false" :client :states :place :places></Manage>
-                            <Destroy :client></Destroy>
-                        </TableCell>
                         <TableCell class="text-center">
-                            <a target="_blank" :href="`http://maps.google.com/?q=${client.address}, ${client.city}, ${client.state?.state} ${client.zip}`" v-if="client.address">
-                                <Button class="bg-blue-500">
-                                    <Map />
-                                </Button>
-                            </a>
-                        </TableCell>
-                        <TableCell class="text-center">
-                            <a target="_blank" :href="client.url" v-if="client.url">
-                                <Button class="bg-red-500">
-                                    <Link />
-                                </Button>
-                            </a>
+                            <Employees :client />
                         </TableCell>
                     </TableRow>
                 </TableBody>

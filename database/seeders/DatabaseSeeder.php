@@ -13,6 +13,7 @@ use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Material;
+use App\Models\Outreach;
 use App\Models\Proposal;
 use App\Models\InvoiceItem;
 use App\Models\ClientInvoice;
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
         Client::factory(20)->create();
         ClientInvoice::factory(50)->create();
         ClientInvoiceItem::factory(100)->create();
+        Outreach::factory(50)->create();
 
         Product::factory(25)->create();
         Invoice::factory(50)->create();

@@ -80,8 +80,4 @@ class ClientController extends Controller
         $client->delete();
         return back();
     }
-
-    public function employees(Request $request) {
-        dd($request);
-    }
 }
