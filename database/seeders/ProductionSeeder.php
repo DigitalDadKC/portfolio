@@ -27,40 +27,29 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
-        $models = [
-            'MaterialUnitSize',
-            // 'Skills',
-            // 'Projects',
-            // 'Features',
-            'UnitOfMeasurements',
-            // 'States',
-            // 'Companies',
-            // 'CsiDivisions',
-            // 'CsiSections',
-            // 'CsiSubsections'
-        ];
-        foreach ($models as $model) {
-            $path = 'database/seeders/production/' . Str::of(strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)))->plural() . '.sql';
-            DB::unprepared(file_get_contents($path));
-            $this->command->info($model . ' Model Seeded!');
-        }
-        // DB::unprepared(file_get_contents('database/seeders/production/' . Str::of('project_skill') . '.sql'));
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Line::truncate();
+        Scope::truncate();
+        Proposal::truncate();
+        Job::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // $this->call(PermissionSeeder::class);
-        // $this->call(RoleSeeder::class);
-        // $this->call(AdminSeeder::class);
-        MaterialCategory::factory(10)->sequence(fn(Sequence $sequence) => ['name' => 'category #' . $sequence->index + 1])->create();
-        MaterialUnitSize::factory(6)->create();
-        Material::factory(50)->create();
+        Job::factory(50)
+            ->create()
+            ->each(fn($job) => $job->proposals()->saveMany(Proposal::factory(mt_rand(1, 3))->create()
+                ->each(fn($proposal) => $proposal->scopes()->saveMany(Scope::factory(mt_rand(1, 3))->create()
+                    ->each(fn($scope) => $scope->lines()->saveMany(Line::factory(mt_rand(1, 3))
+                    ->state(new Sequence(
+                        fn(Sequence $sequence) => [
+                            'order' => $sequence->index
+                        ]
+                    ))
+                    ->create()))
+                ))
+            ));
 
-        Customer::factory(50)->create();
-        Job::factory(250)->create();
-        Proposal::factory(400)->create();
-        Scope::factory(600)->create();
-        Line::factory(950)->create();
-        
-        Invoice::factory(100)->create();
-        InvoiceItem::factory(250)->create();
-        Product::factory(3)->create();
+        // Invoice::factory(100)->create();
+        // InvoiceItem::factory(250)->create();
+        // Product::factory(3)->create();
     }
 }

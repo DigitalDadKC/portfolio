@@ -48,7 +48,7 @@ const props = defineProps({
                             <p class="italic text-xs">Updated: {{ useDateFormat(client.updated_at, 'MMM D, YYYY') }}</p>
                         </TableCell>
                         <TableCell>
-                            <div class="text-center space-x-4">
+                            <div class="space-x-4">
                                 <Manage :new="false" :client :states :place :places></Manage>
                                 <Destroy :client></Destroy>
                                 <a target="_blank" :href="`http://maps.google.com/?q=${client.address}, ${client.city}, ${client.state?.state} ${client.zip}`" v-if="client.address">

@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use DateTime;
-use DateInterval;
+use App\Models\Line;
 use App\Models\Scope;
 use App\Models\UnitOfMeasurement;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,6 +17,7 @@ class LineFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
         return [
@@ -26,6 +26,7 @@ class LineFactory extends Factory
             'days' => $this->faker->randomDigit(),
             'price' => $this->faker->randomNumber(4, false),
             'quantity' => $this->faker->randomNumber(4, false),
+            'order' => 0,
             'scope_id' => Scope::query()->inRandomOrder()->first()->id
         ];
     }
