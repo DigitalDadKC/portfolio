@@ -33,8 +33,12 @@ return [
     'stripe' => [
         'key' => env('STRIPE_KEY'),
     ],
+    'google' => [
+        'key' => env('GOOGLE_API_KEY'),
+    ],
     'signwell' => [
-        'key' => env('SIGNWELL_API_KEY')
+        'api_key' => env('SIGNWELL_API_KEY'),
+        'base_url' => env('SIGNWELL_BASE_URL', 'https://www.signwell.com/api/v1'),
     ]
 
 ];

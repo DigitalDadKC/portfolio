@@ -26,18 +26,18 @@ export default {
         },
         extend: {
             colors: {
-                "light-primary": "#F3EEEA",
-                "light-secondary": "#EBE3D5",
-                "light-tertiary": "#B0A695",
-                "light-quatrenary": "#776B5D",
-                "dark-primary": "#152A38",
-                "dark-secondary": "#29435C",
-                "dark-tertiary": "#556E53",
-                "dark-quatrenary": "#D1D4C9",
-                accent: {
-                    DEFAULT: "#ac6b34",
-                    hover: "#925a2b"
-                },
+                // "light-primary": "#F3EEEA",
+                // "light-secondary": "#EBE3D5",
+                // "light-tertiary": "#B0A695",
+                // "light-quatrenary": "#776B5D",
+                // "dark-primary": "#152A38",
+                // "dark-secondary": "#29435C",
+                // "dark-tertiary": "#556E53",
+                // "dark-quatrenary": "#D1D4C9",
+                // accent: {
+                //     DEFAULT: "#ac6b34",
+                //     hover: "#925a2b"
+                // },
                 paragraph: "#878e99",
                 blue: colors.blue,
                 indigo: colors.indigo,

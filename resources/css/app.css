@@ -140,7 +140,7 @@
         @apply text-base text-paragraph mb-16 lg:mb-24 max-w-[520px];
     }
     .btn {
-        @apply py-4 px-6 font-medium text-slate-700 dark:text-white flex items-center justify-center rounded-xs transition duration-200 hover:translate-x-1 hover:scale-110 hover:text-white bg-accent;
+        @apply py-4 px-6 font-medium text-slate-700 dark:text-white flex items-center justify-center rounded-xs transition duration-200 hover:translate-x-1 hover:scale-110 hover:text-white;
     }
     .btn-lg {
         @apply h-[54px];
@@ -218,7 +218,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-accent: var(--accent);
 }
 
 /*
@@ -238,7 +237,7 @@
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  /* --accent: oklch(0.97 0 0); */
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);

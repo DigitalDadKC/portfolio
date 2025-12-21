@@ -10,8 +10,9 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use App\Http\Resources\ContractResource;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ContractResource;
+use App\Services\SignWell\SignWellService;
 
 class ContractController extends Controller
 {
@@ -155,71 +156,61 @@ class ContractController extends Controller
         return $pdf->stream();
     }
 
-    public function send(Contract $contract)
+    public function send(Contract $contract, SignWellService $signWell)
     {
-        $client = new \GuzzleHttp\Client();
         $contract->load('client');
-
         $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
-        $response = $client->request('POST', 'https://www.signwell.com/api/v1/documents/', [
-            'body' => '{
-                "test_mode":true,
-                "files":
+        $response = $signWell->createDocument([
+                'test_mode' => true,
+                'name' => 'Web App Contract',
+                'subject' => 'Web App Contact from DigitalDad, LLC',
+                'embedded_signing' => true,
+                'embedded_signing_notifications' => false,
+                'recipients' => [
                     [
-                        {
-                            "name":"' . $contract->file_path . '",
-                            "file_base64":"' . base64_encode($document) . '"
-                        }
-                    ],
-                "recipients":
+                        'id' => 1,
+                        'email' => 'user@example.com',
+                        'name' => 'John Doe',
+                    ]
+                ],
+                'files' => [
                     [
-                        {
-                            "send_email":true,
-                            "send_email_delay":0,
-                            "id":"1",
-                            "email":"' . $contract->client->email . '",
-                            "name":"' . $contract->client->company . '"
-                        }
-                    ],
-                "draft":false,
-                "with_signature_page":false,
-                "reminders":true,
-                "apply_signing_order":false,
-                "embedded_signing":true,
-                "embedded_signing_notifications":false,
-                "text_tags":false,
-                "allow_decline":true,
-                "allow_reassign":true,
-                "fields":
+                        'name' => $contract->file_path,
+                        'file_base64' => base64_encode($document),
+                    ]
+                ],
+                'fields' => [
                     [
                         [
-                            {
-                                "type":"initials",
-                                "required":true,
-                                "fixed_width":false,
-                                "lock_sign_date":false,
-                                "allow_other":false,
-                                "x":700,
-                                "y":900,
-                                "page":1,
-                                "recipient_id":"1"
-                            }
+                            'type' => 'initials',
+                            'required' => true,
+                            'fixed_width' => false,
+                            'lock_sign_date' => false,
+                            'allow_other' => false,
+                            'x' => 700,
+                            'y' => 900,
+                            'page' => 1,
+                            'recipient_id' => 1
                         ]
-                    ],
-                "name":"Web App Contract"}',
-            'headers' => [
-                'accept' => 'application/json',
-                'content-type' => 'application/json',
-                'X-Api-Key' => config('services.signwell.key'),
-            ],
+                    ]
+                ]
         ]);
 
         $contract->update([
             'sent' => 1,
-            'signwell_id' => json_decode($response->getBody())->id,
+            'signwell_id' => $response['id'],
         ]);
 
         return back();
+    }
+
+    public function viewDocument(Contract $contract, SignWellService $signWell) {
+        $contract->load('client');
+
+        $response = $signWell->getDocument($contract->signwell_id);
+        // dd($response);
+        return redirect($response['embedded_preview_url']);
+
     }
 }

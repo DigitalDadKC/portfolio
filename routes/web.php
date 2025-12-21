@@ -47,6 +47,7 @@ Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+    Route::get('/contracts/viewDocument/{contract}', [ContractController::class, 'viewDocument'])->name('contracts.viewDocument');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/skills', SkillController::class);
     Route::resource('/projects', ProjectController::class);
@@ -60,7 +61,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
-    Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
+    // Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
     Route::resource('/services', ServiceController::class);
 });
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {  } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
 import { Button } from '@/components/ui/button';
@@ -16,8 +16,6 @@ const props = defineProps({
     clients: Object,
     services: Object,
 })
-
-console.log(props.contracts)
 
 const { formatWithCommas } = useFormatCurrency();
 </script>
@@ -52,7 +50,11 @@ const { formatWithCommas } = useFormatCurrency();
                 </TableHeader>
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
                     <TableRow v-for="contract in props.contracts" :key="contract.id" class="w-full">
-                        <TableCell>{{ contract.client.company }}</TableCell>
+                        <TableCell>
+                            <p>{{ contract.client.company }}</p>
+                            <p class="text-xs italic" v-if="contract.sent">Sent</p>
+                            <p class="text-xs italic" v-else>Unsent</p>
+                        </TableCell>
                         <TableCell>{{ formatWithCommas(contract.price, 'currency') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
@@ -69,6 +71,9 @@ const { formatWithCommas } = useFormatCurrency();
                                         <Eye></Eye>
                                     </Button>
                                 </a>
+                                <Link :href="route('contracts.viewDocument', contract.id)">
+                                    View also
+                                </Link>
                             </div>
                         </TableCell>
                     </TableRow>

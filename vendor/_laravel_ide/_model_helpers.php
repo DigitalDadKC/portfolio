@@ -3848,7 +3848,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int $customer_id
      * @property string|null $notes
-     * @property bool|null $prevailing_wage
+     * @property bool $prevailing_wage
      * @property string|null $start_date
      * @property int $zip
      * @property int $state_id
