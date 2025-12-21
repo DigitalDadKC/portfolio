@@ -27,6 +27,7 @@ class ProposalFactory extends Factory
             'type' => fake()->randomElement(ProposalTypeEnum::cases()),
             'exclusions' => $this->faker->paragraphs(3, true),
             'user_id' => User::query()->inRandomOrder()->first()->id,
+            'created_at' => $this->faker->dateTimeThisYear(),
         ];
     }
 }

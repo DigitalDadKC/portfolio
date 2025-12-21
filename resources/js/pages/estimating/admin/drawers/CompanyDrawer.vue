@@ -52,7 +52,7 @@ const submit = () => {
                 <Cog></Cog>
             </Button>
         </SheetTrigger>
-        <SheetContent class="min-w-[800px] bg-light-secondary dark:bg-dark-secondary">
+        <SheetContent class="min-w-[400px] bg-light-secondary dark:bg-dark-secondary">
             <SheetHeader>
                 <SheetTitle>Manage Company Details</SheetTitle>
                 <SheetDescription>
@@ -74,15 +74,15 @@ const submit = () => {
                             <div class="col-span-4">
                                 <div v-if="form.errors.address" class="text-red-500">{{ form.errors.address }}</div>
                             </div>
-                            <div class="col-span-2">
+                            <div class="col-span-4">
                                 <Label for="city">City</Label>
                                 <FormattedInput id="city" width="full" class="" v-model="form.city" />
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2">
                                 <Label for="state">State</Label>
                                 <State v-model="form.state_id" :states></State>
                             </div>
-                            <div class="col-span-1">
+                            <div class="col-span-2">
                                 <Label for="zip">Zip</Label>
                                 <FormattedInput id="zip" width="full" class="" v-model="form.zip" />
                             </div>

@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import StartDate from '../partials/StartDate.vue';
 import State from '../partials/State.vue';
 import Switch from '@/components/ui/switch/Switch.vue';
+import { Pencil } from 'lucide-vue-next';
 
 const props = defineProps({
     new: Boolean,
@@ -72,8 +73,10 @@ watchEffect(() => {
 <template>
     <Dialog v-model:open="isDialogOpen">
         <DialogTrigger as-child>
-            <Button class="cursor-pointer" v-if="props.new">NEW JOB</Button>
-            <Button class="cursor-pointer" v-else>EDIT JOB</Button>
+            <Button v-if="props.new" class="bg-light-quatrenary">NEW JOB</Button>
+            <Button class="bg-light-quatrenary size-6" v-else>
+                <Pencil />
+            </Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[1000px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 fixed top-80 bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6 pb-0">

@@ -109,9 +109,8 @@ const getJobs = () => {
                                         <th class="w-24 text-start">Type</th>
                                         <th class="w-24 text-start">Created</th>
                                         <th class="w-28 text-start">Estimator</th>
-                                        <th class="w-24 text-start">Total</th>
-                                        <th class="w-20 text-start">Edit</th>
-                                        <th class="text-start">Export</th>
+                                        <th class="w-24 text-center">Total</th>
+                                        <th class="col-span-2"></th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -121,12 +120,16 @@ const getJobs = () => {
                 <tbody>
                     <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs border-2 border-black">
                         <td class="p-2">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    {{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}
-                                    <p class="italic text-xs" v-if="job.prevailing_wage">(Prevailing Wage)</p>
+                            <div>
+                                <div class="flex gap-2">
+                                    <p class="font-bold text-sm">{{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}</p>
+                                    <ManageJob :new="false" :job :states :customers></ManageJob>
                                 </div>
-                                <ManageJob :new="false" :job :states :customers></ManageJob>
+                                <div>
+                                    <p>Start Date: {{ useDateFormat(job.start_date, 'M/D/YYYY') }}</p>
+                                    <p class="italic text-xs" v-if="job.prevailing_wage">(Prevailing Wage)</p>
+                                    <p class="italic text-xs" v-else>(Non-Prevailing Wage)</p>
+                                </div>
                             </div>
                         </td>
                         <td>{{ job.address }}<br>{{ job.city }}, {{ job.state.state }} {{ job.zip }}</td>
@@ -136,10 +139,10 @@ const getJobs = () => {
                                 <tbody>
                                     <tr>
                                         <Link :href="route('proposals.store', { job: job.id })" method="post">
-                                        <Button>NEW PROPOSAL</Button>
+                                            <Button>NEW PROPOSAL</Button>
                                         </Link>
                                     </tr>
-                                    <tr v-for="(proposal, i) in job.proposals" :key="i" class="dark:text-black w-full">
+                                    <tr v-for="(proposal, i) in job.proposals" :key="i">
                                         <td class="min-w-52">{{ proposal.name }}</td>
                                         <td class="min-w-24">{{ proposal.type }}</td>
                                         <td class="min-w-24">{{ useDateFormat(proposal.created_at, 'M/D/YYYY') }}</td>
@@ -149,21 +152,20 @@ const getJobs = () => {
                                                 d) => c +
                                                 ((d.price * d.quantity * 100) / 100), 0), 0), 'currency')}}
                                         </td>
-                                        <td class="min-w-24">
+                                        <td class="flex gap-2 py-0.5">
                                             <Link :href="route('proposals.edit', { proposal: proposal.id })">
-                                            <Button variant="outline">EDIT PROPOSAL</Button>
+                                                <Button>EDIT</Button>
                                             </Link>
-                                        </td>
-                                        <td class="w-full">
-                                            <div class="flex py-1">
-                                                <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
-                                                    <Download class="text-accent"></Download>
-                                                </a>
-                                                <a target="_blank"
-                                                    :href="route('proposals.browserPDF', { proposal: proposal.id })">
-                                                    <FileText class="text-accent"></FileText>
-                                                </a>
-                                            </div>
+                                            <a :href="route('proposals.downloadPDF', { proposal: proposal.id })">
+                                                <Button class="bg-accent">
+                                                    <Download class="text-light-primary"></Download>
+                                                </Button>
+                                            </a>
+                                            <a target="_blank" :href="route('proposals.browserPDF', { proposal: proposal.id })">
+                                                <Button class="bg-accent">
+                                                    <FileText class="text-light-primary"></FileText>
+                                                </Button>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
