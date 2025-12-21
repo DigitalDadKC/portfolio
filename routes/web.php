@@ -47,7 +47,6 @@ Route::get('/proposals', [ProposalController::class, 'index'])->name('proposals.
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
-    Route::get('/contracts/viewDocument/{contract}', [ContractController::class, 'viewDocument'])->name('contracts.viewDocument');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/skills', SkillController::class);
     Route::resource('/projects', ProjectController::class);
@@ -55,13 +54,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/invoices', AdminInvoiceController::class, ['as' => 'admin']);
     Route::get('/invoices/send/{client_invoice}', [AdminInvoiceController::class, 'sendInvoice'])->name('admin.invoices.send');
     Route::resource('/clients', ClientController::class);
-    // Route::post('/employees/store', [EmployeeController::class, 'store'])->name('employees.store');
     Route::resource('/employees', EmployeeController::class)->except(['index', 'show', 'create', 'edit']);
     Route::post('/features/sort', [FeatureController::class, 'sort'])->name('features.sort');
     Route::post('/projects/sort', [ProjectController::class, 'sort'])->name('projects.sort');
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
-    // Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
+    Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
+    Route::get('/contracts/viewDocument/{contract}', [ContractController::class, 'viewDocument'])->name('contracts.viewDocument');
     Route::resource('/services', ServiceController::class);
 });
 
