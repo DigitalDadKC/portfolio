@@ -26,6 +26,7 @@ class JobFactory extends Factory
             'state_id' => State::query()->inRandomOrder()->first()->id,
             'zip' => $this->faker->randomNumber(5, true),
             'start_date' => $this->faker->dateTimeThisYear(),
+            'prevailing_wage' => $this->faker->boolean(),
             'notes' => $this->faker->paragraph(2),
             'customer_id' => Customer::query()->inRandomOrder()->first()->id,
             'created_at' => $this->faker->dateTimeBetween('-2 years')

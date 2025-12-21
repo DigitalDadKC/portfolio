@@ -61,8 +61,9 @@ class JobController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state_id' => $request->state_id,
-            'start_date' => $request->start_date,
             'zip' => $request->zip,
+            'start_date' => $request->start_date,
+            'prevailing_wage' => $request->prevailing_wage,
             'notes' => $request->notes,
             'customer_id' => $request->customer_id,
         ]);
@@ -84,8 +85,9 @@ class JobController extends Controller
             'address' => $request->address,
             'city' => $request->city,
             'state_id' => $request->state_id,
-            'start_date' => $request->start_date,
             'zip' => $request->zip,
+            'start_date' => $request->start_date,
+            'prevailing_wage' => $request->prevailing_wage,
             'notes' => $request->notes,
         ]);
 

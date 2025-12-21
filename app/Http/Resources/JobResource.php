@@ -23,6 +23,7 @@ class JobResource extends JsonResource
             'state' => StateResource::make($this->state),
             'zip' => $this->zip,
             'start_date' => $this->start_date,
+            'prevailing_wage' => !!$this->prevailing_wage,
             'notes' => $this->notes,
             'proposals' => ProposalResource::collection(resource: $this->whenLoaded('proposals')),
             'customer' => CustomerResource::make($this->customer),

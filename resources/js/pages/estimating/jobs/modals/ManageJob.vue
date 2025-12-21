@@ -9,6 +9,7 @@ import Customer from '../partials/Customer.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import StartDate from '../partials/StartDate.vue';
 import State from '../partials/State.vue';
+import Switch from '@/components/ui/switch/Switch.vue';
 
 const props = defineProps({
     new: Boolean,
@@ -26,14 +27,16 @@ const form = useForm({
     state_id: props.job?.state?.id,
     zip: props.job?.zip,
     notes: props.job?.notes,
-    customer_id: props.job.customer?.id,
+    customer_id: props.job?.customer?.id,
     start_date: props.job?.start_date,
+    prevailing_wage: props.job?.prevailing_wage,
     created_at: props.job?.created_at,
+    updated_at: props.job?.updated_at,
 })
 
 const submit = () => {
     if (props.new) {
-        form.post(route('estimating.jobs.store'), {
+        form.post(route('jobs.store'), {
             onSuccess: () => {
                 form.reset()
                 isDialogOpen.value = false
@@ -41,7 +44,7 @@ const submit = () => {
         })
     }
     else {
-        form.patch(route('estimating.jobs.update', props.job.id), {
+        form.patch(route('jobs.update', props.job.id), {
             onSuccess: () => {
                 isDialogOpen.value = false
             }
@@ -50,7 +53,7 @@ const submit = () => {
 }
 
 const destroy = () => {
-    form.delete(route('estimating.jobs.destroy', props.job.id), {
+    form.delete(route('jobs.destroy', props.job.id), {
         preserveScroll: true,
         onSuccess: () => {
             isDialogOpen.value = false
@@ -60,8 +63,8 @@ const destroy = () => {
 
 watchEffect(() => {
     Object.assign(form, props.job)
-    form.state_id = props.job.state?.id
-    form.customer_id = props.job.customer?.id
+    form.state_id = props.job?.state?.id
+    form.customer_id = props.job?.customer?.id
 })
 
 </script>
@@ -72,7 +75,7 @@ watchEffect(() => {
             <Button class="cursor-pointer" v-if="props.new">NEW JOB</Button>
             <Button class="cursor-pointer" v-else>EDIT JOB</Button>
         </DialogTrigger>
-        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 fixed top-80 bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-[1000px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 fixed top-80 bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-6 pb-0">
                 <DialogTitle>{{(props.new) ? 'New Job' : 'Edit Job' }}</DialogTitle>
                 <DialogDescription>
@@ -84,13 +87,17 @@ watchEffect(() => {
                     <Label for="number">Job Number</Label>
                     <Input id="number" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model.number="form.number" />
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-1">
                     <Label for="customer">Customer</Label>
                     <Customer :customers v-model="form.customer_id"></Customer>
                 </div>
                 <div class="col-span-1">
                     <Label for="customer">Start Date</Label>
                     <StartDate v-model="form.start_date" :job></StartDate>
+                </div>
+                <div class="col-span-1 flex flex-col items-center justify-between">
+                    <Label for="prevailing_wage" class="flex justify-center items-center">Prevailing Wage?</Label>
+                    <Switch id="prevailing_wage" v-model="form.prevailing_wage" />
                 </div>
                 <div class="col-span-4">
                     <div v-if="form.errors.number" class="text-red-500">{{ form.errors.number }}</div>

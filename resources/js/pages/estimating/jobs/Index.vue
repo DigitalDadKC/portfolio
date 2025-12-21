@@ -27,18 +27,6 @@ const pages = ref(props.filters?.pages ?? 25)
 const state_id = ref(props.filters.state)
 const customer_id = ref(props.filters.customer)
 
-const newJob = {
-    'id': null,
-    'number': null,
-    'address': '',
-    'city': '',
-    'state_id': null,
-    'customer_id': null,
-    'zip': null,
-    'start_date': '',
-    'created_at': '',
-}
-
 const states = computed(() => {
     return [{ 'id': null, 'state': 'SELECT' }, ...props.states]
 })
@@ -82,7 +70,7 @@ const getJobs = () => {
                     <tr class="uppercase border-2 border-black">
                         <th colspan="10">
                             <div class="flex flex-col md:flex-row justify-between px-2 py-4">
-                                <ManageJob :new="true" :job="newJob" :states :customers></ManageJob>
+                                <ManageJob :new="true" :states :customers></ManageJob>
                                 <div>
                                     <Paginator :links="props.jobs.meta.links" @update:model-value="getJobs()" />
                                     <div class="mt-2">
@@ -134,7 +122,10 @@ const getJobs = () => {
                     <tr v-for="(job, index) in props.jobs.data" :key="index" class="text-xs border-2 border-black">
                         <td class="p-2">
                             <div class="flex items-center justify-between">
-                                {{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}
+                                <div>
+                                    {{ `D${new Date(job.created_at).getFullYear()} - ` + job.number }}
+                                    <p class="italic text-xs" v-if="job.prevailing_wage">(Prevailing Wage)</p>
+                                </div>
                                 <ManageJob :new="false" :job :states :customers></ManageJob>
                             </div>
                         </td>

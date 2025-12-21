@@ -3848,6 +3848,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int $customer_id
      * @property string|null $notes
+     * @property bool|null $prevailing_wage
      * @property string|null $start_date
      * @property int $zip
      * @property int $state_id
@@ -3866,6 +3867,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereStateId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereZip($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereStartDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job wherePrevailingWage($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereNotes($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereCustomerId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereCreatedAt($value)
