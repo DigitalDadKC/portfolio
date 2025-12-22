@@ -13,6 +13,9 @@ class Contract extends Model
     public function client(): BelongsTo {
         return $this->belongsTo(Client::class);
     }
+    public function employee(): BelongsTo {
+        return $this->belongsTo(Employee::class);
+    }
     public function services(): BelongsToMany {
         return $this->belongsToMany(Service::class);
     }

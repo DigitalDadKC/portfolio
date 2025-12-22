@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import FormattedInput from '@/components/FormattedInput.vue';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import Client from '../partials/Client.vue';
 import Services from '../partials/Services.vue';
+import Employees from '../partials/Employees.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
 
@@ -21,7 +22,8 @@ const form = useForm({
     id: props.contract?.id,
     price: props.contract?.price,
     client_id: props.contract?.client.id,
-    services: props.contract?.service_ids
+    employee_id: props.contract?.employee.id,
+    services: props.contract?.service_ids,
 })
 
 const submit = () => {
@@ -41,6 +43,10 @@ const submit = () => {
     }
 }
 
+const employees = computed(() => {
+    return props.clients.find(client => client.id == form.client_id)?.employees
+})
+
 </script>
 
 <template>
@@ -56,7 +62,7 @@ const submit = () => {
             </Button>
         </DialogTrigger>
 
-        <DialogContent class="sm:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="sm:max-w-200 grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-2">
                 <DialogTitle>{{ (props.new) ? 'New Contract' : 'Edit Contract' }}</DialogTitle>
                 <DialogDescription></DialogDescription>
@@ -69,13 +75,16 @@ const submit = () => {
                 </div>
                 <div class="col-span-2">
                     <Label for="description">Client</Label>
-                    <Client :clients v-model="form.client_id" />
+                    <Client :clients @update:model-value="form.employees = []" v-model="form.client_id" />
                 </div>
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <Label for="description">Services</Label>
-                <Services :services v-model="form.services" />
+                <div class="col-span-4">
+                    <Label>Recipient</Label>
+                    <Employees :employees v-model="form.employee_id" />
+                </div>
+                <div class="col-span-4">
+                    <Label>Services</Label>
+                    <Services :services v-model="form.services" />
+                </div>
             </div>
 
             <DialogFooter class="p-6 pt-0">

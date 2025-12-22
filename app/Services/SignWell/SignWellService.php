@@ -23,17 +23,17 @@ class SignWellService
             ->baseUrl($this->baseUrl);
     }
 
-    public function createDocument(array $payload)
+    public function create(array $payload)
     {
+        // dd($payload);
         return $this->request()
             ->post("/documents", $payload)
             ->json();
     }
-
-    public function getDocument(string $documentId)
+    public function delete(string $documentId)
     {
         return $this->request()
-            ->get("{$this->baseUrl}/documents/{$documentId}")
+            ->delete("{$this->baseUrl}/documents/id/{$documentId}")
             ->json();
     }
 

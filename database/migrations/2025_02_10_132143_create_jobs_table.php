@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignId('state_id')->constrained();
             $table->integer('zip');
             $table->timestamp('start_date')->nullable()->default(NULL);
+            $table->boolean('prevailing_wage')->default(0);
             $table->string('notes')->nullable()->default(NULL);
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->timestamps();

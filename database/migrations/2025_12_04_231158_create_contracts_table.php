@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('file_path')->nullable()->default(NULL);
             $table->boolean('sent')->default(0);
             $table->string('signwell_id')->nullable()->default(NULL);
-            $table->foreignId('client_id')->nullable();
+            $table->foreignId('client_id')->constrained()->nullable();
+            $table->foreignId('employee_id')->constrained()->nullable();
             $table->timestamps();
         });
     }

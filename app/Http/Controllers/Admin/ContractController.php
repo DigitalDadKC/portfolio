@@ -23,7 +23,7 @@ class ContractController extends Controller
     {
         return Inertia::render('admin/contracts/Index', [
             'contracts' => ContractResource::collection(Contract::with('client', 'services')->get()),
-            'clients' => Client::orderBy('company')->get(),
+            'clients' => Client::with('employees')->orderBy('company')->get(),
             'services' => Service::orderBy('name')->get(),
         ]);
     }
@@ -36,11 +36,13 @@ class ContractController extends Controller
         $request->validate([
             'price' => 'required',
             'client_id' => 'nullable|required',
+            'employee_id' => 'nullable|required',
         ]);
 
         $contract = Contract::create([
             'price' => $request->price,
             'client_id' => $request->client_id,
+            'employee_id' => $request->employee->id,
         ]);
         $contract->services()->sync($request->services);
 
@@ -66,16 +68,18 @@ class ContractController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, Contract $contract, SignWellService $signWell)
     {
         $request->validate([
             'price' => 'required',
             'client_id' => 'nullable|required',
+            'employee_id' => 'nullable|required',
         ]);
 
         $contract->update([
             'price' => $request->price,
             'client_id' => $request->client_id,
+            'employee_id' => $request->employee->id,
         ]);
         $contract->services()->sync($request->services);
 
@@ -92,7 +96,9 @@ class ContractController extends Controller
         $contract->file_path = $fileName;
         $contract->save();
 
-        $this->send($contract);
+        if($contract->signwell_id) {
+            $signWell->delete($contract->signwell_id);
+        }
 
         return back();
     }
@@ -100,11 +106,12 @@ class ContractController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contract $contract)
+    public function destroy(Contract $contract, SignWellService $signWell)
     {
         if (Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
             Storage::disk('local')->delete('contracts/' . $contract->file_path);
         }
+        $signWell->delete($contract->id);
         $contract->delete();
 
         return back()->with('message', 'Contract deleted');
@@ -161,25 +168,42 @@ class ContractController extends Controller
         $contract->load('client');
         $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
-        $response = $signWell->createDocument([
+        $recipients = [];
+        foreach($contract->employees as $employee) {
+            $recipients[] = [
+                'id' => $employee['id'],
+                'name' => $employee['name'],
+                'email' => $employee['email'],
+            ];
+        }
+
+        $fields = [];
+        foreach($contract->employees as $key=>$employee) {
+            $fields[] = [
+                [
+                    [
+                        'type' => 'initials',
+                        'required' => true,
+                        'fixed_width' => false,
+                        'lock_sign_date' => false,
+                        'allow_other' => false,
+                        'x' => 700,
+                        'y' => 900+($key*100),
+                        'page' => 1,
+                        'recipient_id' => $employee['id']
+                    ]
+                ]
+            ];
+        }
+
+        // dd($recipients, $fields);
+        $response = $signWell->create([
                 'test_mode' => true,
                 'name' => 'Web App Contract',
                 'subject' => 'Web App Contact from DigitalDad, LLC',
                 'embedded_signing' => true,
                 'embedded_signing_notifications' => false,
-                'recipients' => [
-                    [
-                        'id' => 1,
-                        'email' => 'user@example.com',
-                        'name' => 'John Doe',
-                    ]
-                ],
-                'files' => [
-                    [
-                        'name' => $contract->file_path,
-                        'file_base64' => base64_encode($document),
-                    ]
-                ],
+                'recipients' => $recipients,
                 'fields' => [
                     [
                         [
@@ -194,8 +218,15 @@ class ContractController extends Controller
                             'recipient_id' => 1
                         ]
                     ]
-                ]
+                        ],
+                'files' => [
+                    [
+                        'name' => $contract->file_path,
+                        'file_base64' => base64_encode($document),
+                    ]
+                ],
         ]);
+        dd($response);
 
         $contract->update([
             'sent' => 1,
@@ -205,12 +236,12 @@ class ContractController extends Controller
         return back();
     }
 
-    public function viewDocument(Contract $contract, SignWellService $signWell) {
-        $contract->load('client');
+    // public function viewDocument(Contract $contract, SignWellService $signWell) {
+    //     $contract->load('client');
 
-        $response = $signWell->getDocument($contract->signwell_id);
-        // dd($response);
-        return redirect($response['embedded_preview_url']);
+    //     $response = $signWell->getDocument($contract->signwell_id);
+    //     // dd($response);
+    //     return redirect($response['embedded_preview_url']);
 
-    }
+    // }
 }

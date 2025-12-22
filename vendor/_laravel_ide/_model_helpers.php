@@ -1309,6 +1309,7 @@ namespace App\Models {
     /**
      * App\Models\Contract
      *
+     * @property int $employee_id
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int|null $client_id
@@ -1318,6 +1319,7 @@ namespace App\Models {
      * @property int $price
      * @property int $id
      * @property-read \App\Models\Client $client
+     * @property-read \App\Models\Employee $employee
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
      * @property-read int|null $services_count
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
@@ -1328,6 +1330,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereClientId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereEmployeeId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract query()
@@ -2576,6 +2579,7 @@ namespace App\Models {
      * @property string|null $name
      * @property int $id
      * @property-read \App\Models\Client $client
+     * @property-read \App\Models\Contract $contract
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereEmail($value)

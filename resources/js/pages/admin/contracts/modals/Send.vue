@@ -3,7 +3,7 @@ import { ref, watchEffect } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { ReceiptText, Send } from 'lucide-vue-next';
+import { Send } from 'lucide-vue-next';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
 
 const props = defineProps({
@@ -47,12 +47,18 @@ watchEffect(() => {
             <h2 class="text-lg">Send a contract for {{ formatWithCommas(props.contract.price, 'currency') }}?</h2>
 
             <div>
+                <p class="text-lg">Recipients Included</p>
+                <div v-for="recipient in props.contract.employees" :key="recipient.id">
+                    <p>{{ recipient.name }}</p>
+                </div>
+            </div>
+            
+            <div>
                 <p class="text-lg">Services Included</p>
                 <div v-for="service in props.contract.services" :key="service.id">
                     <p>{{ service.name }}</p>
                 </div>
             </div>
-
 
             <DialogFooter>
                     <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false; form.reset(); form.clearErrors();">Cancel</Button>

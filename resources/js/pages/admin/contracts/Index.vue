@@ -17,6 +17,8 @@ const props = defineProps({
     services: Object,
 })
 
+console.log(props.contracts)
+
 const { formatWithCommas } = useFormatCurrency();
 </script>
 
@@ -61,6 +63,7 @@ const { formatWithCommas } = useFormatCurrency();
                         <TableCell>
                             <div class="flex justify-end items-center gap-2" v-if="!contract.sent">
                                 <Send :contract />
+                                <Manage :new="false" :contract :clients :services></Manage>
                                 <Destroy :contract></Destroy>
                             </div>
                             <div class="flex justify-end items-center gap-2" v-else>
@@ -71,9 +74,7 @@ const { formatWithCommas } = useFormatCurrency();
                                         <Eye></Eye>
                                     </Button>
                                 </a>
-                                <Link :href="route('contracts.viewDocument', contract.id)">
-                                    View also
-                                </Link>
+                                <Destroy :contract />
                             </div>
                         </TableCell>
                     </TableRow>
