@@ -22,7 +22,7 @@ class ContractController extends Controller
     public function index()
     {
         return Inertia::render('admin/contracts/Index', [
-            'contracts' => ContractResource::collection(Contract::with('client', 'services')->get()),
+            'contracts' => ContractResource::collection(Contract::with('client', 'employee', 'services')->get()),
             'clients' => Client::with('employees')->orderBy('company')->get(),
             'services' => Service::orderBy('name')->get(),
         ]);
@@ -168,42 +168,19 @@ class ContractController extends Controller
         $contract->load('client');
         $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
-        $recipients = [];
-        foreach($contract->employees as $employee) {
-            $recipients[] = [
-                'id' => $employee['id'],
-                'name' => $employee['name'],
-                'email' => $employee['email'],
-            ];
-        }
-
-        $fields = [];
-        foreach($contract->employees as $key=>$employee) {
-            $fields[] = [
-                [
-                    [
-                        'type' => 'initials',
-                        'required' => true,
-                        'fixed_width' => false,
-                        'lock_sign_date' => false,
-                        'allow_other' => false,
-                        'x' => 700,
-                        'y' => 900+($key*100),
-                        'page' => 1,
-                        'recipient_id' => $employee['id']
-                    ]
-                ]
-            ];
-        }
-
-        // dd($recipients, $fields);
         $response = $signWell->create([
                 'test_mode' => true,
                 'name' => 'Web App Contract',
                 'subject' => 'Web App Contact from DigitalDad, LLC',
                 'embedded_signing' => true,
                 'embedded_signing_notifications' => false,
-                'recipients' => $recipients,
+                'recipients' => [
+                    [
+                        'id' => 1,
+                        'name' => $contract->employee['name'],
+                        'email' => $contract->employee['email'],
+                    ]
+                ],
                 'fields' => [
                     [
                         [
@@ -235,13 +212,4 @@ class ContractController extends Controller
 
         return back();
     }
-
-    // public function viewDocument(Contract $contract, SignWellService $signWell) {
-    //     $contract->load('client');
-
-    //     $response = $signWell->getDocument($contract->signwell_id);
-    //     // dd($response);
-    //     return redirect($response['embedded_preview_url']);
-
-    // }
 }
