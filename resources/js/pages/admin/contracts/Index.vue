@@ -41,6 +41,7 @@ const { formatWithCommas } = useFormatCurrency();
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>
+                        <TableHead class="p-6 text-black">Recipient</TableHead>
                         <TableHead class="p-6 text-black">Client</TableHead>
                         <TableHead class="text-black">Price</TableHead>
                         <TableHead class="text-black">Created</TableHead>
@@ -53,10 +54,11 @@ const { formatWithCommas } = useFormatCurrency();
                 <TableBody class="bg-white dark:bg-gray-800 dark:border-gray-700" ref="el">
                     <TableRow v-for="contract in props.contracts" :key="contract.id" class="w-full">
                         <TableCell>
-                            <p>{{ contract.client.company }}</p>
+                            {{ contract.employee.name }}
                             <p class="text-xs italic" v-if="contract.sent">Sent</p>
                             <p class="text-xs italic" v-else>Unsent</p>
                         </TableCell>
+                        <TableCell>{{ contract.client.company }}</TableCell>
                         <TableCell>{{ formatWithCommas(contract.price, 'currency') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>

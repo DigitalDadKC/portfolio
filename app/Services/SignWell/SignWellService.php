@@ -25,15 +25,15 @@ class SignWellService
 
     public function create(array $payload)
     {
-        // dd($payload);
         return $this->request()
             ->post("/documents", $payload)
             ->json();
     }
     public function delete(string $documentId)
     {
+        // dd($documentId);
         return $this->request()
-            ->delete("{$this->baseUrl}/documents/id/{$documentId}")
+            ->delete("{$this->baseUrl}/documents/{$documentId}")
             ->json();
     }
 

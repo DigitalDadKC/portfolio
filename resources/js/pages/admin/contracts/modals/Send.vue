@@ -47,12 +47,12 @@ watchEffect(() => {
             <h2 class="text-lg">Send a contract for {{ formatWithCommas(props.contract.price, 'currency') }}?</h2>
 
             <div>
-                <p class="text-lg">Recipient</p>
-                <p>{{ props.contract.employee }}</p>
+                <h3 class="text-lg font-bold underline">Recipient</h3>
+                <p>{{ props.contract.employee.name }}</p>
             </div>
 
             <div>
-                <p class="text-lg">Services Included</p>
+                <h3 class="text-lg font-bold underline">Services Included</h3>
                 <div v-for="service in props.contract.services" :key="service.id">
                     <p>{{ service.name }}</p>
                 </div>

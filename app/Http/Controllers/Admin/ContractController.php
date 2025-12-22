@@ -42,7 +42,7 @@ class ContractController extends Controller
         $contract = Contract::create([
             'price' => $request->price,
             'client_id' => $request->client_id,
-            'employee_id' => $request->employee->id,
+            'employee_id' => $request->employee_id,
         ]);
         $contract->services()->sync($request->services);
 
@@ -79,12 +79,20 @@ class ContractController extends Controller
         $contract->update([
             'price' => $request->price,
             'client_id' => $request->client_id,
-            'employee_id' => $request->employee->id,
+            'employee_id' => $request->employee_id,
         ]);
         $contract->services()->sync($request->services);
 
-        if (Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
-            Storage::disk('local')->delete('contracts/' . $contract->file_path);
+        // DELETE PDF
+        Storage::disk('local')->delete('contracts/' . $contract->file_path);
+
+        // DELETE SIGNWELL CONTRACT
+        if($contract->signwell_id) {
+            $signWell->delete($contract->signwell_id);
+            $contract->update([
+                'sent' => 0,
+                'signwell_id' => NULL,
+            ]);
         }
 
         $pdf = Pdf::loadView('pdf.contract', compact('contract'));
@@ -93,12 +101,9 @@ class ContractController extends Controller
         $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
         Storage::disk('local')->put('contracts/' . $fileName, $content);
 
-        $contract->file_path = $fileName;
-        $contract->save();
-
-        if($contract->signwell_id) {
-            $signWell->delete($contract->signwell_id);
-        }
+        $contract->update([
+            'file_path' => $fileName,
+        ]);
 
         return back();
     }
@@ -108,10 +113,10 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract, SignWellService $signWell)
     {
-        if (Storage::disk('local')->exists('contracts/' . $contract->file_path)) {
-            Storage::disk('local')->delete('contracts/' . $contract->file_path);
+        Storage::disk('local')->delete('contracts/' . $contract->file_path);
+        if($contract->signwell_id) {
+            $signWell->delete($contract->signwell_id);
         }
-        $signWell->delete($contract->id);
         $contract->delete();
 
         return back()->with('message', 'Contract deleted');
@@ -203,7 +208,6 @@ class ContractController extends Controller
                     ]
                 ],
         ]);
-        dd($response);
 
         $contract->update([
             'sent' => 1,
