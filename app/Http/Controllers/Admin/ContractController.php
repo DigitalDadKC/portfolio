@@ -21,10 +21,13 @@ class ContractController extends Controller
      */
     public function index()
     {
+        $signwell = new SignWellService(config('services.signwell.api_key'), config('services.signwell.base_url'));
+
         return Inertia::render('admin/contracts/Index', [
             'contracts' => ContractResource::collection(Contract::with('client', 'employee', 'services')->get()),
             'clients' => Client::with('employees')->orderBy('company')->get(),
             'services' => Service::orderBy('name')->get(),
+            'webhooks' => $signwell->getWebhooks(),
         ]);
     }
 
@@ -184,6 +187,10 @@ class ContractController extends Controller
                         'id' => 1,
                         'name' => $contract->employee['name'],
                         'email' => $contract->employee['email'],
+                        'passcode' => 'WEBDEVCONTRACT',
+                        'subject' => 'Web App Contract from DigitalDad',
+                        'message' => 'Please review and sign this contract for your new web app. Passcode is \'WEBDEVCONTRACT\'',
+                        'send_email' => true,
                     ]
                 ],
                 'fields' => [
@@ -215,5 +222,9 @@ class ContractController extends Controller
         ]);
 
         return back();
+    }
+
+    public function webhook() {
+        dd('idiot');
     }
 }

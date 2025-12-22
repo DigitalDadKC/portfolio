@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
-    // Route::delete('/contracts/deleteContract/{contract}', [ContractController::class, 'delete'])->name('contracts.viewDocument');
+    Route::post('/contracts/webhook', [ContractController::class, 'webhook'])->name('contracts.webhook');
     Route::resource('/services', ServiceController::class);
 });
 

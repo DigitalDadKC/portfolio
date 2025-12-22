@@ -44,7 +44,9 @@ class DatabaseSeeder extends Seeder
         Scope::factory(150)->create();
         Line::factory(200)->create();
 
-        Client::factory(20)->create();
+        Client::factory(20)->create()
+            ->each(fn($client) => $client->employees()->saveMany(Employee::factory(mt_rand(1, 3))->create()
+        ));
         ClientInvoice::factory(50)->create();
         ClientInvoiceItem::factory(100)->create();
         Outreach::factory(50)->create();
@@ -53,6 +55,5 @@ class DatabaseSeeder extends Seeder
         Invoice::factory(50)->create();
         InvoiceItem::factory(100)->create();
         Service::factory(15)->create();
-        Employee::factory(35)->create();
     }
 }

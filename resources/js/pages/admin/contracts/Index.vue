@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {  } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
 import { Button } from '@/components/ui/button';
@@ -15,9 +15,10 @@ const props = defineProps({
     contracts: Object,
     clients: Object,
     services: Object,
+    webhooks: Object,
 })
 
-console.log(props.contracts)
+console.log(props.webhooks)
 
 const { formatWithCommas } = useFormatCurrency();
 </script>
@@ -31,6 +32,11 @@ const { formatWithCommas } = useFormatCurrency();
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Contract</h2>
         </template>
 
+        {{ props.webhooks }}
+        <form action="https://digitaldadkc.com/admin/contracts/webhook" method="post">
+            <button type="submit">submit</button>
+        </form>
+
         <div class="container mx-auto w-full">
             <div class="my-10 float-right flex gap-2">
                 View Template
@@ -38,6 +44,7 @@ const { formatWithCommas } = useFormatCurrency();
                     <FilePen></FilePen>
                 </a>
             </div>
+
             <Table class="bg-light-primary dark:bg-dark-primary w-full">
                 <TableHeader class="bg-light-tertiary dark:bg-dark-tertiary">
                     <TableRow>

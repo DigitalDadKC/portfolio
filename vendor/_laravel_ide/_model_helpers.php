@@ -5,17 +5,6 @@ namespace App\Models {
     /**
      * App\Models\Client
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string|null $placeId
-     * @property string|null $url
-     * @property string|null $zip
-     * @property int|null $state_id
-     * @property string|null $city
-     * @property string|null $address
-     * @property string|null $email
-     * @property string $company
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Outreach> $outreaches
      * @property-read int|null $outreaches_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClientInvoice> $client_invoices
@@ -25,17 +14,6 @@ namespace App\Models {
      * @property-read int|null $contract_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Employee> $employees
      * @property-read int|null $employees_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCompany($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereEmail($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereAddress($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereStateId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereZip($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUrl($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client wherePlaceid($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client query()
@@ -339,31 +317,9 @@ namespace App\Models {
     /**
      * App\Models\ClientInvoice
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $client_id
-     * @property string|null $session_id
-     * @property string $status
-     * @property string $terms_and_conditions
-     * @property float|null $total_price
-     * @property string $due_date
-     * @property string $date_created
-     * @property string $number
-     * @property int $id
      * @property-read \App\Models\Client $client
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ClientInvoiceItem> $client_invoice_items
      * @property-read int|null $client_invoice_items_count
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereNumber($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereDateCreated($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereDueDate($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereTotalPrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereTermsAndConditions($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereStatus($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereSessionId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereClientId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoice>|ClientInvoice query()
@@ -667,21 +623,7 @@ namespace App\Models {
     /**
      * App\Models\ClientInvoiceItem
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $client_invoice_id
-     * @property int $quantity
-     * @property float $price
-     * @property string $description
-     * @property int $id
      * @property-read \App\Models\ClientInvoice $client_invoice
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereDescription($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereQuantity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereClientInvoiceId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<ClientInvoiceItem>|ClientInvoiceItem query()
@@ -985,27 +927,7 @@ namespace App\Models {
     /**
      * App\Models\Company
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string|null $terms
-     * @property int $zip
-     * @property int $state_id
-     * @property string $city
-     * @property string $address
-     * @property string $logo
-     * @property string $name
-     * @property int $id
      * @property-read \App\Models\State $state
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereLogo($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereAddress($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereCity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereStateId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereZip($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereTerms($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Company>|Company query()
@@ -1309,28 +1231,10 @@ namespace App\Models {
     /**
      * App\Models\Contract
      *
-     * @property int $employee_id
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int|null $client_id
-     * @property string|null $signwell_id
-     * @property bool $sent
-     * @property string|null $file_path
-     * @property int $price
-     * @property int $id
      * @property-read \App\Models\Client $client
      * @property-read \App\Models\Employee $employee
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
      * @property-read int|null $services_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereFilePath($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSent($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSignwellId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereClientId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereEmployeeId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract query()
@@ -1634,14 +1538,8 @@ namespace App\Models {
     /**
      * App\Models\CsiDivision
      *
-     * @property string $name
-     * @property string $code
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CsiSection> $csi_section
      * @property-read int|null $csi_section_count
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision whereCode($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiDivision>|CsiDivision query()
@@ -1945,17 +1843,9 @@ namespace App\Models {
     /**
      * App\Models\CsiSection
      *
-     * @property int $csi_division_id
-     * @property string $name
-     * @property string $code
-     * @property int $id
      * @property-read \App\Models\CsiDivision $csi_division
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CsiSubsection> $csi_subsection
      * @property-read int|null $csi_subsection_count
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection whereCode($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection whereCsiDivisionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSection>|CsiSection query()
@@ -2259,15 +2149,7 @@ namespace App\Models {
     /**
      * App\Models\CsiSubsection
      *
-     * @property int $csi_section_id
-     * @property string $name
-     * @property string $code
-     * @property int $id
      * @property-read \App\Models\CsiSection $csi_section
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection whereCode($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection whereCsiSectionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<CsiSubsection>|CsiSubsection query()
@@ -2571,22 +2453,8 @@ namespace App\Models {
     /**
      * App\Models\Employee
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $client_id
-     * @property int|null $phone
-     * @property string|null $email
-     * @property string|null $name
-     * @property int $id
      * @property-read \App\Models\Client $client
      * @property-read \App\Models\Contract $contract
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereEmail($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee wherePhone($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereClientId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Employee>|Employee query()
@@ -2890,12 +2758,6 @@ namespace App\Models {
     /**
      * App\Models\Feature
      *
-     * @property int $order
-     * @property string $name
-     * @property int $id
-     * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature whereOrder($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Feature>|Feature query()
@@ -3199,33 +3061,9 @@ namespace App\Models {
     /**
      * App\Models\Invoice
      *
-     * @property \Illuminate\Support\Carbon|null $deleted_at
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $customer_id
-     * @property bool $paid
-     * @property float $discount
-     * @property string $terms_and_conditions
-     * @property string|null $reference
-     * @property string $due_date
-     * @property string $date_created
-     * @property string $number
-     * @property int $id
      * @property-read \App\Models\Customer $customer
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\InvoiceItem> $invoice_items
      * @property-read int|null $invoice_items_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereNumber($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereDateCreated($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereDueDate($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereReference($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereTermsAndConditions($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereDiscount($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice wherePaid($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereCustomerId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Invoice>|Invoice query()
@@ -3529,22 +3367,8 @@ namespace App\Models {
     /**
      * App\Models\InvoiceItem
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $quantity
-     * @property float $unit_price
-     * @property int $material_id
-     * @property int $invoice_id
-     * @property int $id
      * @property-read \App\Models\Invoice $invoice
      * @property-read \App\Models\Material $material
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereInvoiceId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereMaterialId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereUnitPrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereQuantity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<InvoiceItem>|InvoiceItem query()
@@ -3848,34 +3672,10 @@ namespace App\Models {
     /**
      * App\Models\Job
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $customer_id
-     * @property string|null $notes
-     * @property bool $prevailing_wage
-     * @property string|null $start_date
-     * @property int $zip
-     * @property int $state_id
-     * @property string $city
-     * @property string $address
-     * @property int $number
-     * @property int $id
      * @property-read \App\Models\State $state
      * @property-read \App\Models\Customer $customer
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Proposal> $proposals
      * @property-read int|null $proposals_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereNumber($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereAddress($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereCity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereStateId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereZip($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereStartDate($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job wherePrevailingWage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereNotes($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereCustomerId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Job>|Job query()
@@ -4179,28 +3979,8 @@ namespace App\Models {
     /**
      * App\Models\Line
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $scope_id
-     * @property int $order
-     * @property int|null $quantity
-     * @property int|null $price
-     * @property float|null $days
-     * @property int $unit_of_measurement_id
-     * @property string|null $description
-     * @property int $id
      * @property-read \App\Models\Scope $scope
      * @property-read \App\Models\UnitOfMeasurement $unit_of_measurement
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereDescription($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereUnitOfMeasurementId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereDays($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereQuantity($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereOrder($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereScopeId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line ()
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line newQuery()
@@ -4505,22 +4285,8 @@ namespace App\Models {
     /**
      * App\Models\Material
      *
-     * @property int $material_unit_size_id
-     * @property int $material_category_id
-     * @property bool $discountable
-     * @property int $price
-     * @property string $name
-     * @property string $sku
-     * @property int $id
      * @property-read \App\Models\MaterialUnitSize $material_unit_size
      * @property-read \App\Models\MaterialCategory $material_category
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereSku($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereDiscountable($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereMaterialCategoryId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material whereMaterialUnitSizeId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material search()
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material category()
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material newModelQuery()
@@ -4826,12 +4592,8 @@ namespace App\Models {
     /**
      * App\Models\MaterialCategory
      *
-     * @property string $name
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Material> $materials
      * @property-read int|null $materials_count
-     * @method static \Illuminate\Database\Eloquent\Builder<MaterialCategory>|MaterialCategory whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<MaterialCategory>|MaterialCategory whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialCategory>|MaterialCategory newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialCategory>|MaterialCategory newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialCategory>|MaterialCategory query()
@@ -5439,12 +5201,8 @@ namespace App\Models {
     /**
      * App\Models\MaterialUnitSize
      *
-     * @property string $unit_size
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Material> $materials
      * @property-read int|null $materials_count
-     * @method static \Illuminate\Database\Eloquent\Builder<MaterialUnitSize>|MaterialUnitSize whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<MaterialUnitSize>|MaterialUnitSize whereUnitSize($value)
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialUnitSize>|MaterialUnitSize newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialUnitSize>|MaterialUnitSize newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<MaterialUnitSize>|MaterialUnitSize query()
@@ -5748,17 +5506,7 @@ namespace App\Models {
     /**
      * App\Models\Outreach
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string $date_emailed
-     * @property int $client_id
-     * @property int $id
      * @property-read \App\Models\Client $client
-     * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach whereClientId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach whereDateEmailed($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Outreach>|Outreach query()
@@ -6062,20 +5810,6 @@ namespace App\Models {
     /**
      * App\Models\Product
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $bitch
-     * @property string|null $image
-     * @property float $price
-     * @property string $name
-     * @property int $id
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereImage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereBitch($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Product>|Product query()
@@ -6379,26 +6113,8 @@ namespace App\Models {
     /**
      * App\Models\Project
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property bool $active
-     * @property int $order
-     * @property string|null $url
-     * @property string|null $image
-     * @property string|null $description
-     * @property string $name
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Skill> $skills
      * @property-read int|null $skills_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereDescription($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereImage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereUrl($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereOrder($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereActive($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project query()
@@ -6702,28 +6418,10 @@ namespace App\Models {
     /**
      * App\Models\Proposal
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $user_id
-     * @property string|null $exclusions
-     * @property mixed $type
-     * @property int $job_id
-     * @property int|null $contingency
-     * @property string|null $name
-     * @property int $id
      * @property-read \App\Models\Job $job
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Scope> $scopes
      * @property-read int|null $scopes_count
      * @property-read \App\Models\User $user
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereContingency($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereJobId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereType($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereExclusions($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereUserId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal s()
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal newQuery()
@@ -7331,21 +7029,9 @@ namespace App\Models {
     /**
      * App\Models\Scope
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property int $proposal_id
-     * @property float|null $area
-     * @property string|null $name
-     * @property int $id
      * @property-read \App\Models\Proposal $proposal
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Line> $lines
      * @property-read int|null $lines_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereArea($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereProposalId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Scope>|Scope query()
@@ -7649,16 +7335,8 @@ namespace App\Models {
     /**
      * App\Models\Service
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string $name
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
      * @property-read int|null $contracts_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service query()
@@ -7962,18 +7640,8 @@ namespace App\Models {
     /**
      * App\Models\Skill
      *
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string $image
-     * @property string $name
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
      * @property-read int|null $projects_count
-     * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill whereImage($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Skill>|Skill query()
@@ -8588,12 +8256,8 @@ namespace App\Models {
     /**
      * App\Models\UnitOfMeasurement
      *
-     * @property string $UOM
-     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Line> $lines
      * @property-read int|null $lines_count
-     * @method static \Illuminate\Database\Eloquent\Builder<UnitOfMeasurement>|UnitOfMeasurement whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<UnitOfMeasurement>|UnitOfMeasurement whereUom($value)
      * @method static \Illuminate\Database\Eloquent\Builder<UnitOfMeasurement>|UnitOfMeasurement newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<UnitOfMeasurement>|UnitOfMeasurement newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<UnitOfMeasurement>|UnitOfMeasurement query()

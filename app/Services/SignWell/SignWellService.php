@@ -31,7 +31,6 @@ class SignWellService
     }
     public function delete(string $documentId)
     {
-        // dd($documentId);
         return $this->request()
             ->delete("{$this->baseUrl}/documents/{$documentId}")
             ->json();
@@ -39,5 +38,9 @@ class SignWellService
 
     public function getCredentials() {
         return $this->request()->get("/me")->json();
+    }
+
+    public function getWebhooks() {
+        return $this->request()->get('/hooks')->json();
     }
 }
