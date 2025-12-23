@@ -36,7 +36,6 @@ class SignWellController extends Controller
 
     protected function handleCreated(Request $request) {
         Log::info('created!');
-        Log::info($request->data);
         Log::info($request->data)['object'];
         Log::info($request->data)['object']['recipients'];
         Log::info($request->data)['object']['recipients'][0];
@@ -49,6 +48,8 @@ class SignWellController extends Controller
     protected function handleSent(Request $request)
     {
         Log::info('sent!');
+        Log::info($request->data)['object'];
+        Log::info($request->data)['object']['recipients'];
         $subject = "Contract Sent for $request->data['object']['recipients'][0]['name']";
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
