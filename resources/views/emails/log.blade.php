@@ -1,1 +1,2 @@
-<p>{{ $data }}</p><br /><br />
+<p>{{ $name }}</p><br /><br />
+<p>{{ $action }}</p>
