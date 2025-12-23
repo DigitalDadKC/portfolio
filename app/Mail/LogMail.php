@@ -16,7 +16,6 @@ class LogMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $data;
     public function __construct(public $data)
     {
         $this->data = $data;
@@ -28,7 +27,7 @@ class LogMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: `Signwell Log $this->data`,
+            subject: `$this->data['event']['type']`,
         );
     }
 
