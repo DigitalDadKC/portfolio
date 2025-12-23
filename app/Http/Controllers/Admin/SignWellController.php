@@ -39,6 +39,7 @@ class SignWellController extends Controller
     protected function handleCreated(string $subject) {
         Log::info('created!');
         $newSubject = $subject . ': Created';
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 
@@ -66,6 +67,7 @@ class SignWellController extends Controller
     protected function handleCanceled(string $subject) {
         Log::info('cancelled!');
         $newSubject = $subject . ': Canceled';
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 }
