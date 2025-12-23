@@ -38,11 +38,11 @@ class SignWellController extends Controller
     protected function handleCreated(Request $request) {
         Log::info('created!');
         Log::info($request);
-        Log::info('request[input]');
-        Log::info($request['input']);
-        Log::info('request->input');
-        Log::info($request->input);
-        $subject = `Contract Created for $request->input('data')['object']['recipients'][0]`;
+        Log::info('request[event]');
+        Log::info($request['event']);
+        Log::info('request->event');
+        Log::info($request->event);
+        $subject = `Contract Created for $request->data['object']['recipients'][0]`;
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
