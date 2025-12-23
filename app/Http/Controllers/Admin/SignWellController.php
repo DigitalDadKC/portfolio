@@ -22,9 +22,8 @@ class SignWellController extends Controller
     {
         $event = $request->input('event')['type'];
         Log::info($event);
-        Log::info(gettype($event['type']));
 
-        match ($event['type']) {
+        match ($event) {
             'document_created' => $this->handleCreated($request),
             'document_sent' => $this->handleSent($request),
             'document_viewed' => $this->handleViewed($request),
