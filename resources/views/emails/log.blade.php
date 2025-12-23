@@ -1,1 +1,1 @@
-<p>{{ $data }}</p><br /><br />
+<p>test</p><br /><br />
