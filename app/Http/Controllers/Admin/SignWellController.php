@@ -21,56 +21,51 @@ class SignWellController extends Controller
     public function handle(Request $request)
     {
         $event = $request->event['type'];
+        $name = $request->data['object']['recipients'][0]['name'];
+        $subject = "Contract Action for $name :";
 
         match ($event) {
-            'document_created' => $this->handleCreated($request),
-            'document_sent' => $this->handleSent($request),
-            'document_viewed' => $this->handleViewed($request),
-            'document_completed' => $this->handleCompleted($request),
-            'document_canceled' => $this->handleCanceled($request),
+            'document_created' => $this->handleCreated($subject),
+            'document_sent' => $this->handleSent($subject),
+            'document_viewed' => $this->handleViewed($subject),
+            'document_completed' => $this->handleCompleted($subject),
+            'document_canceled' => $this->handleCanceled($subject),
             default => null,
         };
 
         return response()->json(['status' => 'ok']);
     }
 
-    protected function handleCreated(Request $request) {
+    protected function handleCreated(string $subject) {
         Log::info('created!');
-        $name = $request->data['object']['recipients'][0]['name'];
-        $subject = "Contract Created for $name";
-        Log::info($subject);
-        Mail::to(config('mail.from.address'))->send(new LogMail($subject));
+        $newSubject = $subject . ': Created';
+        Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 
-    protected function handleSent(Request $request)
+    protected function handleSent(string $subject)
     {
         Log::info('sent!');
-        $subject = "Contract Sent for $request->data['object']['recipients'][0]['name']";
-        Log::info($subject);
-        Mail::to(config('mail.from.address'))->send(new LogMail($subject));
+        $newSubject = $subject . ': Sent';
+        Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 
-    protected function handleViewed(Request $request)
+    protected function handleViewed(string $subject)
     {
         Log::info('viewed!');
-        $subject = `Contract Viewed for $request->input('data')['object']['recipients'][0]['name']`;
-        Log::info($subject);
-        Mail::to(config('mail.from.address'))->send(new LogMail($subject));
+        $newSubject = $subject . ': Viewed';
+        Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 
-    protected function handleCompleted(Request $request)
+    protected function handleCompleted(string $subject)
     {
         Log::info('completed!');
-        $subject = `Contract Completed for $request->input('data')['object']['recipients'][0]['name']`;
-        Log::info($subject);
-        Mail::to(config('mail.from.address'))->send(new LogMail($subject));
+        $newSubject = $subject . ': Completed';
+        Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 
-    protected function handleCanceled(Request $request) {
+    protected function handleCanceled(string $subject) {
         Log::info('cancelled!');
-        Log::info($request->data['object']);
-        $subject = `Contract Cancelled for $request->input('data')['object']['recipients'][0]['name']`;
-        Log::info($subject);
-        Mail::to(config('mail.from.address'))->send(new LogMail($subject));
+        $newSubject = $subject . ': Canceled';
+        Mail::to(config('mail.from.address'))->send(new LogMail($newSubject));
     }
 }
