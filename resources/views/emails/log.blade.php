@@ -1,1 +1,1 @@
-<p>{{ $data['event'] }}</p><br /><br />
+<p>{{ $data }}</p><br /><br />
