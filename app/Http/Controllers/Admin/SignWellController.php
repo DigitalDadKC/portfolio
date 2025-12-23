@@ -20,7 +20,6 @@ class SignWellController extends Controller
     // }
     public function handle(Request $request)
     {
-        Log::info('skipped');
         // Log::info($request->input('event'));
         // Log::info('request->input(event)', $request->input('event')['type']); DOES NOT WORK
         // Log::info('request->input(event)', $request->input('event.type')); DOES NOT WORK
@@ -30,11 +29,11 @@ class SignWellController extends Controller
         Log::info($event['type']);
 
         match ($event['type']) {
-            'type.document_created' => $this->handleCreated($request),
+            'document_created' => $this->handleCreated($request),
             'document_sent' => $this->handleSent($request),
             'document_viewed' => $this->handleViewed($request),
             'document_completed' => $this->handleCompleted($request),
-            'type.document_canceled' => $this->handleCanceled($request),
+            'document_canceled' => $this->handleCanceled($request),
             default => null,
         };
 
@@ -47,19 +46,17 @@ class SignWellController extends Controller
 
     protected function handleCompleted(Request $request)
     {
-        $documentId = $request->input('data.document.id');
-
-        // Update database, notify user, etc.
+        Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
     protected function handleViewed(Request $request)
     {
-        //
+        Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
     protected function handleSent(Request $request)
     {
-        //
+        Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
     protected function handleCanceled(Request $request) {
