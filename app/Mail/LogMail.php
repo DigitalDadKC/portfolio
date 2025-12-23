@@ -27,7 +27,7 @@ class LogMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Log Mail',
+            subject: `Signwell Log $this->data['event']`,
         );
     }
 
