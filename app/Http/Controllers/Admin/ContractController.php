@@ -224,7 +224,7 @@ class ContractController extends Controller
         return back();
     }
 
-    public function webhook() {
-        dd('idiot');
+    public function webhook(Request $request) {
+        dd($request);
     }
 }

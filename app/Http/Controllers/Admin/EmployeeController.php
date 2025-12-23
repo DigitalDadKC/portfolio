@@ -16,7 +16,7 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'nullable|min:3',
             'email' => 'nullable|email',
-            'phone' => 'nullable|min:9|max:9',
+            'phone' => 'nullable|min:10|max:10',
         ]);
 
         Employee::create([
@@ -32,10 +32,11 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
+        // dd($request);
         $request->validate([
             'name' => 'nullable|min:3',
             'email' => 'nullable|email',
-            'phone' => 'nullable|min:9|max:9',
+            'phone' => 'nullable|min:10|max:10',
         ]);
 
         $employee->update([
