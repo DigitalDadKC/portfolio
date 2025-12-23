@@ -20,8 +20,9 @@ class SignWellController extends Controller
     // }
     public function handle(Request $request)
     {
-        // Log::info('skipped');
-        // Log::info('SignWell Webhook Received', $request->event->type);
+        Log::info('skipped');
+        Log::info('SignWell Webhook Received', $request->event);
+        Log::info('SignWell Webhook Received', $request->event->type);
         $event = $request->event->type;
         Log::info($event);
 
