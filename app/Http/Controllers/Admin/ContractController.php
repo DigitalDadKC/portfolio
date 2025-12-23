@@ -8,12 +8,11 @@ use App\Models\Service;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ContractResource;
 use App\Services\SignWell\SignWellService;
+use Illuminate\Support\Facades\Log;
 
 class ContractController extends Controller
 {
@@ -37,6 +36,7 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('Contract Stored', $request->all());
         $request->validate([
             'price' => 'required',
             'client_id' => 'nullable|required',
@@ -174,6 +174,7 @@ class ContractController extends Controller
 
     public function send(Contract $contract, SignWellService $signWell)
     {
+        Log::info('Contract Sent');
         $contract->load('client');
         $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
@@ -222,6 +223,7 @@ class ContractController extends Controller
             'signwell_id' => $response['id'],
         ]);
 
+        Log::info($response);
         return back();
     }
 
