@@ -21,7 +21,6 @@ class SignWellController extends Controller
     public function handle(Request $request)
     {
         $event = $request->event['type'];
-        Log::info($event);
 
         match ($event) {
             'document_created' => $this->handleCreated($request),
@@ -37,7 +36,11 @@ class SignWellController extends Controller
 
     protected function handleCreated(Request $request) {
         Log::info('created!');
-        Log::info($request->event);
+        Log::info($request->data);
+        Log::info($request->data)['object'];
+        Log::info($request->data)['object']['recipients'];
+        Log::info($request->data)['object']['recipients'][0];
+        Log::info($request->data['object']['recipients'][0]['name']);
         $subject = "Contract Created for $request->data['object']['recipients'][0]['name']";
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
@@ -54,7 +57,7 @@ class SignWellController extends Controller
     protected function handleViewed(Request $request)
     {
         Log::info('viewed!');
-        $subject = `Contract Viewed for $request->input('data')['object']['recipients'][0]`;
+        $subject = `Contract Viewed for $request->input('data')['object']['recipients'][0]['name']`;
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
@@ -62,14 +65,14 @@ class SignWellController extends Controller
     protected function handleCompleted(Request $request)
     {
         Log::info('completed!');
-        $subject = `Contract Completed for $request->input('data')['object']['recipients'][0]`;
+        $subject = `Contract Completed for $request->input('data')['object']['recipients'][0]['name']`;
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 
     protected function handleCanceled(Request $request) {
         Log::info('cancelled!');
-        $subject = `Contract Cancelled for $request->input('data')['object']['recipients'][0]`;
+        $subject = `Contract Cancelled for $request->input('data')['object']['recipients'][0]['name']`;
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
