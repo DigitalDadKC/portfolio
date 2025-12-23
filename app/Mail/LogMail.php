@@ -16,6 +16,7 @@ class LogMail extends Mailable
     /**
      * Create a new message instance.
      */
+    public $data;
     public function __construct(public $data)
     {
         $this->data = $data;
