@@ -22,8 +22,8 @@ class SignWellController extends Controller
     {
         Log::info('skipped');
         Log::info('SignWell Webhook Received', $request->event);
-        Log::info('SignWell Webhook Received', $request->event->type);
-        $event = $request->event->type;
+        Log::info('SignWell Webhook Received', $request->event['type']);
+        $event = $request->event['type'];
         Log::info($event);
 
         match ($event) {
