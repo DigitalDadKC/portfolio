@@ -223,7 +223,6 @@ class ContractController extends Controller
             'signwell_id' => $response['id'],
         ]);
 
-        Log::info($response);
         return back();
     }
 

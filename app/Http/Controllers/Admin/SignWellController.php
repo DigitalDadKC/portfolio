@@ -10,9 +10,9 @@ class SignWellController extends Controller
 {
     public function handle(Request $request)
     {
+        Log::info('SignWell Webhook Received', $request->all());
         dd($request);
         // Log everything for debugging
-        Log::info('SignWell Webhook Received', $request->all());
 
         $event = $request->input('event');
 
