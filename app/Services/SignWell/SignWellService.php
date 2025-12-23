@@ -45,7 +45,7 @@ class SignWellService
     }
 
     public function createWebhook($payload) {
-        return $this->request()->post("{$this->baseUrl}/hooks", $payload)
+        return $this->request()->post("{$this->baseUrl}/hooks")
         ->json();
     }
 }

@@ -61,9 +61,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
-    Route::post('/contracts/webhook', SignWellController::class);
     Route::resource('/services', ServiceController::class);
 });
+Route::post('/signwell/webhook', [SignWellController::class, 'handle']);
 
 // CHECKOUT
 Route::post('/checkout', [AdminInvoiceController::class, 'checkout'])->name('checkout');

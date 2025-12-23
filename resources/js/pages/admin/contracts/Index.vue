@@ -23,7 +23,7 @@ console.log(props.webhooks)
 const { formatWithCommas } = useFormatCurrency();
 
 const send = () => {
-    router.post('/admin/contracts/test');
+    router.post('/admin/contracts/postwebhook');
 }
 </script>
 

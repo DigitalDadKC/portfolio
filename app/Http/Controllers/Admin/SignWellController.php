@@ -8,42 +8,38 @@ use Illuminate\Support\Facades\Log;
 
 class SignWellController extends Controller
 {
-   public function __invoke(Request $request)
+    public function handle(Request $request)
     {
         dd($request);
-        // Log full payload for debugging
+        // Log everything for debugging
         Log::info('SignWell Webhook Received', $request->all());
 
         $event = $request->input('event');
 
         match ($event) {
             'document.completed' => $this->handleCompleted($request),
-            'document.signed'    => $this->handleSigned($request),
-            default              => Log::info('Unhandled SignWell event', compact('event')),
+            'document.viewed' => $this->handleViewed($request),
+            'document.sent' => $this->handleSent($request),
+            default => null,
         };
 
         return response()->json(['status' => 'ok']);
     }
 
-    protected function handleSigned(Request $request)
-    {
-        $document = $request->input('data.document');
-
-        // Example: update your local document record
-        // Document::where('signwell_id', $document['id'])
-        //     ->update(['status' => 'signed']);
-
-        Log::info('Document signed', [
-            'document_id' => $document['id'] ?? null,
-        ]);
-    }
-
     protected function handleCompleted(Request $request)
     {
-        $document = $request->input('data.document');
+        $documentId = $request->input('data.document.id');
 
-        Log::info('Document completed', [
-            'document_id' => $document['id'] ?? null,
-        ]);
+        // Update database, notify user, etc.
+    }
+
+    protected function handleViewed(Request $request)
+    {
+        //
+    }
+
+    protected function handleSent(Request $request)
+    {
+        //
     }
 }

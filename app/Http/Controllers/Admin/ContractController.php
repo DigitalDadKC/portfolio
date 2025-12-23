@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -224,12 +225,8 @@ class ContractController extends Controller
         return back();
     }
 
-    public function webhook(Request $request) {
-        dd($request);
-    }
-
-    public function test(Request $request, SignWellService $signwell) {
-        $test = $signwell->createWebhook('https://digitaldadkc.com/admin/contracts/webhook');
-        dd($request, $signwell, $test);
+    public function webhook(Request $request, SignWellService $signwell) {
+        $response = $signwell->createWebhook('https://digitaldadkc.com/admin/contracts/webhook');
+        dd($request, $response);
     }
 }
