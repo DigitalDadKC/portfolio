@@ -18,8 +18,6 @@ const props = defineProps({
     webhooks: Object,
 })
 
-console.log(props.webhooks)
-
 const { formatWithCommas } = useFormatCurrency();
 
 const send = () => {
@@ -35,8 +33,6 @@ const send = () => {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">Contract</h2>
         </template>
-
-        {{ props.webhooks }}
 
         <div class="container mx-auto w-full">
             <div class="my-10 float-right flex gap-2">
