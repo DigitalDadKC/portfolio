@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Log;
 
 class SignWellController extends Controller
 {
+    public function __invoke(Request $request) {
+        \Log::info('SIGNWELL WEBHOOK HIT', [
+            'headers' => $request->headers->all(),
+            'payload' => $request->all(),
+        ]);
+
+        return response()->json(['ok' => true]);
+    }
     public function handle(Request $request)
     {
         Log::info('SignWell Webhook Received', $request->all());
