@@ -16,10 +16,9 @@ class LogMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public string $subject, public string $recipient)
+    public function __construct(public string $subject)
     {
         $this->subject = $subject;
-        $this->recipient = $recipient;
     }
 
     /**
@@ -28,7 +27,7 @@ class LogMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: `$this->recipient`,
+            subject: `$this->subject`,
         );
     }
 
