@@ -27,14 +27,14 @@ class SignWellController extends Controller
         // Log::info('request->input(event)', json_decode($request->event)); DOES NOT WORK
         // Log::info('SignWell Webhook Received', $request->event['type']);  // DOES NOT WORK
         $event = $request->input('event');
-        Log::info($event);
+        Log::info($event['type']);
 
         match ($event) {
-            'document_created' => $this->handleCreated($request),
+            'type.document_created' => $this->handleCreated($request),
             'document_sent' => $this->handleSent($request),
             'document_viewed' => $this->handleViewed($request),
             'document_completed' => $this->handleCompleted($request),
-            'document_canceled' => $this->handleCanceled($request),
+            'type.document_canceled' => $this->handleCanceled($request),
             default => null,
         };
 
