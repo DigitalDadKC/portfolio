@@ -25,6 +25,7 @@ use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\SignWellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +61,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/contracts', ContractController::class)->except(['show']);
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
-    Route::post('/contracts/webhook', [ContractController::class, 'webhook'])->name('contracts.webhook');
+    Route::post('/contracts/webhook', SignWellController::class);
     Route::resource('/services', ServiceController::class);
 });
 

@@ -227,4 +227,9 @@ class ContractController extends Controller
     public function webhook(Request $request) {
         dd($request);
     }
+
+    public function test(Request $request, SignWellService $signwell) {
+        $test = $signwell->createWebhook('https://digitaldadkc.com/admin/contracts/webhook');
+        dd($request, $signwell, $test);
+    }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {  } from 'vue'
 import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,10 @@ const props = defineProps({
 console.log(props.webhooks)
 
 const { formatWithCommas } = useFormatCurrency();
+
+const send = () => {
+    router.post('/admin/contracts/test');
+}
 </script>
 
 
@@ -33,9 +37,9 @@ const { formatWithCommas } = useFormatCurrency();
         </template>
 
         {{ props.webhooks }}
-        <form action="https://digitaldadkc.com/admin/contracts/webhook" method="post">
-            <button type="submit">submit</button>
-        </form>
+        <!-- <form action="https://www.signwell.com/api/v1/hooks" method="post"> -->
+        <button type="submit" @click="send()">submit</button>
+        <!-- </form> -->
 
         <div class="container mx-auto w-full">
             <div class="my-10 float-right flex gap-2">
