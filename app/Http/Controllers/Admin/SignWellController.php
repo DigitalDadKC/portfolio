@@ -38,6 +38,7 @@ class SignWellController extends Controller
     protected function handleCreated(Request $request) {
         Log::info('created!');
         $subject = `Contract Created for $request->input('data')['object']['recipients'][0]`;
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 
@@ -45,6 +46,7 @@ class SignWellController extends Controller
     {
         Log::info('sent!');
         $subject = `Contract Sent for $request->input('data')['object']['recipients'][0]`;
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 
@@ -52,6 +54,7 @@ class SignWellController extends Controller
     {
         Log::info('viewed!');
         $subject = `Contract Viewed for $request->input('data')['object']['recipients'][0]`;
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 
@@ -59,12 +62,14 @@ class SignWellController extends Controller
     {
         Log::info('completed!');
         $subject = `Contract Completed for $request->input('data')['object']['recipients'][0]`;
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 
     protected function handleCanceled(Request $request) {
         Log::info('cancelled!');
         $subject = `Contract Cancelled for $request->input('data')['object']['recipients'][0]`;
+        Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
     }
 }
