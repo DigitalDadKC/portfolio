@@ -42,6 +42,7 @@ class SignWellController extends Controller
         Log::info($request['event']);
         Log::info('request->event');
         Log::info($request->event);
+        $subject = `Contract Created for $request->data`;
         $subject = `Contract Created for $request->data['object']['recipients'][0]`;
         Log::info($subject);
         Mail::to(config('mail.from.address'))->send(new LogMail($subject));
