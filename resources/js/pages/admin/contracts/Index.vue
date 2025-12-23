@@ -37,9 +37,6 @@ const send = () => {
         </template>
 
         {{ props.webhooks }}
-        <!-- <form action="https://www.signwell.com/api/v1/hooks" method="post"> -->
-        <button type="submit" @click="send()">submit</button>
-        <!-- </form> -->
 
         <div class="container mx-auto w-full">
             <div class="my-10 float-right flex gap-2">

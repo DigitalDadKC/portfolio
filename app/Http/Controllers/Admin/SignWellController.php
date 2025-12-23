@@ -8,44 +8,46 @@ use Illuminate\Support\Facades\Log;
 
 class SignWellController extends Controller
 {
+    public function __invoke(Request $request) {
+        \Log::info('SIGNWELL WEBHOOK HIT', [
+            'headers' => $request->headers->all(),
+            'payload' => $request->all(),
+        ]);
+
+        return response()->json(['ok' => true]);
+    }
     public function handle(Request $request)
     {
+        Log::info('SignWell Webhook Received', $request->all());
+        $event = $request->input('event');
+        // Log everything for debugging
+
         $event = $request->input('event');
 
-        match($event) {
-            'document_created' => $this->handleCreated($request),
-            'document_viewed' => $this->handleViewed($request),
-            'document_sent' => $this->handleSent($request),
-            'document_completed' => $this->handleCompleted($request),
-            'document_canceled' => $this->handleCanceled($request),
+        match ($event) {
+            'document.completed' => $this->handleCompleted($request),
+            'document.viewed' => $this->handleViewed($request),
+            'document.sent' => $this->handleSent($request),
             default => null,
-        }
+        };
 
         return response()->json(['status' => 'ok']);
     }
 
-    protected function handleCreated(Request $request) {
-        
-        Log::info('Document Created!');
-    }
-
-    protected function handleSent(Request $request)
+    protected function handleCompleted(Request $request)
     {
-        Log::info('Document Sent!');
+        $documentId = $request->input('data.document.id');
+
+        // Update database, notify user, etc.
     }
 
     protected function handleViewed(Request $request)
     {
-        Log::info('Document Viewed!');
+        //
     }
 
-    protected function handleCompleted(Request $request)
+    protected function handleSent(Request $request)
     {
-        Log::info('Document Completed!');
-    }
-
-    protected function handleCanceled(Request $request)
-    {
-        Log::info('Document Canceled!');
+        //
     }
 }
