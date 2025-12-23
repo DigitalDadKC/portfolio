@@ -20,9 +20,8 @@ class SignWellController extends Controller
     // }
     public function handle(Request $request)
     {
-        $event = $request->input('event');
+        $event = $request->input('event')['type'];
         Log::info($event);
-        Log::info($event['type']);
         Log::info(gettype($event['type']));
 
         match ($event['type']) {
@@ -45,7 +44,7 @@ class SignWellController extends Controller
     protected function handleSent(Request $request)
     {
         Log::info('sent!');
-        Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
+        Mail::to(config('mail.from.address'))->send(new LogMail($request));
     }
 
     protected function handleViewed(Request $request)
