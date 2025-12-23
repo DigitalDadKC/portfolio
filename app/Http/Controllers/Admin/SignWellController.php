@@ -38,28 +38,30 @@ class SignWellController extends Controller
             'document_canceled' => $this->handleCanceled($request),
             default => null,
         };
-        Log::info('I made it!');
 
         return response()->json(['status' => 'ok']);
     }
 
     protected function handleCreated(Request $request) {
         Log::info('created!');
-        Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
+        Mail::to(config('mail.from.address'))->send(new LogMail($request));
     }
 
-    protected function handleCompleted(Request $request)
+    protected function handleSent(Request $request)
     {
+        Log::info('sent!');
         Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
     protected function handleViewed(Request $request)
     {
+        Log::info('viewed!');
         Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
-    protected function handleSent(Request $request)
+    protected function handleCompleted(Request $request)
     {
+        Log::info('completed!');
         Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
