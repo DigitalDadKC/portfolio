@@ -63,7 +63,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
     Route::resource('/services', ServiceController::class);
 });
-Route::post('/signwell/webhook', [SignWellController::class, 'handle']);
 
 // CHECKOUT
 Route::post('/checkout', [AdminInvoiceController::class, 'checkout'])->name('checkout');
