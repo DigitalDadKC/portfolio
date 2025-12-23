@@ -21,17 +21,17 @@ class SignWellController extends Controller
     public function handle(Request $request)
     {
         Log::info('skipped');
-        Log::info('request->all()', $request->all());
         Log::info('request->input(event)', $request->input('event'));
+        Log::info('request->input(event)', $request->event);
         Log::info('SignWell Webhook Received', $request->event['type']);
         $event = $request->event['type'];
         Log::info($event);
 
         match ($event) {
             'document_created' => $this->handleCreated($request),
-            'document_completed' => $this->handleCompleted($request),
-            'document_viewed' => $this->handleViewed($request),
             'document_sent' => $this->handleSent($request),
+            'document_viewed' => $this->handleViewed($request),
+            'document_completed' => $this->handleCompleted($request),
             'document_canceled' => $this->handleCanceled($request),
             default => null,
         };
