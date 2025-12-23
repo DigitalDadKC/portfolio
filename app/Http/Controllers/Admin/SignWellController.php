@@ -36,11 +36,13 @@ class SignWellController extends Controller
             'document_canceled' => $this->handleCanceled($request),
             default => null,
         };
+        Log::info('I made it!');
 
         return response()->json(['status' => 'ok']);
     }
 
     protected function handleCreated(Request $request) {
+        Log::info('created!');
         Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 
@@ -60,6 +62,7 @@ class SignWellController extends Controller
     }
 
     protected function handleCanceled(Request $request) {
+        Log::info('cancelled!');
         Mail::to(config('mail.from.address'))->send(new LogMail($request->all()));
     }
 }
