@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
             $table->integer('price');
+            $table->date('date')->default(now());
             $table->string('file_path')->nullable()->default(NULL);
             $table->boolean('sent')->default(0);
             $table->string('signwell_id')->nullable()->default(NULL);

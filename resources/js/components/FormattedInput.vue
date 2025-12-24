@@ -50,7 +50,7 @@ watch(() => modelValue, (newVal) => {
 
 const displayValue = computed(() => {
   if (isFocused.value) {
-    return (props.type === 'percent') ? rawValue.value : rawValue.value
+    return rawValue.value
   }
   return formatWithCommas(rawValue.value)
 })
@@ -77,7 +77,7 @@ function onBlur() {
     emit('blur', rawValue.value)
 }
 
-function formatWithCommas(value) {
+function formatWithCommas(value = 0) {
   if (value === null || value === '') return ''
   switch (true) {
     case props.type === 'text':

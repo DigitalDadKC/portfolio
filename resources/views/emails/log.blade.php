@@ -1,2 +1,2 @@
-<p>{{ $name }}</p><br /><br />
+<p>{{ $name }}</p>
 <p>{{ $action }}</p>

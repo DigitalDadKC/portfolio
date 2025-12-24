@@ -52,6 +52,7 @@ class ContractController extends Controller
         $data = [
             'contract' => $contract,
             'client' => $contract->client,
+            'employee' => $contract->employee,
             'services' => $contract->services,
         ];
 
@@ -141,6 +142,9 @@ class ContractController extends Controller
                 'url' => 'https://example.com',
                 'placeId' => NULL,
             ],
+            'employee' => [
+                'name' => 'John Doe'
+            ],
             'services' => [
                 [
                     'name' => 'Service 1',
@@ -196,14 +200,14 @@ class ContractController extends Controller
                 'fields' => [
                     [
                         [
-                            'type' => 'initials',
+                            'type' => 'signature',
                             'required' => true,
                             'fixed_width' => false,
                             'lock_sign_date' => false,
                             'allow_other' => false,
-                            'x' => 700,
-                            'y' => 900,
-                            'page' => 1,
+                            'x' => 100,
+                            'y' => 670,
+                            'page' => 2,
                             'recipient_id' => 1
                         ]
                     ]
@@ -222,10 +226,5 @@ class ContractController extends Controller
         ]);
 
         return back();
-    }
-
-    public function webhook(Request $request, SignWellService $signwell) {
-        $response = $signwell->createWebhook('https://digitaldadkc.com/admin/contracts/webhook');
-        dd($request, $response);
     }
 }

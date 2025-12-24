@@ -70,18 +70,18 @@ const employees = computed(() => {
 
             <div class="grid grid-cols-4 gap-4">
                 <div class="col-span-2">
-                    <Label for="title">Price</Label>
-                    <FormattedInput type="currency" class="w-full" v-model="form.price" />
-                </div>
-                <div class="col-span-2">
                     <Label for="description">Client</Label>
                     <Client :clients @update:model-value="form.employees = []" v-model="form.client_id" />
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-2">
                     <Label>Recipient</Label>
                     <Employees :employees v-model="form.employee_id" />
                 </div>
-                <div class="col-span-4">
+                <div class="col-span-1">
+                    <Label for="title">Price</Label>
+                    <FormattedInput type="currency" class="w-full" v-model="form.price" />
+                </div>
+                <div class="col-span-3">
                     <Label>Services</Label>
                     <Services :services v-model="form.services" />
                 </div>
