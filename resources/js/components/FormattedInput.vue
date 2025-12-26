@@ -77,7 +77,7 @@ function onBlur() {
     emit('blur', rawValue.value)
 }
 
-function formatWithCommas(value = 0) {
+function formatWithCommas(value = '') {
   if (value === null || value === '') return ''
   switch (true) {
     case props.type === 'text':

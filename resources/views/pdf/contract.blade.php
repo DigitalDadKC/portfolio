@@ -83,12 +83,14 @@
             <p class="signature-line">___________________________________________________</p>
             <p class="signature-label">Client</p>
             <p class="signature-label">{{ $contract['employee']['name'] }}</p>
+            <p class="signature-label-company">{{ $contract['client']['company'] }}</p>
         </div>
 
         <div class="signature-section">
             <p class="signature-line">___________________________________________________</p>
             <p class="signature-label">Developer</p>
             <p class="signature-label">Raleigh Groesbeck</p>
+            <p class="signature-label-company">DigitalDad, LLC</p>
         </div>
     </div>
 </div>
@@ -121,6 +123,9 @@
     }
     .signature-label {
         font-weight: bold;
+    }
+    .signature-label-company {
+        font-style: italic;
     }
 
 </style>

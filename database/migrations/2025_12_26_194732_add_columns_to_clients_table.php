@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
-            $table->date('date')->default(now())->after('price');
+        Schema::table('clients', function (Blueprint $table) {
+            $table->decimal('latitude', 10, 7)->nullable()->after('url');
+            $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table) {
             //
         });
     }

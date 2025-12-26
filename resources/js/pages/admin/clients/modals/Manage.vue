@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { Input } from '@/components/ui/input';
 import FormattedInput from '@/components/FormattedInput.vue';
@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button';
 import State from '@/pages/estimating/jobs/partials/State.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Pencil, Plus, Search } from 'lucide-vue-next';
+import { GoogleMap, AdvancedMarker } from 'vue3-google-map'
+
+// const center = { lat: 40.689247, lng: -74.044502 }
 
 const props = defineProps({
     new: Boolean,
@@ -26,7 +29,17 @@ const form = useForm({
     city: props.client?.city,
     state_id: props.client?.state?.id,
     zip: props.client?.zip,
+    placeId: props.client?.placeId,
+    latitude: props.client?.latitude,
+    longitude: props.client?.longitude,
     url: props.client?.url,
+})
+
+const center = computed(() => {
+    return {
+        lat: form.latitude ?? 40.689247,
+        lng: form.longitude ?? -74.044502
+    }
 })
 
 const submit = () => {
@@ -60,7 +73,7 @@ const searchPlaces = () => {
 }
 
 const handle = (e) => {
-            search.value = ''
+    search.value = ''
     router.reload({
         data: {
             placeId: e.placePrediction.placeId,
@@ -73,6 +86,9 @@ const handle = (e) => {
             form.city = props.place.shortFormattedAddress.split(',')[1]
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
             form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
+            form.placeId = e.placePrediction.placeId
+            form.latitude = props.place.location.latitude,
+            form.longitude = props.place.location.longitude
             props.places.suggestions = []
         }
     })
@@ -92,25 +108,30 @@ const handle = (e) => {
                 <Pencil class="cursor-pointer"></Pencil>
             </Button>
         </DialogTrigger>
-        <DialogContent class="md:max-w-[800px] grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
+        <DialogContent class="md:max-w-400 grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader>
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit ${props.client.company}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
 
-                <div class="grid grid-cols-4 gap-4">
-                    <div class="col-span-2">
+                <div class="grid grid-cols-4 gap-4 mb-12">
+                    <div class="col-span-1">
                         <Label for="company">Company</Label>
                         <Input id="company"
                             class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
                             v-model="form.company" />
                     </div>
-                    <div class="col-span-2">
-                        <Label for="email">Email</Label>
+                    <div class="col-span-1">
+                        <Label for="email">Company Email</Label>
                         <Input id="email" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50"
                             v-model="form.email" />
                     </div>
 
-                    <div class="relative w-full items-center col-span-4">
+                    <div class="col-span-2">
+                        <Label for="url">URL</Label>
+                        <FormattedInput v-model="form.url" id="url" width="full" />
+                    </div>
+
+                    <div class="relative w-full items-center col-span-4 mb-12">
                         <Label for="address">Search</Label>
                         <Input v-model="search" id="address" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
                         <span class="absolute start-0 inset-y-0 flex items-end mb-2 justify-center px-2">
@@ -142,12 +163,17 @@ const handle = (e) => {
                         <Label for="zip">Zip</Label>
                         <FormattedInput v-model="form.zip" id="zip" width="full" :disabled="true" />
                     </div>
-
-                    <div class="col-span-4">
-                        <Label for="url">URL</Label>
-                        <FormattedInput v-model="form.url" id="url" width="full" />
-                    </div>
                 </div>
+        
+                <GoogleMap
+                    api-key="AIzaSyCaeMDr_DdMy4FTvhPjQGHnjpSxS2LvQzw"
+                    mapId="DEMO_MAP_ID"
+                    style="width: 100%; height: 500px"
+                    :center="center"
+                    :zoom="15"
+                >
+                    <AdvancedMarker :options="{ position: center }" />
+                </GoogleMap>
 
                 <div v-for="error in form.errors" :key="error.id" class="text-red-500">
                     {{ error }}

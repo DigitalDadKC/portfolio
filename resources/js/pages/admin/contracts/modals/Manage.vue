@@ -9,6 +9,7 @@ import Services from '../partials/Services.vue';
 import Employees from '../partials/Employees.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
+import { useDateFormat } from '@vueuse/core';
 
 const props = defineProps({
     new: Boolean,
@@ -21,12 +22,17 @@ const isDialogOpen = ref(false)
 const form = useForm({
     id: props.contract?.id,
     price: props.contract?.price,
+    date: props.contract?.date,
     client_id: props.contract?.client.id,
     employee_id: props.contract?.employee.id,
     services: props.contract?.service_ids,
 })
 
 const submit = () => {
+    form.transform((data) => ({
+        ...data,
+        date: (form.date) ? useDateFormat(form.date, 'YYYY-MM-DD').value : null,
+    }))
     if (props.new) {
         form.post(route('contracts.store'), {
             onSuccess: () => {
@@ -65,7 +71,9 @@ const employees = computed(() => {
         <DialogContent class="sm:max-w-200 grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh] bg-light-primary dark:bg-dark-primary">
             <DialogHeader class="p-2">
                 <DialogTitle>{{ (props.new) ? 'New Contract' : 'Edit Contract' }}</DialogTitle>
-                <DialogDescription></DialogDescription>
+                <DialogDescription>
+                    <p v-if="!props.new">NOTE: This will delete the old contract</p>
+                </DialogDescription>
             </DialogHeader>
 
             <div class="grid grid-cols-4 gap-4">
@@ -91,7 +99,10 @@ const employees = computed(() => {
                 <div class="flex gap-2">
                     <Button variant="outline" class="cursor-pointer" @click="isDialogOpen = false">Cancel</Button>
                     <Button type="submit" class="cursor-pointer" :disabled="form.processing"
-                        @click="submit()">Save</Button>
+                        @click="submit()">
+                            <p v-if="props.new">Create</p>
+                            <p v-else>Update</p>
+                        </Button>
                 </div>
             </DialogFooter>
         </DialogContent>

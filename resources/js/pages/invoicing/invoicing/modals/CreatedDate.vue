@@ -15,7 +15,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div>
         <Label for="rate">Date Created</Label>
         <Popover>
             <PopoverTrigger as-child>

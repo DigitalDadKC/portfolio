@@ -7,8 +7,10 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string|null $placeId
+     * @property float|null $longitude
+     * @property float|null $latitude
      * @property string|null $url
+     * @property string|null $placeId
      * @property string|null $zip
      * @property int|null $state_id
      * @property string|null $city
@@ -32,8 +34,10 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCity($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereStateId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereZip($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUrl($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client wherePlaceid($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUrl($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereLatitude($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereLongitude($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Client>|Client newModelQuery()

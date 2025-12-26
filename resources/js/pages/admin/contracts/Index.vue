@@ -19,10 +19,6 @@ const props = defineProps({
 })
 
 const { formatWithCommas } = useFormatCurrency();
-
-const send = () => {
-    router.post('/admin/contracts/postwebhook');
-}
 </script>
 
 
@@ -48,6 +44,7 @@ const send = () => {
                         <TableHead class="p-6 text-black">Recipient</TableHead>
                         <TableHead class="p-6 text-black">Client</TableHead>
                         <TableHead class="text-black">Price</TableHead>
+                        <TableHead class="text-black">Date</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
                         <TableHead class="text-black text-end">
@@ -64,6 +61,7 @@ const send = () => {
                         </TableCell>
                         <TableCell>{{ contract.client.company }}</TableCell>
                         <TableCell>{{ formatWithCommas(contract.price, 'currency') }}</TableCell>
+                        <TableCell>{{ useDateFormat(contract.date, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.created_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>{{ useDateFormat(contract.updated_at, 'MMM D, YYYY HH:MM:ss') }}</TableCell>
                         <TableCell>

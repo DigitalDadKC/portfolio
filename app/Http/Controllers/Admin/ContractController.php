@@ -11,23 +11,22 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ContractResource;
-use App\Services\SignWell\SignWellService;
-use Illuminate\Support\Facades\Log;
+use App\Services\Pdf\PdfService;
 
 class ContractController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct(protected PdfService $pdf) {
+
+    }
     public function index()
     {
-        $signwell = new SignWellService(config('services.signwell.api_key'), config('services.signwell.base_url'));
-
         return Inertia::render('admin/contracts/Index', [
             'contracts' => ContractResource::collection(Contract::with('client', 'employee', 'services')->get()),
             'clients' => Client::with('employees')->orderBy('company')->get(),
             'services' => Service::orderBy('name')->get(),
-            'webhooks' => $signwell->getWebhooks(),
         ]);
     }
 
@@ -49,30 +48,15 @@ class ContractController extends Controller
         ]);
         $contract->services()->sync($request->services);
 
-        $data = [
-            'contract' => $contract,
-            'client' => $contract->client,
-            'employee' => $contract->employee,
-            'services' => $contract->services,
-        ];
+        $this->pdf->createContract($contract);
 
-        $pdf = Pdf::loadView('pdf.contract', $data);
-        $content = $pdf->output();
-
-        $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
-
-        Storage::disk('local')->put('contracts/' . $fileName, $content);
-
-        $contract->file_path = $fileName;
-        $contract->save();
-
-        return back();
+        return back()->with('message', 'Contract created');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contract $contract, SignWellService $signWell)
+    public function update(Request $request, Contract $contract)
     {
         $request->validate([
             'price' => 'required',
@@ -87,40 +71,18 @@ class ContractController extends Controller
         ]);
         $contract->services()->sync($request->services);
 
-        // DELETE PDF
-        Storage::disk('local')->delete('contracts/' . $contract->file_path);
-
-        // DELETE SIGNWELL CONTRACT
-        if($contract->signwell_id) {
-            $signWell->delete($contract->signwell_id);
-            $contract->update([
-                'sent' => 0,
-                'signwell_id' => NULL,
-            ]);
-        }
-
-        $pdf = Pdf::loadView('pdf.contract', compact('contract'));
-        $content = $pdf->output();
-
-        $fileName = 'contract-' . $contract->id . '-' . uniqid() . '.pdf';
-        Storage::disk('local')->put('contracts/' . $fileName, $content);
-
-        $contract->update([
-            'file_path' => $fileName,
-        ]);
-
-        return back();
+        $this->pdf->destroyContract($contract);
+        $this->pdf->createContract($contract);
+        
+        return back()->with('message', 'Contract updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contract $contract, SignWellService $signWell)
+    public function destroy(Contract $contract)
     {
-        Storage::disk('local')->delete('contracts/' . $contract->file_path);
-        if($contract->signwell_id) {
-            $signWell->delete($contract->signwell_id);
-        }
+        $this->pdf->destroyContract($contract);
         $contract->delete();
 
         return back()->with('message', 'Contract deleted');
@@ -175,56 +137,11 @@ class ContractController extends Controller
         return $pdf->stream();
     }
 
-    public function send(Contract $contract, SignWellService $signWell)
+    public function send(Contract $contract)
     {
         $contract->load('client');
-        $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
+        $this->pdf->sendContract($contract);
 
-        $response = $signWell->create([
-                'test_mode' => true,
-                'name' => 'Web App Contract',
-                'subject' => 'Web App Contact from DigitalDad, LLC',
-                'embedded_signing' => true,
-                'embedded_signing_notifications' => false,
-                'recipients' => [
-                    [
-                        'id' => 1,
-                        'name' => $contract->employee['name'],
-                        'email' => $contract->employee['email'],
-                        'passcode' => 'WEBDEVCONTRACT',
-                        'subject' => 'Web App Contract from DigitalDad',
-                        'message' => 'Please review and sign this contract for your new web app. Passcode is \'WEBDEVCONTRACT\'',
-                        'send_email' => true,
-                    ]
-                ],
-                'fields' => [
-                    [
-                        [
-                            'type' => 'signature',
-                            'required' => true,
-                            'fixed_width' => false,
-                            'lock_sign_date' => false,
-                            'allow_other' => false,
-                            'x' => 100,
-                            'y' => 670,
-                            'page' => 2,
-                            'recipient_id' => 1
-                        ]
-                    ]
-                        ],
-                'files' => [
-                    [
-                        'name' => $contract->file_path,
-                        'file_base64' => base64_encode($document),
-                    ]
-                ],
-        ]);
-
-        $contract->update([
-            'sent' => 1,
-            'signwell_id' => $response['id'],
-        ]);
-
-        return back();
+        return back()->with('message', 'Contract sent');
     }
 }

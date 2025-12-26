@@ -21,8 +21,10 @@
         <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
         @inertiaHead
+    </script>
     </head>
     <body class="font-sans antialiased" style="margin-bottom: 0;">
+        
         @inertia
     </body>
 </html>

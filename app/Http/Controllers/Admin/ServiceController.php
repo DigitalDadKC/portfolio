@@ -28,7 +28,6 @@ class ServiceController extends Controller
             'name' => 'required|min:3'
         ]);
 
-        $count = Service::count();
         Service::create([
             'name' => $request->name,
         ]);

@@ -20,6 +20,7 @@ class ContractResource extends JsonResource
         return [
             'id' => $this->id,
             'price' => $this->price,
+            'date' => $this->date,
             'client' => ClientResource::make($this->client),
             'employee' => EmployeeResource::make($this->employee),
             'sent' => !!$this->sent,

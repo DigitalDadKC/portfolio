@@ -43,6 +43,9 @@ class ClientController extends Controller
             'city' => $request->city,
             'state_id' => $request->state_id,
             'zip' => $request->zip,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'placeId' => $request->placeId,
             'url' => $request->url,
         ]);
 
@@ -66,6 +69,9 @@ class ClientController extends Controller
             'city' => $request->city,
             'state_id' => $request->state_id,
             'zip' => $request->zip,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'placeId' => $request->placeId,
             'url' => $request->url,
         ]);
 
