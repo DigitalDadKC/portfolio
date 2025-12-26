@@ -45,7 +45,7 @@ class ClientController extends Controller
             'zip' => $request->zip,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'placeId' => $request->placeId,
+            'google_maps_url' => $request->google_maps_url,
             'url' => $request->url,
         ]);
 
@@ -71,7 +71,7 @@ class ClientController extends Controller
             'zip' => $request->zip,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'placeId' => $request->placeId,
+            'google_maps_url' => $request->google_maps_url,
             'url' => $request->url,
         ]);
 

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->decimal('latitude', 10, 7)->nullable()->after('url');
-            $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
+            $table->dropColumn('places_url');
+            $table->string('google_maps_url', 512)->nullable()->default(NULL)->after('url');
         });
     }
 

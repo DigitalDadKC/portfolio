@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('clients', function (Blueprint $table) {
+            $table->string('places_url')->nullable()->default(NULL)->after('url');
             $table->dropColumn('placeId');
-            $table->string('placeId')->nullable()->default(NULL)->after('longitude');
         });
     }
 

@@ -27,10 +27,10 @@ const form = useForm({
     city: props.client?.city,
     state_id: props.client?.state?.id,
     zip: props.client?.zip,
-    placeId: props.client?.placeId,
+    url: props.client?.url,
+    google_maps_url: props.client?.google_maps_url,
     latitude: props.client?.latitude,
     longitude: props.client?.longitude,
-    url: props.client?.url,
 })
 
 
@@ -80,13 +80,15 @@ const handle = (e) => {
         only: ['place'],
         replace: true,
         onSuccess: () => {
+            console.log(e)
+            console.log(props.place)
             search.value = ''
             form.address = props.place.shortFormattedAddress ?? props.place.displayName.text
             form.city = props.place.shortFormattedAddress.split(',')[1]
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
             form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
-            form.placeId = e.placePrediction.placeId
-            form.latitude = props.place.location.latitude,
+            form.google_maps_url = props.place.googleMapsUri
+            form.latitude = props.place.location.latitude
             form.longitude = props.place.location.longitude
             props.places.suggestions = []
         }

@@ -51,7 +51,7 @@ const props = defineProps({
                             <div class="space-x-4">
                                 <Manage :new="false" :client :states :place :places></Manage>
                                 <Destroy :client></Destroy>
-                                <a target="_blank" :href="`https://www.google.com/maps/place/?q=place_id:${client.placeId}`" v-if="client.address">
+                                <a target="_blank" :href="`${client.google_maps_url}`" v-if="client.address">
                                     <Button class="bg-blue-500">
                                         Location
                                         <MapPin />
