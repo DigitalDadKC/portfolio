@@ -10,8 +10,6 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Pencil, Plus, Search } from 'lucide-vue-next';
 import { GoogleMap, AdvancedMarker } from 'vue3-google-map'
 
-// const center = { lat: 40.689247, lng: -74.044502 }
-
 const props = defineProps({
     new: Boolean,
     client: Object,
@@ -34,6 +32,7 @@ const form = useForm({
     longitude: props.client?.longitude,
     url: props.client?.url,
 })
+
 
 const center = computed(() => {
     return {

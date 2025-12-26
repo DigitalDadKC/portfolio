@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Client extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
     public function outreaches(): HasMany {
         return $this->hasMany(Outreach::class);
     }
