@@ -1318,7 +1318,7 @@ namespace App\Models {
      * @property int $employee_id
      * @property int $client_id
      * @property string|null $signwell_id
-     * @property mixed $status
+     * @property \App\Enums\ContractStatus|null $status
      * @property bool $sent
      * @property string|null $file_path
      * @property string $date
