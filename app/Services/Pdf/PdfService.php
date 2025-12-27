@@ -47,6 +47,14 @@ class PdfService
                         'subject' => 'Web App Contract from DigitalDad',
                         'message' => 'Please review and sign this contract for your new web app. Passcode is \'WEBDEVCONTRACT\'',
                         'send_email' => true,
+                    ], [
+                        'id' => 2,
+                        'name' => 'Raleigh Groesbeck',
+                        'email' => 'info@digitaldadkc.com',
+                        'passcode' => 'WEBDEVCONTRACT',
+                        'subject' => 'Web App Contract from DigitalDad',
+                        'message' => 'Please review and sign this contract for your new web app. Passcode is \'WEBDEVCONTRACT\'',
+                        'send_email' => true,
                     ]
                 ],
                 'fields' => [
@@ -55,20 +63,36 @@ class PdfService
                                         'type' => 'signature',
                                         'required' => true,
                                         'fixed_width' => false,
-                                        'x' => 90,
+                                        'x' => 140,
                                         'y' => 600,
                                         'page' => 2,
                                         'recipient_id' => 1
-                                    ],
-                                    [
+                                    ], [
                                         'type' => 'date',
-                                        // 'required' => true,
+                                        'required' => true,
                                         'fixed_width' => false,
-                                        'lock_sign_date' => false,
-                                        'x' => 90,
+                                        'lock_sign_date' => true,
+                                        'x' => 140,
                                         'y' => 650,
                                         'page' => 2,
                                         'recipient_id' => 1
+                                    ], [
+                                        'type' => 'signature',
+                                        'required' => true,
+                                        'fixed_width' => false,
+                                        'x' => 140,
+                                        'y' => 800,
+                                        'page' => 2,
+                                        'recipient_id' => 2
+                                    ], [
+                                        'type' => 'date',
+                                        'required' => true,
+                                        'fixed_width' => false,
+                                        'lock_sign_date' => true,
+                                        'x' => 140,
+                                        'y' => 850,
+                                        'page' => 2,
+                                        'recipient_id' => 2
                                     ]
                                 ]
                             ],

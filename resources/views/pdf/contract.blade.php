@@ -80,17 +80,13 @@
 
     <div class="signature">
         <div class="signature-section">
-            <p class="signature-line">___________________________________________________</p>
-            <p class="signature-label">Client</p>
-            <p class="signature-label">{{ $contract['employee']['name'] }}</p>
-            <p class="signature-label-company">{{ $contract['client']['company'] }}</p>
+            <p class="signature-line">Client: ___________________________________________________</p>
+            <p class="signature-line">Date: _________________________</p>
         </div>
 
         <div class="signature-section">
-            <p class="signature-line">___________________________________________________</p>
-            <p class="signature-label">Developer</p>
-            <p class="signature-label">Raleigh Groesbeck</p>
-            <p class="signature-label-company">DigitalDad, LLC</p>
+            <p class="signature-line">Developer: ___________________________________________________</p>
+            <p class="signature-line">Date: _________________________</p>
         </div>
     </div>
 </div>
