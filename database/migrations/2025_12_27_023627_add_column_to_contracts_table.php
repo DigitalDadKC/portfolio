@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
-            $table->enum('status', ContractStatus::cases())->nullable()->default(NULL)->after('sent');
+            $table->enum('status', ContractStatus::cases())->after('sent');
         });
     }
 
