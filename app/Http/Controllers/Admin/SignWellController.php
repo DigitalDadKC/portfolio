@@ -17,6 +17,7 @@ class SignWellController extends Controller
         $event = $request->event['type'];
         $name = $request->data['object']['recipients'][0]['name'];
         $contract = Contract::where('signwell_id', $request->data['object']['id'])->first();
+        Log::info($contract);
 
         match ($event) {
             'document_created' => $this->handleCreated($contract),
