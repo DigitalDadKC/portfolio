@@ -1313,10 +1313,32 @@ namespace App\Models {
     /**
      * App\Models\Contract
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property int $employee_id
+     * @property int $client_id
+     * @property string|null $signwell_id
+     * @property mixed $status
+     * @property bool $sent
+     * @property string|null $file_path
+     * @property string $date
+     * @property int $price
+     * @property int $id
      * @property-read \App\Models\Client $client
      * @property-read \App\Models\Employee $employee
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
      * @property-read int|null $services_count
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract wherePrice($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereFilePath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereSignwellId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereClientId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereEmployeeId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Contract>|Contract query()
@@ -7635,8 +7657,16 @@ namespace App\Models {
     /**
      * App\Models\Service
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $name
+     * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contract> $contracts
      * @property-read int|null $contracts_count
+     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Service>|Service query()
