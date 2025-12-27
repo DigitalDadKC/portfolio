@@ -80,8 +80,6 @@ const handle = (e) => {
         only: ['place'],
         replace: true,
         onSuccess: () => {
-            console.log(e)
-            console.log(props.place)
             search.value = ''
             form.address = props.place.shortFormattedAddress ?? props.place.displayName.text
             form.city = props.place.shortFormattedAddress.split(',')[1]

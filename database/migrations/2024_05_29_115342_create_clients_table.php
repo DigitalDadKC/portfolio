@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url')->nullable()->default(NULL);
             $table->decimal('latitude', 10, 7)->nullable()->default(NULL);
             $table->decimal('longitude', 10, 7)->nullable()->default(NULL);
-            $table->string('placeId')->nullable()->default(NULL);
+            $table->string('google_maps_url', 512)->nullable()->default(NULL);
             $table->timestamps();
         });
         Schema::create('employees', function (Blueprint $table) {

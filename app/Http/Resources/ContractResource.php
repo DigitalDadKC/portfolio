@@ -24,6 +24,7 @@ class ContractResource extends JsonResource
             'client' => ClientResource::make($this->client),
             'employee' => EmployeeResource::make($this->employee),
             'sent' => !!$this->sent,
+            'status' => $this->status,
             'signwell_id' => $this->signwell_id,
             'service_ids' => ServiceResource::collection($this->services)->pluck('id')->toArray(),
             'services' => ServiceResource::collection($this->services),

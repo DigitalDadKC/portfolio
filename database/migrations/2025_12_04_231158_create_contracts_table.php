@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\ContractStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->date('date')->default(now());
             $table->string('file_path')->nullable()->default(NULL);
             $table->boolean('sent')->default(0);
+            $table->enum('status', ContractStatus::cases())->nullable()->default(NULL);
             $table->string('signwell_id')->nullable()->default(NULL);
             $table->foreignId('client_id')->constrained()->nullable();
             $table->foreignId('employee_id')->constrained()->nullable();
