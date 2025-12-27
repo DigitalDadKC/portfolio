@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Mail\LogMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -11,6 +12,7 @@ class SignWellController extends Controller
 {
     public function handle(Request $request)
     {
+        Log::info($request);
         $event = $request->event['type'];
         $name = $request->data['object']['recipients'][0]['name'];
 
@@ -18,8 +20,12 @@ class SignWellController extends Controller
             'document_created' => $this->handleCreated($name),
             'document_sent' => $this->handleSent($name),
             'document_viewed' => $this->handleViewed($name),
+            'document_in_progress' => $this->handleInProgress($name),
+            'document_signed' => $this->handleSigned($name),
             'document_completed' => $this->handleCompleted($name),
+            'document_expired' => $this->handleExpired($name),
             'document_canceled' => $this->handleCanceled($name),
+            'document_declined' => $this->handleDeclined($name),
             default => null,
         };
 
@@ -28,29 +34,29 @@ class SignWellController extends Controller
 
     protected function handleCreated(string $name) {
         $action = 'Created';
-        Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
     }
 
     protected function handleSent(string $name)
     {
         $action = 'Sent';
-        Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
     }
 
     protected function handleViewed(string $name)
     {
         $action = 'Viewed';
-        Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
     }
 
     protected function handleCompleted(string $name)
     {
         $action = 'Completed';
-        Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
     }
 
     protected function handleCanceled(string $name) {
         $action = 'Canceled';
-        Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
     }
 }
