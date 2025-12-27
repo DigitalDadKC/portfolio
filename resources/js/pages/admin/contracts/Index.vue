@@ -56,8 +56,7 @@ const { formatWithCommas } = useFormatCurrency();
                     <TableRow v-for="contract in props.contracts" :key="contract.id" class="w-full">
                         <TableCell>
                             {{ contract.employee.name }}
-                            <p class="text-xs italic" v-if="contract.sent">Sent</p>
-                            <p class="text-xs italic" v-else>Unsent</p>
+                            <p class="text-xs italic">{{contract.status}}</p>
                         </TableCell>
                         <TableCell>{{ contract.client.company }}</TableCell>
                         <TableCell>{{ formatWithCommas(contract.price, 'currency') }}</TableCell>

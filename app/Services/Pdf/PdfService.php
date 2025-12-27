@@ -50,20 +50,28 @@ class PdfService
                     ]
                 ],
                 'fields' => [
-                    [
-                        [
-                            'type' => 'signature',
-                            'required' => true,
-                            'fixed_width' => false,
-                            'lock_sign_date' => false,
-                            'allow_other' => false,
-                            'x' => 90,
-                            'y' => 600,
-                            'page' => 2,
-                            'recipient_id' => 1
-                        ]
-                    ]
-                        ],
+                                [
+                                    [
+                                        'type' => 'signature',
+                                        'required' => true,
+                                        'fixed_width' => false,
+                                        'x' => 90,
+                                        'y' => 600,
+                                        'page' => 2,
+                                        'recipient_id' => 1
+                                    ],
+                                    [
+                                        'type' => 'date',
+                                        // 'required' => true,
+                                        'fixed_width' => false,
+                                        'lock_sign_date' => false,
+                                        'x' => 90,
+                                        'y' => 650,
+                                        'page' => 2,
+                                        'recipient_id' => 1
+                                    ]
+                                ]
+                            ],
                 'files' => [
                     [
                         'name' => $contract->file_path,
@@ -73,20 +81,18 @@ class PdfService
         ]);
 
         $contract->update([
-            'sent' => 1,
-            'status' => 'sent',
+            // 'status' => 'sent',
             'signwell_id' => $response['id'],
         ]);
     }
 
     public function destroyContract($contract) {
         Storage::disk('local')->delete('contracts/' . $contract->file_path);
-        
+
         if($contract->signwell_id) {
             $this->signWell->delete($contract->signwell_id);
             $contract->update([
-                'sent' => 0,
-                'status' => 'canceled',
+                // 'status' => 'canceled',
                 'signwell_id' => NULL,
             ]);
         }

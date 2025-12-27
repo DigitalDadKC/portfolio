@@ -14,10 +14,12 @@ class SignWellController extends Controller
     public function handle(Request $request)
     {
         $event = $request->event['type'];
-        $name = $request->data['object']['recipients'][0]['name'];
+        $contract = Contract::where('signwell_id', $request->data['object']['id'])->first();
+        Log::info($event);
+        Log::info($contract);
 
         match ($event) {
-            'document_created' => $this->handleCreated($contract),
+            // 'document_created' => $this->handleCreated($contract),
             'document_sent' => $this->handleSent($contract),
             'document_viewed' => $this->handleViewed($contract),
             'document_in_progress' => $this->handleInProgress($contract),
@@ -33,7 +35,6 @@ class SignWellController extends Controller
     }
 
     protected function handleCreated(Contract $contract) {
-        $action = 'Created';
         $contract->update([
             'status' => 'created'
         ]);
@@ -42,7 +43,6 @@ class SignWellController extends Controller
 
     protected function handleSent(Contract $contract)
     {
-        $action = 'Sent';
         $contract->update([
             'status' => 'sent'
         ]);
@@ -51,7 +51,6 @@ class SignWellController extends Controller
 
     protected function handleViewed(Contract $contract)
     {
-        $action = 'Viewed';
         $contract->update([
             'status' => 'viewed'
         ]);
@@ -60,7 +59,6 @@ class SignWellController extends Controller
 
     protected function handleCompleted(Contract $contract)
     {
-        $action = 'Completed';
         $contract->update([
             'status' => 'completed'
         ]);
@@ -68,7 +66,6 @@ class SignWellController extends Controller
     }
 
     protected function handleCanceled(Contract $contract) {
-        $action = 'Canceled';
         $contract->update([
             'status' => 'canceled'
         ]);
