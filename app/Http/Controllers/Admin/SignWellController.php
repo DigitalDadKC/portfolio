@@ -11,50 +11,74 @@ use Illuminate\Support\Facades\Mail;
 
 class SignWellController extends Controller
 {
+    public function __construct(public Contract $contract, public string $name) {}
     public function handle(Request $request)
     {
         $event = $request->event['type'];
-        $signwell_id = $request->data['object']['id'];
-        $contract = Contract::where('signwell_id', $signwell_id)->first();
-        Log::info($request->data['object']['id']);
-        Log::info($event);
-        Log::info($signwell_id);
-        Log::info($contract);
+        Log::info($request);
+        $this->contract = Contract::where('signwell_id', $request->data['object']['id'])->first();
+        $this->name = $this->contract->employee['name'];
 
         match ($event) {
-            'document_viewed' => $this->handleViewed($contract),
-            'document_in_progress' => $this->handleInProgress($contract),
-            'document_signed' => $this->handleSigned($contract),
-            'document_completed' => $this->handleCompleted($contract),
-            'document_expired' => $this->handleExpired($contract),
-            'document_canceled' => $this->handleCanceled($contract),
-            'document_declined' => $this->handleDeclined($contract),
+            'document_viewed' => $this->handleViewed(),
+            'document_in_progress' => $this->handleInProgress(),
+            'document_signed' => $this->handleSigned(),
+            'document_completed' => $this->handleCompleted(),
+            'document_expired' => $this->handleExpired(),
+            'document_declined' => $this->handleDeclined(),
             default => null,
         };
 
         return response()->json(['status' => 'ok']);
     }
 
-    protected function handleViewed(Contract $contract)
+    protected function handleViewed()
     {
-        $contract->update([
+        $this->contract->update([
             'status' => 'viewed'
         ]);
-        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        $action = 'Viewed';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
     }
 
-    protected function handleCompleted(Contract $contract)
+    protected function handleInProgress()
     {
-        $contract->update([
+        $this->contract->update([
             'status' => 'completed'
         ]);
-        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        $action = 'In Progress';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
     }
 
-    protected function handleCanceled(Contract $contract) {
-        $contract->update([
+    protected function handleSigned() {
+        $this->contract->update([
             'status' => 'canceled'
         ]);
-        // Mail::to(config('mail.from.address'))->send(new LogMail($name, $action));
+        $action = 'Signed';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
+    }
+
+    protected function handleCompleted() {
+        $this->contract->update([
+            'status' => 'canceled'
+        ]);
+        $action = 'Completed';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
+    }
+
+    protected function handleExpired() {
+        $this->contract->update([
+            'status' => 'expired'
+        ]);
+        $action = 'Expired';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
+    }
+
+    protected function handleDeclined() {
+        $this->contract->update([
+            'status' => 'declined'
+        ]);
+        $action = 'Declined';
+        Mail::to(config('mail.from.address'))->send(new LogMail($this->name, $action));
     }
 }

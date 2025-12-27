@@ -63,8 +63,8 @@ class PdfService
                                         'type' => 'signature',
                                         'required' => true,
                                         'fixed_width' => false,
-                                        'x' => 140,
-                                        'y' => 600,
+                                        'x' => 180,
+                                        'y' => 740,
                                         'page' => 2,
                                         'recipient_id' => 1
                                     ], [
@@ -72,16 +72,16 @@ class PdfService
                                         'required' => true,
                                         'fixed_width' => false,
                                         'lock_sign_date' => true,
-                                        'x' => 140,
-                                        'y' => 650,
+                                        'x' => 160,
+                                        'y' => 790,
                                         'page' => 2,
                                         'recipient_id' => 1
                                     ], [
                                         'type' => 'signature',
                                         'required' => true,
                                         'fixed_width' => false,
-                                        'x' => 140,
-                                        'y' => 800,
+                                        'x' => 190,
+                                        'y' => 890,
                                         'page' => 2,
                                         'recipient_id' => 2
                                     ], [
@@ -89,8 +89,8 @@ class PdfService
                                         'required' => true,
                                         'fixed_width' => false,
                                         'lock_sign_date' => true,
-                                        'x' => 140,
-                                        'y' => 850,
+                                        'x' => 160,
+                                        'y' => 940,
                                         'page' => 2,
                                         'recipient_id' => 2
                                     ]
