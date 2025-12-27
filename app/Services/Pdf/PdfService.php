@@ -81,7 +81,7 @@ class PdfService
         ]);
 
         $contract->update([
-            // 'status' => 'sent',
+            'status' => 'sent',
             'signwell_id' => $response['id'],
         ]);
     }

@@ -15,6 +15,8 @@ class SignWellController extends Controller
     {
         $event = $request->event['type'];
         $contract = Contract::where('signwell_id', $request->data['object']['id'])->first();
+        Log::info($request->data['object']);
+        Log::info($request->data['object']['id']);
         Log::info($event);
         Log::info($contract);
 
