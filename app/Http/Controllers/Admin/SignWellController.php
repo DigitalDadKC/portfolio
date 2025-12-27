@@ -13,11 +13,8 @@ class SignWellController extends Controller
 {
     public function handle(Request $request)
     {
-        Log::info($request);
         $event = $request->event['type'];
         $name = $request->data['object']['recipients'][0]['name'];
-        $contract = Contract::where('signwell_id', $request->data['object']['id'])->first();
-        Log::info($contract);
 
         match ($event) {
             'document_created' => $this->handleCreated($contract),

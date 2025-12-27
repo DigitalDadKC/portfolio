@@ -2,7 +2,9 @@
 
 namespace App\Enums;
 
-enum ContractStatus
+use JsonSerializable;
+
+enum ContractStatus implements JsonSerializable
 {
     case created;
     case sent;
@@ -13,4 +15,8 @@ enum ContractStatus
     case expired;
     case canceled;
     case declined;
+
+    public function jsonSerialize(): mixed {
+        return $this->name;
+    }
 }

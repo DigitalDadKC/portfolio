@@ -22,7 +22,8 @@ class PdfService
 
         $file_path = 'contract-' . $contract->id. '-' . uniqid() . '.pdf';
         $contract->update([
-            'file_path' => $file_path
+            'file_path' => $file_path,
+            'status' => 'created',
         ]);
 
         Storage::disk('local')->put('contracts/' . $contract->file_path, $content);
@@ -73,6 +74,7 @@ class PdfService
 
         $contract->update([
             'sent' => 1,
+            'status' => 'sent',
             'signwell_id' => $response['id'],
         ]);
     }
@@ -84,6 +86,7 @@ class PdfService
             $this->signWell->delete($contract->signwell_id);
             $contract->update([
                 'sent' => 0,
+                'status' => 'canceled',
                 'signwell_id' => NULL,
             ]);
         }

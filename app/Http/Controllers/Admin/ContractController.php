@@ -43,6 +43,7 @@ class ContractController extends Controller
 
         $contract = Contract::create([
             'price' => $request->price,
+            'status' => 'created',
             'client_id' => $request->client_id,
             'employee_id' => $request->employee_id,
         ]);
