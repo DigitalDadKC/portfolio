@@ -81,7 +81,7 @@ const handle = (e) => {
         replace: true,
         onSuccess: () => {
             search.value = ''
-            form.address = props.place.shortFormattedAddress ?? props.place.displayName.text
+            form.address = props.place.shortFormattedAddress ?? props.place.displayName?.text
             form.city = props.place.shortFormattedAddress.split(',')[1]
             form.state_id = props.states.find(state => state.abbr == props.place.addressComponents.find(item => item.types.includes('administrative_area_level_1')).shortText).id
             form.zip = props.place.addressComponents.find(item => item.types.includes('postal_code'))?.shortText
@@ -112,7 +112,7 @@ const handle = (e) => {
                 <DialogTitle>{{ `${(props.new) ? 'New Client' : `Edit ${props.client.company}`}` }}</DialogTitle>
                 <DialogDescription></DialogDescription>
 
-                <div class="grid grid-cols-4 gap-4 mb-12">
+                <div class="grid grid-cols-4 gap-4 mb-4">
                     <div class="col-span-1">
                         <Label for="company">Company</Label>
                         <Input id="company"
@@ -130,7 +130,7 @@ const handle = (e) => {
                         <FormattedInput v-model="form.url" id="url" width="full" />
                     </div>
 
-                    <div class="relative w-full items-center col-span-4 mb-12">
+                    <div class="relative w-full items-center col-span-4">
                         <Label for="address">Search</Label>
                         <Input v-model="search" id="address" class="bg-white pl-10" placeholder="Search places..." @input="searchPlaces()" />
                         <span class="absolute start-0 inset-y-0 flex items-end mb-2 justify-center px-2">
@@ -163,11 +163,11 @@ const handle = (e) => {
                         <FormattedInput v-model="form.zip" id="zip" width="full" :disabled="true" />
                     </div>
                 </div>
-        
+
                 <GoogleMap
                     api-key="AIzaSyCaeMDr_DdMy4FTvhPjQGHnjpSxS2LvQzw"
                     mapId="DEMO_MAP_ID"
-                    style="width: 100%; height: 500px"
+                    style="width: 100%; height: 40vh"
                     :center="center"
                     :zoom="15"
                 >

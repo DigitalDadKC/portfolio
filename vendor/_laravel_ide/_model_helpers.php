@@ -4210,7 +4210,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line query()
-     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line ()
+     * @method static \Illuminate\Database\Eloquent\Builder<Line>|Line () {@see App\Models\Line::scope()}
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
@@ -4530,8 +4530,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material query()
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material search(mixed $term)
-     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material category(mixed $category)
+     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material search(mixed $term) {@see App\Models\Material::scopeSearch()}
+     * @method static \Illuminate\Database\Eloquent\Builder<Material>|Material category(mixed $category) {@see App\Models\Material::scopeCategory()}
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
@@ -6733,7 +6733,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal query()
-     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal s()
+     * @method static \Illuminate\Database\Eloquent\Builder<Proposal>|Proposal s() {@see App\Models\Proposal::scopes()}
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
@@ -8932,10 +8932,10 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User query()
-     * @method static \Illuminate\Database\Eloquent\Builder<User>|User role(mixed $roles, mixed $guard = null, mixed $without = false)
-     * @method static \Illuminate\Database\Eloquent\Builder<User>|User withoutRole(mixed $roles, mixed $guard = null)
-     * @method static \Illuminate\Database\Eloquent\Builder<User>|User permission(mixed $permissions, mixed $without = false)
-     * @method static \Illuminate\Database\Eloquent\Builder<User>|User withoutPermission(mixed $permissions)
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User role(mixed $roles, mixed $guard = null, mixed $without = false) {@see App\Models\User::scopeRole()}
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User withoutRole(mixed $roles, mixed $guard = null) {@see App\Models\User::scopeWithoutRole()}
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User permission(mixed $permissions, mixed $without = false) {@see App\Models\User::scopePermission()}
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User withoutPermission(mixed $permissions) {@see App\Models\User::scopeWithoutPermission()}
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
