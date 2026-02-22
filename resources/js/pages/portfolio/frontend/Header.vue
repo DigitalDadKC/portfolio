@@ -11,11 +11,11 @@ const showMobileMenu = ref('false')
 const scrollBackground = ref(false)
 
 const navigations = [
-    { name: "Home", href: "#home" },
-    { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/#home" },
+    { name: "Services", href: "/#services" },
+    { name: "Portfolio", href: "/#portfolio" },
+    { name: "About", href: "/#about" },
+    { name: "Contact", href: "/#contact" },
 ]
 const setScrollBackground = (value) => {
     scrollBackground.value = value
@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
     <nav class="fixed z-20 w-full transition bg-light-primary dark:bg-dark-primary"
         :class="{ 'bg-light-primary dark:bg-dark-secondary border-b-2 border-light-quatrenary -translate-y-3': scrollBackground, 'bg-white dark:bg-dark-primary': !scrollBackground }">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
             <Link href="/" class="flex items-center">
             <ApplicationLogo :scrollBackground />
             <span

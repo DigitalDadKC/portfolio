@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
-import { descriptors } from 'chart.js/dist/core/core.defaults';
 
 const props = defineProps({
     invoices: Object,

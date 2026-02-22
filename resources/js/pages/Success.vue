@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import {  } from 'vue';
-import { Head } from '@inertiajs/vue3';
-import GuestLayout from '@/layouts/GuestLayout.vue';
-
-interface DataItem {
-    division: string
-    section: string
-}
+import { Head, Link } from '@inertiajs/vue3';
+import FrontendLayout from '@/layouts/Frontend.vue';
+import Button from '@/components/ui/button/Button.vue';
 
 const props = defineProps({
     divisions: Object,
@@ -19,9 +15,12 @@ const props = defineProps({
 <template>
     <Head title="Success" />
 
-    <GuestLayout title="Success">
-        Hoora!
-        you paid me some sweet cash!
-    </GuestLayout>
-
+    <FrontendLayout>
+        <div class="flex flex-col items-center gap-8 pt-48">
+            Thank you for your business!
+            <Button>
+                <Link :href="route('home')">Return  Home</Link>
+            </Button>
+        </div>
+    </FrontendLayout>
 </template>

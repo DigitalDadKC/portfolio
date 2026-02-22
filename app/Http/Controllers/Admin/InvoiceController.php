@@ -210,13 +210,13 @@ class InvoiceController extends Controller
         }
 
         if ($endpoint_secret) {
-        // Only verify the event if you've defined an endpoint secret
-        // Otherwise, use the basic decoded event
-        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
-        try {
-            $event = \Stripe\Webhook::constructEvent(
-            $payload, $sig_header, $endpoint_secret
-                );
+            // Only verify the event if you've defined an endpoint secret
+            // Otherwise, use the basic decoded event
+            $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+            try {
+                $event = \Stripe\Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+                    );
             } catch(\Stripe\Exception\SignatureVerificationException $e) {
                 // Invalid signature
                 echo '⚠️  Webhook error while validating signature.';
