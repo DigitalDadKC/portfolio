@@ -29,7 +29,7 @@ class PdfService
         Storage::disk('local')->put('contracts/' . $contract->file_path, $content);
     }
 
-    public function sendContract(Contract $contract,) {
+    public function sendContract(Contract $contract) {
         $document = Storage::disk('local')->get('contracts/' . $contract->file_path);
 
         $response = $this->signWell->create([
@@ -104,6 +104,7 @@ class PdfService
                 ],
         ]);
 
+        dd($response);
         $contract->update([
             'status' => 'sent',
             'signwell_id' => $response['id'],
