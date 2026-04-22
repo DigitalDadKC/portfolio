@@ -71,7 +71,7 @@ const props = defineProps({
                             </div>
                         </TableCell>
                         <TableCell>
-                            <Outreach :client></Outreach>
+                            <Outreach :client v-if="client.email"></Outreach>
                         </TableCell>
                         <TableCell class="text-center">
                             <Employees :client />

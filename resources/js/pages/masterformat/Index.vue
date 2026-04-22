@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, shallowRef, useTemplateRef } from 'vue';
 import { Head } from '@inertiajs/vue3';
-import FormattedInput from '@/components/FormattedInput.vue';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-vue-next';
 import GuestLayout from '@/layouts/GuestLayout.vue';
@@ -69,6 +68,10 @@ const selectDivision = (division) => {
     secSection.value.scrollTop = 0
 }
 
+const filteredResults = computed(() => {
+    return search.value ? results.value : []
+})
+
 const selectSearch = async (searchedItem) => {
     if(searchedItem.item.category === 'division') {
         selectDivision(searchedItem.item)
@@ -93,16 +96,14 @@ const selectSearch = async (searchedItem) => {
         <div class="antialiased bg-light-primary dark:bg-gray-900" v-motion-fade>
             <main class="p-4 h-auto py-20 md:px-10">
                 <div class="relative w-full items-center">
-                    <!-- <FormattedInput v-model="search" width="full" /> -->
                     <Input v-model="search" class="pl-10 bg-light-secondary dark:bg-dark-secondary" />
                     <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
                         <Search class="size-6" />
                     </span>
-                    <!-- <v-text-field v-model="search" density="compact" hide-details variant="outlined" prepend-inner-icon="mdi-magnify" placeholder="Search divisions and sections..." class="select-all"></v-text-field> -->
                 </div>
                 <div class="relative ms-9 ">
-                    <div class="absolute bg-light-secondary w-full overflow-auto max-h-80 border-x-2 border-b-2 border-black z-10" ref="resultSection" v-motion-fade v-if="results.length > 0">
-                        <div v-for="(result, index) in results" :key="index" class="py-0.5 px-4 cursor-pointer hover:bg-light-tertiary hover:italic hover:font-bold hover:text-md w-full" @click.prevent="selectSearch(result)" :class="{'font-bold text-sm': result.item.category == 'division'}">
+                    <div class="absolute bg-light-secondary w-full overflow-auto max-h-80 border-x-2 z-10" ref="resultSection" v-motion-fade v-if="results.length > 0">
+                        <div v-for="(result, index) in filteredResults" :key="index" class="py-0.5 px-4 cursor-pointer hover:bg-light-tertiary hover:italic hover:font-bold hover:text-md w-full" @click.prevent="selectSearch(result)" :class="{'font-bold text-sm': result.item.category == 'division'}">
                             {{ result.item.division?.code }} {{ result.item.code }} - {{ result.item.name }} - {{ result.item.category }}
                         </div>
                     </div>
@@ -139,12 +140,6 @@ const selectSearch = async (searchedItem) => {
                 </div>
             </main>
         </div>
-
-
-
-        <!-- <div class="mb-6" v-motion :initial="{ opacity: 0, y:100}" :visibleOnce="{opacity: 1, y:0}"> -->
-        <!-- <div class="container mx-auto" v-motion :initial="{opacity: 0, y:100}" :visibleOnce="{opacity: 1, y: 0}"> -->
-
     </GuestLayout>
 
 </template>
