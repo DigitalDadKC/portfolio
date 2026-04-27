@@ -25,15 +25,15 @@ const props = defineProps({
 
 const isDialogOpen = ref(false)
 const form = useForm({
-    id: props.invoice.id,
-    number: props.invoice.number,
-    customer_id: props.invoice.customer?.id,
-    date_created: props.invoice.date_created ?? new Date(),
-    due_date: props.invoice.due_date,
-    reference: props.invoice.reference,
-    terms_and_conditions: props.invoice.terms_and_conditions,
-    discount: props.invoice.discount,
-    invoice_items: props.invoice.invoice_items ?? []
+    id: props.invoice?.id,
+    number: props.invoice?.number,
+    customer_id: props.invoice?.customer?.id,
+    date_created: props.invoice?.date_created ?? new Date(),
+    due_date: props.invoice?.due_date,
+    reference: props.invoice?.reference,
+    terms_and_conditions: props.invoice?.terms_and_conditions,
+    discount: props.invoice?.discount,
+    invoice_items: props.invoice?.invoice_items ?? []
 })
 
 const customer = computed(() => {

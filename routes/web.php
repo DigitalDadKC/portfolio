@@ -1,31 +1,32 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\DatatableController;
-use App\Http\Controllers\PortfolioController;
-use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\ContractController;
-use App\Http\Controllers\Admin\OutreachController;
-use App\Http\Controllers\Admin\EmployeeController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Estimating\JobController;
+use App\Http\Controllers\Admin\SignWellController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\Estimating\AdminController;
+use App\Http\Controllers\Estimating\CustomerController;
+use App\Http\Controllers\Estimating\JobController;
+use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Invoicing\ProductController;
-use App\Http\Controllers\Estimating\CustomerController;
-use App\Http\Controllers\Estimating\ProposalController;
 use App\Http\Controllers\Masterformat\DivisionController;
-use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
-use App\Http\Controllers\Admin\SignWellController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,8 +106,9 @@ Route::resource('/masterformat', DivisionController::class);
 
 // INVOICING
 Route::resource('/invoices', InvoiceController::class);
-Route::get('invoices/download-pdf/{invoice}', [InvoiceController::class, 'downloadPDF'])->name('invoices.downloadPDF');
-Route::get('invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
+Route::get('/invoices/download-pdf/{invoice}', [InvoiceController::class, 'downloadPDF'])->name('invoices.downloadPDF');
+Route::get('/invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
+Route::post('/invoices/filters', [InvoiceController::class, 'index'])->name('invoices.filter');
 Route::resource('/products', ProductController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {

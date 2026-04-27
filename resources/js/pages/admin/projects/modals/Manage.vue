@@ -53,6 +53,7 @@ const submit = () => {
             skills: form.skills,
         }, {
             preserveScroll: true,
+            forceFormData: true,
             onSuccess: () => {
                 isDialogOpen.value = false;
             }
@@ -100,7 +101,7 @@ const submit = () => {
                 </div>
                 <div class="mt-2">
                     <Label for="image">Image</Label>
-                    <Input id="image" type="file" class="bg-white dark:bg-dark-tertiary hover:bg-input/50" @input="handleImage($event)" />
+                    <Input id="image" type="file" class="bg-white dark:bg-dark-tertiary hover:bg-input/50" @change="handleImage($event)" />
                     <InputError class="mt-2" :message="$page.props.errors.image" />
                 </div>
                 <div class="flex justify-center">

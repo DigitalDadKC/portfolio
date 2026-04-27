@@ -3,7 +3,6 @@ import AuthenticatedLayout from '@/layouts/AuthenticatedLayout.vue';
 import Manage from './modals/Manage.vue';
 import Destroy from './modals/Destroy.vue';
 import Invoice from './modals/Invoice.vue';
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
