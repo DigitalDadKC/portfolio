@@ -28,21 +28,6 @@ const trashed = ref(props.filters.trashed)
 const pages = ref(props.filters.pages)
 const selectedCustomers = ref(props.filters.customers)
 
-// const getInvoices = () => {
-//     router.reload({
-//         data: {
-//             search: search.value,
-//             unpaid: unpaid.value,
-//             trashed: trashed.value,
-//             pages: pages.value,
-//             customers: selectedCustomers.value
-//         },
-//         only: ['invoices', 'filters'],
-//         replace: true,
-//         preserveState: true,
-//     })
-// }
-
 const getInvoices = () => {
     router.post(route('invoices.filter'), {
         search: search.value,

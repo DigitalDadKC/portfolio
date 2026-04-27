@@ -108,7 +108,7 @@ Route::resource('/masterformat', DivisionController::class);
 Route::resource('/invoices', InvoiceController::class);
 Route::get('/invoices/download-pdf/{invoice}', [InvoiceController::class, 'downloadPDF'])->name('invoices.downloadPDF');
 Route::get('/invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
-Route::post('/invoices/filters', [InvoiceController::class, 'index'])->name('invoices.filter');
+Route::post('/invoices', [InvoiceController::class, 'index'])->name('invoices.filter');
 Route::resource('/products', ProductController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
