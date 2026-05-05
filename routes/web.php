@@ -73,6 +73,8 @@ Route::post('/webhook', [AdminInvoiceController::class, 'webhook'])->name('check
 
 // jobs
 Route::resource('estimating/jobs', JobController::class);
+Route::get('/estimating/jobs', [JobController::class, 'index'])->name('estimating.jobs.index');
+Route::post('/estimating/jobs', [JobController::class, 'index'])->name('estimating.jobs.filter');
 
 // proposal
 Route::post('proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');

@@ -755,7 +755,9 @@ export function useDateField(props: UseDateFieldProps) {
 
       let displayPrev = prevValue
       if (is12Hour && prevValue !== null) {
-        displayPrev = prevValue === 0 ? 12 : (prevValue > 12 ? prevValue - 12 : prevValue)
+        // 12 AM/PM should be treated as 0 internally even if it doesn't match the display
+        // otherwise repeatedly typing 0 will not advance to the next segment
+        displayPrev = prevValue % 12 === 0 ? 0 : (prevValue > 12 ? prevValue - 12 : prevValue)
       }
 
       const { value, moveToNext } = updateHour(max, num, displayPrev)

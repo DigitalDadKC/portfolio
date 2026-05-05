@@ -14,6 +14,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
         <link rel="icon" type="image/x-icon" :href="public_path('/img/dad.svg')">
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"><!-- Calendly badge widget begin -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('/img/favicon.png') }}">
 
         <!-- Scripts -->
         @routes

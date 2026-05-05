@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 import EstimatingLayout from '@/layouts/EstimatingLayout.vue';
 import Paginator from '@/components/Paginator.vue';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import SearchBox from './partials/SearchBox.vue';
 import Pages from './partials/Pages.vue';
-import State from './partials/State.vue';
-import Customer from './partials/Customer.vue';
 import ManageJob from './modals/ManageJob.vue';
+import Filters from './partials/Filters.vue';
+import StateTag from './partials/StateTag.vue';
+import CustomerTag from './partials/CustomerTag.vue';
 import { useDateFormat } from '@vueuse/core';
 import { useFormatCurrency } from '@/composables/useFormatCurrency';
 import { Download, FileText } from 'lucide-vue-next';
@@ -23,29 +23,34 @@ const props = defineProps({
 
 const { formatWithCommas } = useFormatCurrency()
 const search = ref(props.filters.search)
-const pages = ref(props.filters?.pages ?? 25)
-const state_id = ref(props.filters.state)
-const customer_id = ref(props.filters.customer)
+const pages = ref(props.filters.pages)
+const state_ids = ref(props.filters.states ?? [])
+const customer_ids = ref(props.filters.customers ?? [])
 
-const states = computed(() => {
-    return [{ 'id': null, 'state': 'SELECT' }, ...props.states]
-})
-const customers = computed(() => {
-    return [{ 'id': null, 'name': 'SELECT' }, ...props.customers]
-})
-
-const getJobs = () => {
-    router.reload({
-        data: {
-            search: search.value,
-            pages: pages.value,
-            state: state_id.value,
-            customer: customer_id.value
-        },
+const reload = () => {
+    router.post(route('estimating.jobs.filter'), {
+        search: search.value,
+        pages: pages.value,
+        states: state_ids.value,
+        customers: customer_ids.value,
+    }, {
         only: ['jobs', 'filters'],
         replace: true,
-        preserveState: true
     })
+}
+
+watch([search, pages, state_ids, customer_ids], () => {
+    reload()
+}, {
+    deep: true,
+})
+
+const remove_state_filter = (id) => {
+    state_ids.value = state_ids.value.filter(state_id => state_id !== id)
+}
+
+const remove_customer_filter = (id) => {
+    customer_ids.value = customer_ids.value.filter(customer_id => customer_id !== id)
 }
 
 </script>
@@ -65,6 +70,20 @@ const getJobs = () => {
         </template>
 
         <div class="container mx-auto bg-light-tertiary dark:bg-dark-primary rounded-xl py-8 w-full">
+
+            <div class="flex gap-2 py-1" v-if="state_ids.length">
+                States:
+                <div v-for="filter in state_ids" :key="filter">
+                    <StateTag :filter :states @remove="(id) => remove_state_filter(id)" />
+                </div>
+            </div>
+            <div class="flex gap-2 py-1" v-if="customer_ids.length">
+                Customers:
+                <div v-for="filter in customer_ids" :key="filter">
+                    <CustomerTag :filter :customers @remove="(id) => remove_customer_filter(id)" />
+                </div>
+            </div>
+
             <table class="table table-auto bg-light-primary dark:bg-dark-primary border-2 border-black w-full">
                 <thead>
                     <tr class="uppercase border-2 border-black">
@@ -72,30 +91,21 @@ const getJobs = () => {
                             <div class="flex flex-col md:flex-row justify-between px-2 py-4">
                                 <ManageJob :new="true" :states :customers></ManageJob>
                                 <div>
-                                    <Paginator :links="props.jobs.meta.links" @update:model-value="getJobs()" />
-                                    <div class="mt-2">
-                                        {{ props.jobs.meta.from }} - {{ props.jobs.meta.to }} of {{
-                                            props.jobs.meta.total }} jobs
+                                    <Paginator :links="props.jobs.meta.links" />
+                                    <div class="flex items-center justify-center mt-2 gap-2">
+                                        {{ props.jobs.meta.from }} - {{ props.jobs.meta.to }} of {{ props.jobs.meta.total }} jobs
+                                        <Pages v-model="pages"></Pages>
                                     </div>
                                 </div>
                                 <div>
-                                    <Pages v-model="pages" @update:model-value="getJobs()"></Pages>
+                                    <Filters :states :customers v-model:selectedStates="state_ids" v-model:selectedCustomers="customer_ids" />
                                 </div>
                             </div>
                         </th>
                     </tr>
                     <tr>
-                        <th class="pl-2">
-                            <Label>Job #</Label>
-                            <SearchBox v-model="search" @update:model-value="getJobs()"></SearchBox>
-                        </th>
-                        <th>
-                            <Label for="state">State</Label>
-                            <State v-model="state_id" :states @update:model-value="getJobs()"></State>
-                        </th>
-                        <th class="text-center hidden xl:table-cell">
-                            <Label for="customer">Customer</Label>
-                            <Customer v-model="customer_id" :customers @update:model-value="getJobs()"></Customer>
+                        <th colspan="3">
+                            <SearchBox v-model="search"></SearchBox>
                         </th>
                         <th
                             class="bg-light-tertiary dark:bg-dark-tertiary border-b-black border-b-4 py-2 text-black rounded-t-sm">

@@ -39,10 +39,10 @@ class DatabaseSeeder extends Seeder
         Material::factory(50)->create();
 
         Customer::factory(50)->create();
-        Job::factory(50)->create();
-        Proposal::factory(100)->create();
-        Scope::factory(150)->create();
-        Line::factory(200)->create();
+        Job::factory(500)->create();
+        Proposal::factory(750)->create();
+        Scope::factory(1000)->create();
+        Line::factory(1500)->create();
 
         Client::factory(20)->create()
             ->each(fn($client) => $client->employees()->saveMany(Employee::factory(mt_rand(1, 3))->create()

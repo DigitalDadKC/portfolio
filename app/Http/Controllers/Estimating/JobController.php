@@ -2,48 +2,57 @@
 
 namespace App\Http\Controllers\Estimating;
 
-use App\Models\Job;
-use Inertia\Inertia;
-use App\Models\State;
-use App\Models\Customer;
-use Illuminate\Http\Request;
-use App\Http\Resources\JobResource;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CustomerResource;
+use App\Http\Resources\JobResource;
 use App\Http\Resources\StateResource;
+use App\Models\Customer;
+use App\Models\Job;
+use App\Models\State;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $filters = [];
-        $filters['search'] = $request->search;
-        $filters['pages'] = $request->pages ? $request->pages : 25;
-        $filters['state'] = $request->state ? $request->state : NULL;
-        $filters['customer'] = $request->customer ? $request->customer : NULL;
+        $filters = [
+            'search'   => $request->search,
+            'pages'    => $request->pages ?: 25,
+            'states'   => $request->states ?: null,
+            'customers' => $request->customers ?: null,
+        ];
 
-        $jobs = Job::query()->with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])
-            ->where(fn($query) => $query->where('number', 'like', "%{$filters['search']}%")->orWhere('address', 'like', "%{$filters['search']}%"))
-            ->when($request->state, fn($query, $state) => $query->where('state_id', $state))
-            ->when($request->customer, fn($query, $customer) => $query->where('customer_id', $customer))
-            ->orderBy('created_at', 'desc');
+        $query = Job::query()
+            ->with(['state', 'customer', 'proposals.user:id,name,email', 'proposals.scopes.lines.unit_of_measurement'])
+            ->when($filters['search'], function ($q, $search) {
+                $q->where(function ($q) use ($search) {
+                    $q->where('number', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('address', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->states, fn($query, $states) => $query->whereIn('state_id', $states))
+            ->when($request->customers, fn($query, $customers) => $query->whereIn('customer_id', $customers))
+            ->orderBy('created_at', 'desc');      
 
-        $customers = Customer::whereIn('id', $jobs->get()->pluck('customer_id'))->orderBy('name', 'asc')->get();
-        $jobs = ($jobs->paginate($filters['pages'])->isEmpty()) ? JobResource::collection($jobs->paginate($filters['pages'], ['*'], 'page', 1)->withQueryString()) : JobResource::collection($jobs->paginate($filters['pages'])->withQueryString());
+        $paginated = $query->paginate($filters['pages'])->appends($filters);
+
+        if ($paginated->isEmpty() && $paginated->currentPage() > 1) {
+            $paginated = $query->paginate($filters['pages'], ['*'], 'page', 1)
+                ->appends($filters);
+        }
+
+        $jobs = JobResource::collection($paginated);
 
         return Inertia::render('estimating/jobs/Index', [
             'jobs' => fn() => $jobs,
             'states' => StateResource::collection(State::orderBy('state')->get()),
-            'customers' => $customers,
+            'customers' => CustomerResource::collection(Customer::orderBy('name')->get()),
             'filters' => $filters
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -94,9 +103,6 @@ class JobController extends Controller
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Job $job)
     {
         $job->delete();

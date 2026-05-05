@@ -7,9 +7,8 @@ const model = defineModel()
 </script>
 
 <template>
-    <Label for="pages">Pages</Label>
     <Select id="pages" v-model.number="model">
-        <SelectTrigger class="w-full bg-white dark:bg-dark-tertiary dark:text-dark-quatrenary">
+        <SelectTrigger class="w-full max-w-[80px] bg-white dark:bg-dark-tertiary dark:text-dark-quatrenary">
             {{ model }}
         </SelectTrigger>
         <SelectContent>

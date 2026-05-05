@@ -34,7 +34,7 @@ class ProductionSeeder extends Seeder
         Job::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        Job::factory(50)
+        Job::factory(250)
             ->create()
             ->each(fn($job) => $job->proposals()->saveMany(Proposal::factory(mt_rand(1, 3))->create()
                 ->each(fn($proposal) => $proposal->scopes()->saveMany(Scope::factory(mt_rand(1, 3))->create()
