@@ -11,11 +11,15 @@ use Laravel\Socialite\Facades\Socialite;
 class GoogleAuthController extends Controller
 {
     public function redirect() {
-        return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/gmail.send'])->with(['access_type' => 'offline'])->redirect();
+        return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/gmail.send'])->with(['access_type' => 'offline', 'prompt' => 'consent'])->redirect();
     }
 
     public function callback() {
         $googleUser = Socialite::driver('google')->user();
+
+        $googleUser->token;
+        $googleUser->refreshToken;
+        $googleUser->expiresIn;
 
         $socialAccount = SocialAccount::where(['provider' => 'google', 'provider_id' => $googleUser->getId()])->first();
 
@@ -32,6 +36,7 @@ class GoogleAuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
+        dd($googleUser, $googleUser->getEmail());
         $user = null;
         if($googleUser->getEmail()) {
             $user = User::where('email', $googleUser->getEmail())->first();
