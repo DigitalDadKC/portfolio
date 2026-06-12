@@ -16,7 +16,6 @@ class GoogleAuthController extends Controller
                 'openid',
                 'email',
                 'profile',
-                'https://www.googleapis.com/auth/gmail.readonly',
                 'https://www.googleapis.com/auth/calendar',
             ])
             ->with([
