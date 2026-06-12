@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SignWellController extends Controller
 {
-    public function __construct(public Contract $contract, public string $name) {}
+    public function __construct(public Contract $contract, public string $name = '') {}
     public function handle(Request $request)
     {
         $event = $request->event['type'];

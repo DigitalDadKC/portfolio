@@ -18,9 +18,7 @@ class ContractController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __construct(protected PdfService $pdf) {
-
-    }
+    public function __construct(protected PdfService $pdf) {}
     public function index()
     {
         return Inertia::render('admin/contracts/Index', [
