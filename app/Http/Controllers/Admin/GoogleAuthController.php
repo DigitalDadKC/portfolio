@@ -11,7 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 class GoogleAuthController extends Controller
 {
     public function redirect() {
-        return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/gmail.send'])->with(['access_type' => 'offline', 'prompt' => 'consent'])->redirect();
+        return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/gmail.send'])->with(['access_type' => 'offline'])->redirect();
     }
 
     public function callback() {
