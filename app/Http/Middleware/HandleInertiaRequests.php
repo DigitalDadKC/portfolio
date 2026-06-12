@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => fn() => $request->user()
                     ? $request->user()
                         ->loadMissing('socialAccounts')
-                        ->only(['name', 'email', 'socialAccounts'])
+                        ->only(['name', 'email', 'email_verified_at', 'socialAccounts'])
                     : null,
             ],
             'ziggy' => fn() => [

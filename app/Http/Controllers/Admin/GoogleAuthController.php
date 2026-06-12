@@ -16,7 +16,8 @@ class GoogleAuthController extends Controller
                 'openid',
                 'email',
                 'profile',
-                'https://www.googleapis.com/auth/gmail.send'
+                'https://www.googleapis.com/auth/gmail',
+                'https://www.googleapis.com/auth/calendar',
             ])
             ->with([
                 'access_type' => 'offline',
@@ -52,6 +53,7 @@ class GoogleAuthController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
         }
 
+        dd($user);
         if (!$user) {
             $user = User::create([
                 'name' => $googleUser->getName()
