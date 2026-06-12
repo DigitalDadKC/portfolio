@@ -2,7 +2,11 @@
 
 namespace App\Services\Google;
 
+use App\Models\User;
+use Client;
+use Google\Service\Calendar;
 use Illuminate\Support\Facades\Http;
+use Laravel\Socialite\Facades\Socialite;
 
 class GoogleService
 {

@@ -16,7 +16,7 @@ class GoogleAuthController extends Controller
                 'openid',
                 'email',
                 'profile',
-                'https://www.googleapis.com/auth/gmail',
+                'https://www.googleapis.com/auth/gmail.readonly',
                 'https://www.googleapis.com/auth/calendar',
             ])
             ->with([
@@ -28,10 +28,6 @@ class GoogleAuthController extends Controller
 
     public function callback() {
         $googleUser = Socialite::driver('google')->user();
-
-        $googleUser->token;
-        $googleUser->refreshToken;
-        $googleUser->expiresIn;
 
         $socialAccount = SocialAccount::where(['provider' => 'google', 'provider_id' => $googleUser->getId()])->first();
 
