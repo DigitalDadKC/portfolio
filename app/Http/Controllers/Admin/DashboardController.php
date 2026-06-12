@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -13,7 +14,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/dashboard/Index');
+        $github = auth()->user()
+            ->socialAccounts()
+            ->where('provider', 'github')
+            ->first();
+
+        return Inertia::render('admin/dashboard/Index', [
+            'repos' => Http::withToken($github?->access_token)->get('https://api.github.com/user/repos')->json(),
+        ]);
     }
 
     /**

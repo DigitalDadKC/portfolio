@@ -33,7 +33,11 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => fn() => $request->user() ? $request->user()->only('name', 'email') : null,
+                'user' => fn() => $request->user()
+                    ? $request->user()
+                        ->loadMissing('socialAccounts')
+                        ->only(['name', 'email', 'socialAccounts'])
+                    : null,
             ],
             'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),

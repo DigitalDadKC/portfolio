@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
 use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\SignWellController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DatatableController;
@@ -18,15 +17,15 @@ use App\Http\Controllers\Estimating\AdminController;
 use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\JobController;
 use App\Http\Controllers\Estimating\ProposalController;
+use App\Http\Controllers\Admin\GithubAuthController;
+use App\Http\Controllers\Admin\GoogleAuthController;
 use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Invoicing\ProductController;
 use App\Http\Controllers\Masterformat\DivisionController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +62,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/contracts/browser', [ContractController::class, 'browser'])->name('contracts.browser');
     Route::post('/contracts/send/{contract}', [ContractController::class, 'send'])->name('contracts.send');
     Route::resource('/services', ServiceController::class);
+    
+    Route::get('/auth/github/redirect', [GithubAuthController::class, 'redirect'])->name('github.redirect');
+    Route::get('/auth/github/callback', [GithubAuthController::class, 'callback'])->name('github.callback');
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
+
+
 });
 
 // CHECKOUT
@@ -77,10 +83,10 @@ Route::get('/estimating/jobs', [JobController::class, 'index'])->name('estimatin
 Route::post('/estimating/jobs', [JobController::class, 'index'])->name('estimating.jobs.filter');
 
 // proposal
-Route::post('proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');
-Route::get('proposals/edit/{proposal}', [ProposalController::class, 'edit'])->name('proposals.edit');
-Route::put('proposals/update/{proposal}', [ProposalController::class, 'updateProposal'])->name('proposals.update');
-Route::delete('proposals/delete/{proposal}', [ProposalController::class, 'destroy'])->name('proposals.destroy');
+Route::post('/proposals/{job}', [ProposalController::class, 'store'])->name('proposals.store');
+Route::get('/proposals/edit/{proposal}', [ProposalController::class, 'edit'])->name('proposals.edit');
+Route::put('/proposals/update/{proposal}', [ProposalController::class, 'updateProposal'])->name('proposals.update');
+Route::delete('/proposals/delete/{proposal}', [ProposalController::class, 'destroy'])->name('proposals.destroy');
 
 // scopes
 Route::post('proposals/scopes/create/{proposal}', [ProposalController::class, 'createScope'])->name('scopes.create');
@@ -112,12 +118,6 @@ Route::get('/invoices/download-pdf/{invoice}', [InvoiceController::class, 'downl
 Route::get('/invoices/browser-pdf/{invoice}', [InvoiceController::class, 'browserPDF'])->name('invoices.browserPDF');
 Route::post('/invoices', [InvoiceController::class, 'index'])->name('invoices.filter');
 Route::resource('/products', ProductController::class);
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

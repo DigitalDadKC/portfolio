@@ -67,13 +67,13 @@ onMounted(() => {
                             :aria-label="navigation.name" aria-current="page">{{ navigation.name }}</a>
                     </li>
                     <li class="py-2" v-if="!$page.props.auth.user">
-                        <a :href="route('dashboard')"
+                        <a :href="route('admin.dashboard')"
                             class="text-light-quatrenary dark:text-dark-quatrenary hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-tertiary"
                             :class="{ 'text-base': scrollBackground, 'text-lg': !scrollBackground }" aria-label="'login'"
                             aria-current="page">Login</a>
                     </li>
                     <li class="py-2" v-else>
-                        <a :href="route('dashboard')"
+                        <a :href="route('admin.dashboard')"
                             class="text-light-quatrenary dark:text-dark-quatrenary hover:text-light-quatrenary hover:border-b-2 border-light-quatrenary dark:hover:text-dark-tertiary"
                             :class="{ 'text-base': scrollBackground, 'text-lg': !scrollBackground }" aria-label="'login'"
                             aria-current="page">Dashboard</a>

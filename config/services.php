@@ -35,10 +35,17 @@ return [
     ],
     'google' => [
         'key' => env('GOOGLE_API_KEY'),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
     'signwell' => [
         'api_key' => env('SIGNWELL_API_KEY'),
         'base_url' => env('SIGNWELL_BASE_URL', 'https://www.signwell.com/api/v1'),
-    ]
-
+    ],
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI'),
+    ],
 ];

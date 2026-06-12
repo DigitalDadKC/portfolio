@@ -69,10 +69,10 @@ const showingNavigationDropdown = ref(false);
                                             <NavigationMenuContent>
                                                 <ul class="grid w-[100px] gap-4">
                                                     <li>
-                                                        <NavLink :href="route('services.index')" :active="route().current('services.index')">Services</NavLink>
+                                                        <NavLink :href="route('clients.index')" :active="route().current('clients.index')">Clients</NavLink>
                                                     </li>
                                                     <li>
-                                                        <NavLink :href="route('clients.index')" :active="route().current('clients.index')">Clients</NavLink>
+                                                        <NavLink :href="route('services.index')" :active="route().current('services.index')">Services</NavLink>
                                                     </li>
                                                     <li>
                                                         <NavLink :href="route('contracts.index')" :active="route().current('contracts.index')">Contracts</NavLink>
@@ -143,7 +143,7 @@ const showingNavigationDropdown = ref(false);
                 <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
                     </div>

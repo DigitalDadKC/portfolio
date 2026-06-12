@@ -4,13 +4,15 @@
         Hello There {{ $company }}!
     </h1>
     <div>
-        <p style="margin: 0;">Let's be honest, nobody LIKES working with spreadsheets all day</p>
-        <p>I am a local web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs, without losing the logic and workflows they've already built</p>
+        <p>Let's be honest, nobody LIKES working with spreadsheets all day.</p>
+        <p style="margin: 0;">I mean, it's {{now()->year }}.</p>
+        <p style="margin: 0;">Your spreadsheets contain siloed data.</p>
+        <p style="margin: 0;">This project-specific data is isolated and bound within a single file, typically requiring double-entry into a separate platform, which, quite honestly, is ripe with human error and requires extra effort just to report YOUR KPI's right back to you.</p>
+        <p>It's time to upgrade to a custom-built, cohesive platform, exactly the way your team designed it.</p>
+        <p style="margin: 0;">I am a <span style="font-weight: bold;">local</span> web app developer in the construction industry specializing in transforming complex, time-consuming spreadsheets into <span style="font-weight: bold;">powerful, sophisticated web apps</span> from the ground up for businesses just like yours, tailored to fit their needs, without losing the logic and workflows they've already built.</p>
+        <p style="margin: 0;">Whether it's building construction estimates, tracking inventory, managing clients, or emailing automated reports, I take your existing Excel or Google Sheets workflows and turn them into a custom web platform that's</p>
     </div>
 
-    <div>
-        <p>Whether it's building construction estimates, tracking inventory, managing clients, or emailing automated reports, I take your existing Excel or Google Sheets workflows and turn them into a custom web platform that's</p>
-    </div>
 
     <div style="margin-bottom: 20px;">
         <ul style="list-style-type: none">
@@ -33,9 +35,8 @@
         </ul>
 
         <div>
-            <p>
-                I'd love to learn more about {{ $company }} and share a couple of ideas on how a web app could save time and create new opportunities for growth. Would you be open to slot in a 15-minute phone call to your schedule?
-            </p>
+            <p style="margin: 0;">I'd love to learn more about {{ $company }} and share a couple of ideas on how a web app could save time and create new opportunities for growth</p>
+            <p>Would you be open to slot in a 15-minute phone call to your schedule?</p>
         </div>
     </div>
 

@@ -17,7 +17,8 @@ const props = defineProps({
 <template>
     <Popover>
         <PopoverTrigger as-child>
-            <Button variant="outline" id="start_date" :class="cn(
+            <Button variant="outline" id="start_date"
+                :class="cn(
                 'w-full justify-start text-left font-normal bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50',
                 !model && 'text-muted-foreground',
             )">
