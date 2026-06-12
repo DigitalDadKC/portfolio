@@ -36,7 +36,6 @@ class GoogleAuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        dd($googleUser, $googleUser->getEmail());
         $user = null;
         if($googleUser->getEmail()) {
             $user = User::where('email', $googleUser->getEmail())->first();
@@ -46,14 +45,14 @@ class GoogleAuthController extends Controller
             $user = User::create([
                 'name' => $googleUser->getName()
                     ?: $googleUser->getNickname()
-                    ?: 'GitHub User',
+                    ?: 'Google User',
 
                 'email' => $googleUser->getEmail(),
             ]);
         }
 
         $user->socialAccounts()->create([
-            'provider' => 'github',
+            'provider' => 'google',
             'provider_id' => $googleUser->getId(),
 
             'access_token' => $googleUser->token,
