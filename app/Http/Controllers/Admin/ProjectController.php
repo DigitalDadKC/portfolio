@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $projects = ProjectResource::collection(Project::with('skills')->orderBy('order')->get());
@@ -25,15 +22,13 @@ class ProjectController extends Controller
         return Inertia::render('admin/projects/Index', compact('projects', 'skills'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required|min:3',
             'skills.*' => 'required',
-            'project_url' => 'required'
+            'url' => 'required'
         ]);
 
         $image = NULL;
@@ -49,14 +44,11 @@ class ProjectController extends Controller
             'active' => $request->active,
             'image' => $image,
         ]);
-        $project->skills()->sync($request->skills);
+        $project->skills()->sync(array_column($request->skills, 'id'));
 
         return Redirect::route('projects.index')->with('message', 'Project created successfully!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Project $project)
     {
         $request->validate([
@@ -64,7 +56,6 @@ class ProjectController extends Controller
             'skills.*' => 'required',
         ]);
 
-        $skills = array_column($request->skills ?? [], 'id');
         $image = $project->image;
         if ($request->hasFile('image')) {
             if($image) {
@@ -80,17 +71,14 @@ class ProjectController extends Controller
             'image' => $image,
             'active' => $request->active,
         ]);
-        $project->skills()->sync($skills);
+        $project->skills()->sync(array_column($request->skills, 'id'));
 
         return Redirect::route('projects.index')->with('message', 'Project updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Project $project)
     {
-        Storage::delete($project->image);
+        Storage::delete($project?->image ?? '');
         $project->delete();
         return Redirect::back()->with('message', 'Project deleted');
     }

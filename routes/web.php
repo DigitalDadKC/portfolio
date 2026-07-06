@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\GithubAuthController;
+use App\Http\Controllers\Admin\GoogleAuthController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
 use App\Http\Controllers\Admin\OutreachController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -17,10 +19,9 @@ use App\Http\Controllers\Estimating\AdminController;
 use App\Http\Controllers\Estimating\CustomerController;
 use App\Http\Controllers\Estimating\JobController;
 use App\Http\Controllers\Estimating\ProposalController;
-use App\Http\Controllers\Admin\GithubAuthController;
-use App\Http\Controllers\Admin\GoogleAuthController;
 use App\Http\Controllers\Invoicing\InvoiceController;
 use App\Http\Controllers\Invoicing\ProductController;
+use App\Http\Controllers\Lodging\LodgingController;
 use App\Http\Controllers\Masterformat\DivisionController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
@@ -67,8 +68,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/auth/github/callback', [GithubAuthController::class, 'callback'])->name('github.callback');
     Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
     Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
-
-
 });
 
 // CHECKOUT
@@ -126,8 +125,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('autocomplete', [AddressController::class, 'index']);
-
 Route::patch('/users/{user}', [AdminController::class, 'update_user'])->name('users.update');
+
+// Lodging
+Route::get('/lodging', [LodgingController::class, 'index'])->name('lodging.index');
+Route::post('/lodging', [LodgingController::class, 'index'])->name('lodging.filter');
 
 require __DIR__ . '/auth.php';
 

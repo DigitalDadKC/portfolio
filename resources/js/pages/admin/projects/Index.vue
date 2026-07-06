@@ -14,16 +14,6 @@
         skills: Object,
     })
 
-    const newProject = {
-        id: null,
-        name: '',
-        description: '',
-        image: null,
-        url: '',
-        active: true,
-        skills: [],
-    }
-
     const updateProjectOrder = () => {
         router.post(route('projects.sort'), {
             'projects': list.value
@@ -77,7 +67,7 @@ watch(() => (props.projects), (projects) => {
                         <TableHead class="text-black">Active</TableHead>
                         <TableHead class="text-black">Created</TableHead>
                         <TableHead class="text-black">Updated</TableHead>
-                        <TableHead class="text-black text-center"><Manage :new="true" :project="newProject" :skills></Manage></TableHead>
+                        <TableHead class="text-black text-center"><Manage :new="true" :skills></Manage></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody class="bg-white dark:bg-dark-primary" ref="el">

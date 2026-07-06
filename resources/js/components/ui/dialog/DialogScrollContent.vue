@@ -1,6 +1,6 @@
 <script setup>
+import { X } from "@lucide/vue";
 import { reactiveOmit } from "@vueuse/core";
-import { X } from "lucide-vue-next";
 import {
   DialogClose,
   DialogContent,
@@ -10,12 +10,20 @@ import {
 } from "reka-ui";
 import { cn } from "@/lib/utils";
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const props = defineProps({
   forceMount: { type: Boolean, required: false },
   disableOutsidePointerEvents: { type: Boolean, required: false },
   asChild: { type: Boolean, required: false },
   as: { type: null, required: false },
-  class: { type: null, required: false },
+  class: {
+    type: [Boolean, null, String, Object, Array],
+    required: false,
+    skipCheck: true,
+  },
 });
 const emits = defineEmits([
   "escapeKeyDown",
@@ -43,7 +51,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
             props.class,
           )
         "
-        v-bind="forwarded"
+        v-bind="{ ...$attrs, ...forwarded }"
         @pointer-down-outside="
           (event) => {
             const originalEvent = event.detail.originalEvent;

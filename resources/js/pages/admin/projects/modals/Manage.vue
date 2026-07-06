@@ -9,6 +9,7 @@ import InputError from '@/components/InputError.vue';
 import Skills from '../partials/Skills.vue';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Pencil, Plus } from 'lucide-vue-next';
+import Multiselect from '@/components/Multiselect.vue';
 
 const props = defineProps({
     new: Boolean,
@@ -18,13 +19,13 @@ const props = defineProps({
 
 const isDialogOpen = ref(false)
 const form = useForm({
-    id: props.project.id,
-    name: props.project.name,
-    description: props.project.description,
-    image: props.project.image,
-    url: props.project.url,
-    active: !!props.project.active,
-    skills: props.project.skills,
+    id: props.project?.id,
+    name: props.project?.name,
+    description: props.project?.description,
+    image: props.project?.image,
+    url: props.project?.url,
+    active: !!props.project?.active ?? true,
+    skills: props.project?.skills,
 })
 
 const picture = computed(() => {
@@ -39,11 +40,12 @@ const submit = () => {
     if(props.new) {
         form.post(route('projects.store'), {
             onSuccess: () => {
+                form.reset()
                 isDialogOpen.value = false
             }
         });
     } else {
-        router.post(route('projects.update', props.project.id), {
+        router.post(route('projects.update', props.project?.id), {
             _method: 'put',
             name: form.name,
             description: form.description,
@@ -84,6 +86,7 @@ const submit = () => {
                     <Label for="name">Name</Label>
                     <Input id="name" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.name" />
                 </div>
+                <div v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</div>
                 <div>
                     <Label for="description">Description</Label>
                     <Input id="description" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.description" />
@@ -92,12 +95,14 @@ const submit = () => {
                     <Label for="url">Project URL</Label>
                     <Input id="url" class="bg-white dark:bg-dark-tertiary hover:bg-accent hover:dark:bg-input/50" v-model="form.url" />
                 </div>
+                <div v-if="form.errors.url" class="text-red-500">{{ form.errors.url }}</div>
                 <div>
                     <Label for="active">{{ (form.active) ? `Active` : `Inactive` }}</Label>
                     <Switch id="active" v-model="form.active" />
                 </div>
                 <div>
-                    <Skills v-model="form.skills" :project :skills></Skills>
+                    <Multiselect v-model="form.skills" :options="props.skills" placeholder="Select skills"/>
+                    <!-- <Skills v-model="form.skills" :project :skills></Skills> -->
                 </div>
                 <div class="mt-2">
                     <Label for="image">Image</Label>

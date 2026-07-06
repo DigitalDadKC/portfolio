@@ -48,4 +48,13 @@ return [
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
         'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
+    'countrystatecity' => [
+        'key' => env('COUNTRYSTATECITY_API_KEY'),
+    ],
+    'gsa' => [
+        'key' => env('GSA_API_KEY'),
+    ],
+    'samgov' => [
+        'key' => env('SAM_API_KEY'),
+    ],
 ];
